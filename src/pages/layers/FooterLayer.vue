@@ -1,0 +1,31 @@
+<template>
+  <v-bottom-navigation :value="bottomNav" color="primary" :fixed="true">
+    <v-btn value="main" to="/">
+      <span>Главная</span>
+      <v-icon>mdi-home-outline</v-icon>
+    </v-btn>
+    <v-btn value="neighbors" to="/neighbors">
+      <span>Соседи</span>
+      <v-icon>mdi-account-supervisor-outline</v-icon>
+    </v-btn>
+    <v-btn value="im" to="/im">
+      <span>Мессенджер</span>
+      <v-icon>mdi-chat-outline</v-icon>
+    </v-btn>
+    <v-btn value="services" to="/services">
+      <span>Сервисы</span>
+      <v-icon>mdi-cube-outline</v-icon>
+    </v-btn>
+  </v-bottom-navigation>
+</template>
+
+<script>
+export default {
+  name: "FooterLayer",
+  data() {
+    return {
+      bottomNav: undefined,
+    };
+  },
+};
+</script>

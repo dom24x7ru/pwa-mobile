@@ -7,7 +7,9 @@ import actions from "./actions";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    appName: "Dom24x7"
+  },
   getters,
   mutations,
   actions,
