@@ -4,7 +4,7 @@
       <span>Главная</span>
       <v-icon>mdi-home-outline</v-icon>
     </v-btn>
-    <v-btn value="neighbors" to="/neighbors">
+    <v-btn value="house" to="/sections">
       <span>Соседи</span>
       <v-icon>mdi-account-supervisor-outline</v-icon>
     </v-btn>

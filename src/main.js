@@ -5,7 +5,12 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 
+import data from "../data.json";
+
 Vue.config.productionTip = false
+
+store.state.user = data.user;
+store.state.flats = data.flats;
 
 new Vue({
   router,
