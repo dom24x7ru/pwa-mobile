@@ -1,5 +1,8 @@
 <template>
   <v-app-bar app color="primary" dark>
+    <v-btn v-if="showNavBack" icon @click="goBack">
+      <v-icon>mdi-arrow-left</v-icon>
+    </v-btn>
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer></v-spacer>
     <MenuLayer />
@@ -16,7 +19,23 @@ export default {
     title() {
       return this.appName + " - " + this.pageName;
     },
+    showNavBack() {
+      switch (this.$route.name) {
+        case "main":
+        case "sections":
+        case "im":
+        case "services":
+          return false;
+        default:
+          return true;
+      }
+    },
     ...mapState(["appName", "pageName"]),
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
   },
   components: {
     MenuLayer,
