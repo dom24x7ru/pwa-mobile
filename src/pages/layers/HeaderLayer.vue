@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app color="primary" dark>
-    <v-toolbar-title>{{ appName }}</v-toolbar-title>
+    <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer></v-spacer>
     <MenuLayer />
   </v-app-bar>
@@ -13,7 +13,10 @@ import MenuLayer from "@/pages/layers/MenuLayer";
 export default {
   name: "HeaderLayer",
   computed: {
-    ...mapState(["appName"]),
+    title() {
+      return this.appName + " - " + this.pageName;
+    },
+    ...mapState(["appName", "pageName"]),
   },
   components: {
     MenuLayer,

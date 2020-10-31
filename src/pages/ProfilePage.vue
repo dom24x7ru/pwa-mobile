@@ -2,11 +2,7 @@
   <v-container fluid>
     <v-card class="v-card--material">
       <div class="d-flex">
-        <v-avatar
-          color="primary"
-          size="128"
-          class="mx-auto v-card--material__avatar"
-        >
+        <v-avatar color="primary" size="128" class="mx-auto v-card--material__avatar">
           <span class="white--text headline">ЕТХ</span>
         </v-avatar>
       </div>

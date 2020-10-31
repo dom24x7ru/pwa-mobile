@@ -8,7 +8,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    appName: "Dom24x7"
+    appName: "Dom24x7",
+    pageName: null,
   },
   getters,
   mutations,
