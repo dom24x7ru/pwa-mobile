@@ -1,25 +1,27 @@
 <template>
   <v-container fluid>
-    <v-list>
-      <v-subheader>ПОДЪЕЗД {{ sectionId }}</v-subheader>
-      <v-list-group v-for="floor in getFlats({ section: sectionId })" :key="floor.number">
-        <template v-slot:activator>
-          <v-list-item-content>
-            <v-list-item-title>Этаж {{ floor.number }}</v-list-item-title>
-          </v-list-item-content>
-        </template>
-        <v-list-item v-for="flat of floor.flats" :key="flat.number">
-          <v-list-item-content>
-            <v-list-item-title>Квартира № {{ flat.number }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-group>
-    </v-list>
+    <v-row dense>
+      <v-col v-for="item in getFloors(sectionId)" :key="item.floor" cols="12">
+        <v-card>
+          <v-card-title>Этаж {{ item.floor }}</v-card-title>
+          <v-card-subtitle>
+            Квартиры: {{ item.min }} - {{ item.max }}
+          </v-card-subtitle>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn icon :to="{ name: 'floor', params: { sectionId, floorId: item.floor } }">
+              <v-icon>mdi-account-supervisor-outline</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+    <br /><br />
   </v-container>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "SectionsPage",
@@ -27,7 +29,13 @@ export default {
     sectionId() {
       return this.$route.params.sectionId;
     },
-    ...mapGetters(["getFlats"]),
+    ...mapGetters(["getFloors"]),
+  },
+  created() {
+    this.setTitle(`Подъезд ${this.sectionId}`);
+  },
+  methods: {
+    ...mapMutations(["setTitle"]),
   },
 };
 </script>

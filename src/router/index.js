@@ -7,7 +7,7 @@ import ServicesPage from "@/pages/ServicesPage";
 
 import SectionsPage from "@/pages/home/SectionsPage";
 import SectionPage from "@/pages/home/SectionPage";
-import NeighborsPage from "@/pages/home/NeighborsPage";
+import FloorPage from "@/pages/home/FloorPage";
 
 import AboutPage from "@/pages/AboutPage";
 import ProfilePage from "@/pages/ProfilePage";
@@ -24,7 +24,7 @@ export default new Router({
 
     { path: "/sections", name: "sections", component: SectionsPage },
     { path: "/section/:sectionId/floors", name: "section", component: SectionPage },
-    { path: "/neighbors", name: "neighbors", component: NeighborsPage },
+    { path: "/section/:sectionId/floor/:floorId", name: "floor", component: FloorPage },
 
     { path: "/about", name: "about", component: AboutPage },
     { path: "/profile", name: "profile", component: ProfilePage },

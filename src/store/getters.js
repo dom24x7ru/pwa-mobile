@@ -10,15 +10,19 @@ export default {
     });
     return sections;
   },
-  getFlats: state => ({ section, floor }) => {
+  getFloors: state => (section) => {
     if (state.flats == null) return {};
     let flats = state.flats.filter(flat => flat.section == section);
     let floors = {};
     flats.forEach(flat => {
-      if (floor != null && floor != flat.floor) return;
-      if (floors[flat.floor] == null) floors[flat.floor] = { number: flat.floor, flats: [] };
-      floors[flat.floor].flats.push(flat);
+      if (floors[flat.floor] == null) floors[flat.floor] = { floor: flat.floor, min: Number.MAX_VALUE, max: 0 };
+      if (floors[flat.floor].min > flat.number) floors[flat.floor].min = flat.number;
+      if (floors[flat.floor].max < flat.number) floors[flat.floor].max = flat.number;
     });
     return floors;
+  },
+  getFlats: state => ({ section, floor }) => {
+    if (state.flats == null) return {};
+    return state.flats.filter(flat => flat.section == section && flat.floor == floor);
   },
 };
