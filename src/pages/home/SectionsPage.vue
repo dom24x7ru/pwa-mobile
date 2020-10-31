@@ -1,12 +1,16 @@
 <template>
   <v-container fluid>
     <v-row dense>
-      <v-col v-for="index of getSections()" :key="index">
+      <v-col v-for="item in getSections()" :key="item.section" cols="12">
         <v-card>
-          <v-card-title>Подъезд {{ index }}</v-card-title>
+          <v-card-title>Подъезд {{ item.section }}</v-card-title>
+          <v-card-subtitle>
+            Этажей: {{ item.floors }}<br />
+            Квартиры: {{ item.min }} - {{ item.max }}
+          </v-card-subtitle>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn icon :to="{ name: 'section', params: { sectionId: index } }">
+            <v-btn icon :to="{ name: 'section', params: { sectionId: item.section } }">
               <v-icon>mdi-account-supervisor-outline</v-icon>
             </v-btn>
           </v-card-actions>

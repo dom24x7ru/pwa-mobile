@@ -1,14 +1,17 @@
 export default {
   getSections: state => () => {
-    let list = [];
-    state.flats.forEach(flat => list.push(flat.section));
-    return [...new Set(list)];
-  },
-  getFloorsCount: state => section => {
-    let flats = state.flats.filter(flat => flat.section == section);
-    return Math.max(...flats.map(flat => flat.floor));
+    if (state.flats == null) return [];
+    let sections = {};
+    state.flats.forEach(flat => {
+      if (sections[flat.section] == null) sections[flat.section] = { section: flat.section, min: Number.MAX_VALUE, max: 0, floors: 0 };
+      if (sections[flat.section].min > flat.number) sections[flat.section].min = flat.number;
+      if (sections[flat.section].max < flat.number) sections[flat.section].max = flat.number;
+      if (sections[flat.section].floors < flat.floor) sections[flat.section].floors = flat.floor;
+    });
+    return sections;
   },
   getFlats: state => ({ section, floor }) => {
+    if (state.flats == null) return {};
     let flats = state.flats.filter(flat => flat.section == section);
     let floors = {};
     flats.forEach(flat => {

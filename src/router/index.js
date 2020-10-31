@@ -5,9 +5,9 @@ import MainPage from "@/pages/MainPage";
 import ChatPage from "@/pages/ChatPage";
 import ServicesPage from "@/pages/ServicesPage";
 
-import SectionsPage from "@/pages/neighbors/SectionsPage";
-import SectionPage from "@/pages/neighbors/SectionPage";
-import NeighborsPage from "@/pages/neighbors/NeighborsPage";
+import SectionsPage from "@/pages/home/SectionsPage";
+import SectionPage from "@/pages/home/SectionPage";
+import NeighborsPage from "@/pages/home/NeighborsPage";
 
 import AboutPage from "@/pages/AboutPage";
 import ProfilePage from "@/pages/ProfilePage";

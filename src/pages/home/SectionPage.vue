@@ -27,7 +27,7 @@ export default {
     sectionId() {
       return this.$route.params.sectionId;
     },
-    ...mapGetters(["getFloorsCount", "getFlats"]),
+    ...mapGetters(["getFlats"]),
   },
 };
 </script>

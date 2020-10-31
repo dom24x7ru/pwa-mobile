@@ -5,12 +5,24 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 
+import SocketClient from "./api/SocketClient";
 import data from "../data.json";
 
-Vue.config.productionTip = false
+const PRODUCTION_MODE = false;
+Vue.config.productionTip = PRODUCTION_MODE
 
-store.state.user = data.user;
-store.state.flats = data.flats;
+const client = new SocketClient({
+  port: 8000,
+});
+client.on("login", data => {
+  console.log(data);
+});
+client.on("logout", () => { });
+client.on("flats", flat => {
+  store.commit("setFlat", flat.data);
+});
+
+store.commit("setUser", data.user);
 
 new Vue({
   router,

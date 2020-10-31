@@ -3,7 +3,15 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   name: "MainPage",
+  created() {
+    this.setTitle("Главная");
+  },
+  methods: {
+    ...mapMutations(["setTitle"]),
+  },
 };
 </script>
