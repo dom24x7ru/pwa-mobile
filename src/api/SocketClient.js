@@ -58,8 +58,8 @@ export default class SocketClient extends EventEmitter {
     this.ready = false;
     this.emit("loading");
     if (this.socket.authToken) {
-      let { id, mobile, banned, role, person } = this.socket.authToken;
-      let user = this.user = { id, mobile, banned, role, person };
+      let { id, mobile, banned, role, person, resident } = this.socket.authToken;
+      let user = this.user = { id, mobile, banned, role, person, resident };
       for (let name of this.userChannels()) this.initChannel(name);
       this.emit("login", { user });
     } else {

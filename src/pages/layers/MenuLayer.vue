@@ -25,10 +25,20 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
   name: "MenuLayer",
+  computed: {
+    ...mapState(["client"]),
+  },
   methods: {
-    logout() {},
+    async logout() {
+      console.log("send logout");
+      await this.client.wrapEmit("user.logout");
+      this.setUser(null);
+    },
+    ...mapMutations(["setUser"]),
   },
 };
 </script>

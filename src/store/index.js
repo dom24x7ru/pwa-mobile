@@ -10,6 +10,8 @@ export default new Vuex.Store({
   state: {
     appName: "Dom24x7",
     pageName: null,
+    user: null,
+    flats: null,
   },
   getters,
   mutations,

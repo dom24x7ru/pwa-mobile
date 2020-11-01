@@ -1,9 +1,72 @@
 <template>
-  <v-container fluid></v-container>
+  <v-container fluid>
+    <v-form>
+      <v-container v-if="!showSmsCodeForm">
+        <v-row>
+          <v-col>
+            <v-text-field v-model="mobile" prefix="+7" :rules="phoneRules" :counter="10" label="Ваш номер телефона" required />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn x-large color="primary" dark @click="sendMobile">Отправить</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container v-else>
+        <v-row>
+          <v-col>
+            <v-text-field v-model="smsCode" :rules="smsCodeRules" :counter="4" label="СМС код" required />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn x-large color="primary" dark @click="sendSmsCode">Отправить</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </v-container>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "AuthPage",
+  data() {
+    return {
+      mobile: null,
+      phoneRules: [
+        (v) => !!v || "Необходимо указать номер телефона",
+        (v) =>
+          /^\d{10}$/.test(v) ||
+          "Номер телефона должен быть валидным и состоять из 10 цифр",
+      ],
+      showSmsCodeForm: false,
+      smsCode: null,
+      smsCodeRules: [
+        (v) => !!v || "Необходимо указать смс код",
+        (v) => /^\d{4}$/.test(v) || "СМС код состоит из 4 цифр",
+      ],
+    };
+  },
+  computed: {
+    ...mapState(["client"]),
+  },
+  methods: {
+    async sendMobile() {
+      console.log("send mobile: ", this.mobile);
+      const result = await this.client.wrapEmit("user.auth", {
+        mobile: `7${this.mobile}`,
+      });
+      this.showSmsCodeForm = result.status == "OK";
+    },
+    async sendSmsCode() {
+      const params = { mobile: `7${this.mobile}`, code: this.smsCode };
+      console.log("send mobile with sms code: ", params);
+      await this.client.wrapEmit("user.auth", params);
+    },
+  },
 };
 </script>

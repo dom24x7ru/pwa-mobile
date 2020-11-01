@@ -9,8 +9,11 @@
           </v-card-subtitle>
           <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn icon>
+              <v-icon>mdi-chat-outline</v-icon>
+            </v-btn>
             <v-btn icon :to="{ name: 'floor', params: { sectionId, floorId: item.floor } }">
-              <v-icon>mdi-account-supervisor-outline</v-icon>
+              <v-icon>mdi-arrow-right</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>

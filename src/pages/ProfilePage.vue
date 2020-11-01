@@ -13,13 +13,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "ProfilePage",
   computed: {
     fio() {
-      const profile = this.user.profile;
+      if (this.user == null) return "";
+      const profile = this.user.person;
       const name = profile.name != null ? profile.name : "";
       const surname = profile.surname != null ? profile.surname : "";
       const midname = profile.midname != null ? profile.midname : "";
@@ -27,7 +28,8 @@ export default {
     },
     avatar() {
       // пока не поддерживаем картинки, поэтому отображаем первые буквы имени
-      const profile = this.user.profile;
+      if (this.user == null) return "";
+      const profile = this.user.person;
       let result = "";
       result += profile.name != null ? profile.name.substr(0, 1) : "";
       result += profile.surname != null ? profile.surname.substr(0, 1) : "";
@@ -35,11 +37,18 @@ export default {
       return result;
     },
     address() {
-      const house = this.user.house;
-      return `подъезд ${house.section}, этаж ${house.floor}, кв. ${house.flat}`;
+      if (this.user == null) return "";
+      const flat = this.user.resident.flat;
+      return `подъезд ${flat.section}, этаж ${flat.floor}, кв. ${flat.number}`;
     },
     ...mapState(["user"]),
   },
+  created() {
+    this.setTitle("Профиль");
+  },
+  methods: {
+    ...mapMutations(["setTitle"]),
+  }
 };
 </script>
 
