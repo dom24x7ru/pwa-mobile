@@ -25,6 +25,9 @@ export default {
         case "sections":
         case "im":
         case "services":
+        case "about":
+        case "profile":
+        case "settings":
           return false;
         default:
           return true;

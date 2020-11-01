@@ -15,11 +15,13 @@ const client = new SocketClient({
 });
 client.on("login", data => {
   console.log("emit login");
+  console.log(router.currentRoute.name);
   store.commit("setUser", data.user);
   if (router.currentRoute.name == "signin") router.push("/");
 });
 client.on("logout", () => {
   console.log("emit logout");
+  console.log(router.currentRoute.name);
   store.commit("setUser", null);
   if (router.currentRoute.name != "signin") router.push("/signin");
 });
