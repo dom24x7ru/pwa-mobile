@@ -35,11 +35,7 @@ export default {
   methods: {
     async logout() {
       console.log("send logout");
-      try {
-        await this.client.wrapEmit("user.logout");
-      } catch (error) {
-        console.error(error);
-      }
+      await this.client.wrapEmit("user.logout");
       this.setUser(null);
     },
     ...mapMutations(["setUser"]),

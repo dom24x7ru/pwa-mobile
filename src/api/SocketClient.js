@@ -132,13 +132,13 @@ export default class SocketClient extends EventEmitter {
   }
 
   commonChannels() {
-    let channels = ["ping", "flats"];
+    let channels = ["ping"];
     return channels;
   }
 
   userChannels() {
     if (!this.user) return [];
-    let channels = [];
+    let channels = ["flats"];
     return channels;
   }
 
