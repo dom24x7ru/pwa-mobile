@@ -7,7 +7,7 @@
     <v-spacer></v-spacer>
     <MenuLayer />
     <template v-if="showFabBtnMenu" v-slot:extension>
-      <FabBtnMenuComponent />
+      <FabBtnMenuLayer @chat="chat" @vote="vote" />
     </template>
   </v-app-bar>
 </template>
@@ -15,7 +15,7 @@
 <script>
 import { mapState } from "vuex";
 import MenuLayer from "@/pages/layers/MenuLayer";
-import FabBtnMenuComponent from "@/components/FabBtnMenuComponent";
+import FabBtnMenuLayer from "@/pages/layers/FabBtnMenuLayer";
 
 export default {
   name: "HeaderLayer",
@@ -56,9 +56,15 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+    chat() {
+      console.log("chat");
+    },
+    vote() {
+      console.log("vote")
+    },
   },
   components: {
-    MenuLayer, FabBtnMenuComponent,
+    MenuLayer, FabBtnMenuLayer,
   },
 };
 </script>

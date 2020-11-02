@@ -6,12 +6,7 @@
         <v-icon v-else>mdi-chevron-double-down</v-icon>
       </v-btn>
     </template>
-    <v-btn fab dark color="green">
-      <v-icon>mdi-ballot-outline</v-icon>
-    </v-btn>
-    <v-btn fab dark color="indigo">
-      <v-icon>mdi-chat-outline</v-icon>
-    </v-btn>
+    <slot></slot>
   </v-speed-dial>
 </template>
 
