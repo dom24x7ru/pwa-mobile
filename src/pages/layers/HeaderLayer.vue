@@ -9,6 +9,7 @@
     <template v-if="showFabBtnMenu" v-slot:extension>
       <FabBtnMenuLayer @chat="chat" @vote="vote" />
     </template>
+    <Toast v-if="toast.show" :show="toast.show" :text="toast.text" color="warning" @close="toastClose" />
   </v-app-bar>
 </template>
 
@@ -16,9 +17,18 @@
 import { mapState } from "vuex";
 import MenuLayer from "@/pages/layers/MenuLayer";
 import FabBtnMenuLayer from "@/pages/layers/FabBtnMenuLayer";
+import Toast from "@/components/ToastComponent";
 
 export default {
   name: "HeaderLayer",
+  data() {
+    return {
+      toast: {
+        show: false,
+        text: "Метод в разработке",
+      },
+    };
+  },
   computed: {
     title() {
       return this.appName + " - " + this.pageName;
@@ -58,13 +68,18 @@ export default {
     },
     chat() {
       console.log("chat");
+      this.toast.show = true;
     },
     vote() {
-      console.log("vote")
+      console.log("vote");
+      this.toast.show = true;
+    },
+    toastClose() {
+      this.toast.show = false;
     },
   },
   components: {
-    MenuLayer, FabBtnMenuLayer,
+    MenuLayer, FabBtnMenuLayer, Toast,
   },
 };
 </script>
