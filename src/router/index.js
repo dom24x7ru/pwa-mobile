@@ -13,6 +13,7 @@ import AboutPage from "@/pages/AboutPage";
 import ProfilePage from "@/pages/ProfilePage";
 import SettingsPage from "@/pages/SettingsPage";
 import AuthPage from "@/pages/AuthPage";
+import InvitePage from "@/pages/InvitePage";
 
 Vue.use(Router);
 
@@ -28,6 +29,7 @@ export default new Router({
 
     { path: "/about", name: "about", component: AboutPage },
     { path: "/profile", name: "profile", component: ProfilePage },
+    { path: "/invite", name: "invite", component: InvitePage },
     { path: "/settings", name: "settings", component: SettingsPage },
     { path: "/signin", name: "auth", component: AuthPage },
   ],

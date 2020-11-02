@@ -42,6 +42,7 @@ export default {
         case "about":
         case "profile":
         case "settings":
+        case "invite":
           return false;
         default:
           return true;
@@ -55,6 +56,7 @@ export default {
         case "about":
         case "profile":
         case "settings":
+        case "invite":
           return false;
         default:
           return true;

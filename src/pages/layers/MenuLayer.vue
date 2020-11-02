@@ -13,6 +13,9 @@
       <v-list-item to="/profile">
         <v-list-item-title>Профиль</v-list-item-title>
       </v-list-item>
+      <v-list-item to="/invite">
+        <v-list-item-title>Пригласить</v-list-item-title>
+      </v-list-item>
       <v-list-item to="/settings">
         <v-list-item-title>Настройки</v-list-item-title>
       </v-list-item>
