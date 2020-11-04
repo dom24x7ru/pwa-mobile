@@ -5,11 +5,15 @@
         <v-row>
           <v-col>
             <v-text-field v-model="mobile" prefix="+7" :rules="phoneRules" :counter="10" label="Ваш номер телефона" required />
+            <v-text-field v-if="showInviteCode" v-model="invite" :counter="6" label="Введите код приглашения" required />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <v-btn x-large color="primary" dark @click="sendMobile">Отправить</v-btn>
+          </v-col>
+          <v-col>
+            <v-btn x-large color="success" dark @click="showInviteCode = !showInviteCode">Я новый пользователь</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -37,12 +41,14 @@ export default {
   data() {
     return {
       mobile: null,
+      invite: null,
       phoneRules: [
         (v) => !!v || "Необходимо указать номер телефона",
         (v) =>
           /^\d{10}$/.test(v) ||
           "Номер телефона должен быть валидным и состоять из 10 цифр",
       ],
+      showInviteCode: false,
       showSmsCodeForm: false,
       smsCode: null,
       smsCodeRules: [
@@ -59,6 +65,7 @@ export default {
       console.log("send mobile: ", this.mobile);
       const result = await this.client.wrapEmit("user.auth", {
         mobile: `7${this.mobile}`,
+        invite: this.invite,
       });
       this.showSmsCodeForm = result.status == "OK";
     },
