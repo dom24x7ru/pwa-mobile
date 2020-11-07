@@ -6,11 +6,13 @@
     <v-combobox v-model="flat" label="Выберите свою квартиру" :items="flatsComboboxItems" :error="combobox.errors.length != 0" :error-messages="combobox.errors"></v-combobox>
     <br /><br />
     <v-btn x-large color="success" dark @click="save">Сохранить</v-btn>
+    <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toastClose" />
   </v-container>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import Toast from "@/components/ToastComponent";
 
 export default {
   name: "SettingsPage",
@@ -22,6 +24,11 @@ export default {
       flat: null,
       combobox: {
         errors: []
+      },
+      toast: {
+        show: false,
+        text: null,
+        color: null
       },
     };
   },
@@ -70,13 +77,21 @@ export default {
         flat: this.flat.value,
       };
       const result = await this.client.wrapEmit("user.saveProfile", params);
+      console.log(result);
       if (result.status == "OK") {
-        console.log("Успешно сохранили");
-        this.setPerson(result.person);
-        this.setResident(result.resident);
+        this.toast.text = "Успешно сохранили";
+        this.toast.color = "success";
+        this.toast.show = true;
+        console.log(this.toast.text);
       } else {
-        console.error("Не удалось сохранить");
+        this.toast.text = "Сохранить не удалось. Попробуйте позже";
+        this.toast.color = "error";
+        this.toast.show = true;
+        console.error(this.toast.text);
       }
+    },
+    toastClose() {
+      this.toast.show = false;
     },
     ...mapMutations(["setTitle", "setPerson", "setResident"]),
   },
@@ -89,6 +104,9 @@ export default {
         this.combobox.errors = [];
       }
     },
+  },
+  components: {
+    Toast,
   },
 };
 </script>

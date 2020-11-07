@@ -33,8 +33,6 @@ client.on("flats", flat => {
 store.commit("setClient", client);
 
 router.beforeEach((to, from, next) => {
-  console.log(`from: ${from.name}`);
-  console.log(`to: ${to.name}`);
   if (to.name == "auth") {
     next();
   } else if (store.state.user != null && store.state.user.person == null && to.name != "settings") {
