@@ -126,7 +126,7 @@ export default class SocketClient extends EventEmitter {
           error.methodName = event
           console.log("ERROR", event, error);
         }
-        error ? resolve(error) : resolve(response);
+        error ? resolve({ status: "ERROR", message: error.message }) : resolve(response);
       });
     });
   }

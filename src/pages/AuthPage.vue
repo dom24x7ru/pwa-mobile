@@ -30,11 +30,13 @@
         </v-row>
       </v-container>
     </v-form>
+    <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toastClose" />
   </v-container>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import Toast from "@/components/ToastComponent";
 
 export default {
   name: "AuthPage",
@@ -55,6 +57,11 @@ export default {
         (v) => !!v || "Необходимо указать смс код",
         (v) => /^\d{4}$/.test(v) || "СМС код состоит из 4 цифр",
       ],
+      toast: {
+        show: false,
+        text: null,
+        color: "error",
+      },
     };
   },
   computed: {
@@ -68,12 +75,26 @@ export default {
         invite: this.invite,
       });
       this.showSmsCodeForm = result.status == "OK";
+      if (result.status == "ERROR") {
+        this.toast.show = true;
+        this.toast.text = result.message;
+      }
     },
     async sendSmsCode() {
       const params = { mobile: `7${this.mobile}`, code: this.smsCode };
       console.log("send mobile with sms code: ", params);
-      await this.client.wrapEmit("user.auth", params);
+      const result = await this.client.wrapEmit("user.auth", params);
+      if (result.status == "ERROR") {
+        this.toast.show = true;
+        this.toast.text = result.message;
+      }
     },
+    toastClose() {
+      this.toast.show = false;
+    },
+  },
+  components: {
+    Toast,
   },
 };
 </script>
