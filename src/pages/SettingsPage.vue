@@ -72,11 +72,13 @@ export default {
       const result = await this.client.wrapEmit("user.saveProfile", params);
       if (result.status == "OK") {
         console.log("Успешно сохранили");
+        this.setPerson(result.person);
+        this.setResident(result.resident);
       } else {
         console.error("Не удалось сохранить");
       }
     },
-    ...mapMutations(["setTitle"]),
+    ...mapMutations(["setTitle", "setPerson", "setResident"]),
   },
   watch: {
     user() {

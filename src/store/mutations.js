@@ -16,4 +16,12 @@ export default {
   setUser(state, user) {
     state.user = user;
   },
+  setPerson(state, person) {
+    if (state.user == null) return;
+    state.user.person = person;
+  },
+  setResident(state, resident) {
+    if (state.user == null) return;
+    state.user.resident = resident;
+  },
 };
