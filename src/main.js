@@ -16,7 +16,11 @@ const client = new SocketClient({
 client.on("login", data => {
   console.log("emit login");
   store.commit("setUser", data.user);
-  if (router.currentRoute.name == "auth") router.push("/");
+  if (router.currentRoute.name == "auth") {
+    router.push("/");
+  } else if (store.state.user.person == null && router.currentRoute.name != "settings") {
+    router.push("/settings");
+  }
 });
 client.on("logout", () => {
   console.log("emit logout");
@@ -27,6 +31,18 @@ client.on("flats", flat => {
   store.commit("setFlat", flat.data);
 });
 store.commit("setClient", client);
+
+router.beforeEach((to, from, next) => {
+  console.log(`from: ${from.name}`);
+  console.log(`to: ${to.name}`);
+  if (to.name == "auth") {
+    next();
+  } else if (store.state.user != null && store.state.user.person == null && to.name != "settings") {
+    next({ name: "settings" });
+  } else {
+    next();
+  }
+})
 
 new Vue({
   router,
