@@ -30,6 +30,9 @@ client.on("logout", () => {
 client.on("flats", flat => {
   store.commit("setFlat", flat.data);
 });
+client.on("posts", post => {
+  store.commit("setPost", post.data);
+});
 store.commit("setClient", client);
 
 router.beforeEach((to, from, next) => {

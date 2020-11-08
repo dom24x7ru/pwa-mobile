@@ -12,6 +12,7 @@ export default new Vuex.Store({
     pageName: null,
     user: null,
     flats: null,
+    posts: null,
   },
   getters,
   mutations,

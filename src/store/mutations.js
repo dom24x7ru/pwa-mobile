@@ -24,4 +24,12 @@ export default {
     if (state.user == null) return;
     state.user.resident = resident;
   },
+  setPosts(state, posts) {
+    state.posts = posts;
+  },
+  setPost(state, post) {
+    if (state.posts == null) state.posts = [];
+    const posts = state.posts.filter(item => item.id == post.id);
+    if (posts.length == 0) state.posts.push(post);
+  }
 };
