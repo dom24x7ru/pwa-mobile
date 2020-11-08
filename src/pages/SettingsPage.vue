@@ -83,6 +83,9 @@ export default {
         this.toast.color = "success";
         this.toast.show = true;
         console.log(this.toast.text);
+        
+        this.setPerson(result.person);
+        this.setResident(result.resident);
       } else {
         this.toast.text = "Сохранить не удалось. Попробуйте позже";
         this.toast.color = "error";
