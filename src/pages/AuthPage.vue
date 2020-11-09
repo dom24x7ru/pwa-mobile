@@ -10,10 +10,10 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn x-large color="primary" dark @click="sendMobile">Отправить</v-btn>
+            <v-btn x-large color="success" dark @click="showInviteCode = !showInviteCode">{{ inviteBtnCaption }}</v-btn>
           </v-col>
           <v-col>
-            <v-btn x-large color="success" dark @click="showInviteCode = !showInviteCode">Я новый пользователь</v-btn>
+            <v-btn x-large color="primary" dark @click="sendMobile">{{ sendBtnCaption }}</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -62,6 +62,8 @@ export default {
         text: null,
         color: "error",
       },
+      sendBtnCaption: "Войти",
+      inviteBtnCaption: "Я новый пользователь",
     };
   },
   computed: {
@@ -92,6 +94,16 @@ export default {
     toastClose() {
       this.toast.show = false;
     },
+  },
+  watch: {
+    invite() {
+      if (this.invite == null) return;
+      this.invite = this.invite.replace("-", "");
+    },
+    showInviteCode() {
+      this.sendBtnCaption = this.showInviteCode ? "Зарегистрироваться" : "Войти";
+      this.inviteBtnCaption = this.showInviteCode ? "Уже зарегистрирован" : "Новый пользователь";
+    }
   },
   components: {
     Toast,
