@@ -3,7 +3,14 @@
     <v-text-field v-model="surname" label="Фамилия" required />
     <v-text-field v-model="name" label="Имя" required />
     <v-text-field v-model="midname" label="Отчество" required />
-    <v-combobox v-model="flat" label="Выберите свою квартиру" :items="flatsComboboxItems" :error="combobox.errors.length != 0" :error-messages="combobox.errors"></v-combobox>
+    <v-text-field
+      v-model="flat.number"
+      label="Выберите свою квартиру"
+      :hint="flat.hint"
+      :error-messages="flat.errors" 
+      persistent-hint
+      required
+      :disabled="!channels.ready" />
     <br /><br />
     <v-btn x-large color="success" dark @click="save">Сохранить</v-btn>
     <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toastClose" />
@@ -21,9 +28,11 @@ export default {
       surname: null,
       name: null,
       midname: null,
-      flat: null,
-      combobox: {
-        errors: []
+      flat: {
+        id: null,
+        number: null,
+        hint: null,
+        errors: [],
       },
       toast: {
         show: false,
@@ -33,13 +42,7 @@ export default {
     };
   },
   computed: {
-    flatsComboboxItems() {
-      if (this.flats == null) return [];
-      return this.flats.map(flat => {
-        return this.genFlatComboboxItem(flat);
-      });
-    },
-    ...mapState(["client", "user", "flats"]),
+    ...mapState(["client", "user", "flats", "channels"]),
   },
   created() {
     this.setTitle("Настройки");
@@ -53,28 +56,24 @@ export default {
        this.name = this.user.person.name;
        this.midname = this.user.person.midname;
       }
-      if (this.user.resident != null) {
-        this.flat = this.genFlatComboboxItem(this.user.resident.flat);
+      if (this.channels.ready) {
+        if (this.user.resident != null) {
+          const flat = this.user.resident.flat;
+          this.flat = { id: flat.id, number: flat.number, hint: this.getHint(flat) };
+        }
       }
-    },
-    genFlatComboboxItem(flat) {
-      return {
-        text: `кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}`,
-        value: flat.id,
-      };
     },
     async save() {
       console.log("Сохранение профиля");
-      if (this.flat == null) {
-        this.combobox.errors.push("Необходимо выбрать квартиру проживания");
-        console.error(this.combobox.errors);
+      if (this.flat.id == null) {
+        console.error("Необходимо указать номер кватиры");
         return;
       }
       const params = {
         surname: this.surname,
         name: this.name,
         midname: this.midname,
-        flat: this.flat.value,
+        flat: this.flat.id,
       };
       const result = await this.client.wrapEmit("user.saveProfile", params);
       console.log(result);
@@ -93,6 +92,15 @@ export default {
         console.error(this.toast.text);
       }
     },
+    getFlat(number) {
+      for (let flat of this.flats) {
+        if (flat.number == number) return flat;
+      }
+      return null;
+    },
+    getHint(flat) {
+      return `кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}`;
+    },
     toastClose() {
       this.toast.show = false;
     },
@@ -102,9 +110,28 @@ export default {
     user() {
       this.init();
     },
-    flat() {
-      if (this.flat != null) {
-        this.combobox.errors = [];
+    "channels.ready"() {
+      if (this.user.resident != null) {
+        const flat = this.user.resident.flat;
+        this.flat = { id: flat.id, number: flat.number, hint: this.getHint(flat) };
+      }
+    },
+    "flat.number"() {
+      if (this.flat.number == null || this.flat.number.length == 0) {
+        this.flat.id = null;
+        this.flat.hint = null;
+        this.flat.errors = ["Необходимо указать номер квартиры"];
+        return;
+      }
+      const flat = this.getFlat(parseInt(this.flat.number));
+      if (flat != null) {
+        this.flat.id = flat.id;
+        this.flat.hint = this.getHint(flat);
+        this.flat.errors = [];
+      } else {
+        this.flat.id == null;
+        this.flat.hint = null;
+        this.flat.errors = ["Указанный номер квартиры не найден в доме"];
       }
     },
   },

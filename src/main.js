@@ -12,6 +12,7 @@ Vue.config.productionTip = PRODUCTION_MODE
 
 const client = new SocketClient({
   port: 8000,
+  hostname: "185.15.211.83",
 });
 client.on("login", data => {
   console.log("emit login");
@@ -32,6 +33,9 @@ client.on("flats", flat => {
 });
 client.on("posts", post => {
   store.commit("setPost", post.data);
+});
+client.on("channel.ready", data => {
+  if (data.name == "flats") store.commit("setChannelsReady", true);
 });
 store.commit("setClient", client);
 

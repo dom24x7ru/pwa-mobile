@@ -13,6 +13,9 @@ export default new Vuex.Store({
     user: null,
     flats: null,
     posts: null,
+    channels: {
+      ready: false, // признак, что загружены каналы
+    },
   },
   getters,
   mutations,
