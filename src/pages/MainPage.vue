@@ -1,14 +1,14 @@
 <template>
   <v-container fluid>
-    <v-list>
-      <v-list-item v-for="post of posts" :key="post.id">
-        <v-list-item-content>
-          <v-list-item-title>{{ post.title }}</v-list-item-title>
-          <v-list-item-subtitle>{{ post.createdAt | formatDate }}</v-list-item-subtitle>
-          <v-list-item-subtitle>{{ post.body }}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    <v-row dense>
+      <v-col v-for="post of posts" :key="post.id" cols="12">
+        <v-card>
+          <v-card-title v-if="post.title != null">{{ post.title }}</v-card-title>
+          <v-card-subtitle>{{ post.createdAt | formatDate }}</v-card-subtitle>
+          <v-card-text>{{ post.body }}</v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
