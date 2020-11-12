@@ -9,7 +9,7 @@
     </v-list>
     <v-row v-if="instrId != null && instruction != null">
       <v-col cols="12">
-        <v-card>
+        <v-card color="#1F7087" dark>
           <v-card-title>{{ instruction.title }}</v-card-title>
           <v-card-subtitle v-if="instruction.subtitle != null">{{ instruction.subtitle }}</v-card-subtitle>
         </v-card>
@@ -17,9 +17,11 @@
       <v-col v-for="item of instruction.body" :key="item.id" cols="12">
         <v-card>
           <v-card-title>{{ item.title }}</v-card-title>
+          <v-card-text v-if="item.body" v-html="item.body" />
         </v-card>
       </v-col>
     </v-row>
+    <br /><br />
   </v-container>
 </template>
 
