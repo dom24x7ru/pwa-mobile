@@ -57,6 +57,10 @@ export default {
         case "profile":
         case "settings":
         case "invite":
+        case "documents":
+        case "instructions":
+        case "votes":
+        case "contacts":
           return false;
         default:
           return true;

@@ -3,7 +3,12 @@ import Router from "vue-router";
 
 import MainPage from "@/pages/MainPage";
 import ChatPage from "@/pages/ChatPage";
-import ServicesPage from "@/pages/ServicesPage";
+
+import ServicesPage from "@/pages/services/ServicesPage";
+import DocumentsPage from "@/pages/services/DocumentsPage";
+import InstructionsPage from "@/pages/services/InstructionsPage";
+import ContactsPage from "@/pages/services/ContactsPage";
+import VotesPage from "@/pages/services/VotesPage";
 
 import SectionsPage from "@/pages/home/SectionsPage";
 import SectionPage from "@/pages/home/SectionPage";
@@ -21,7 +26,12 @@ export default new Router({
   routes: [
     { path: "/", name: "main", component: MainPage },
     { path: "/im", name: "im", component: ChatPage },
+
     { path: "/services", name: "services", component: ServicesPage },
+    { path: "/documents", name: "documents", component: DocumentsPage },
+    { path: "/instructions", name: "instructions", component: InstructionsPage },
+    { path: "/contacts", name: "contacts", component: ContactsPage },
+    { path: "/votes", name: "votes", component: VotesPage },
 
     { path: "/sections", name: "sections", component: SectionsPage },
     { path: "/section/:sectionId/floors", name: "section", component: SectionPage },
