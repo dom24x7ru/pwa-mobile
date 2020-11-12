@@ -25,4 +25,15 @@ export default {
     if (state.flats == null) return {};
     return state.flats.filter(flat => flat.section == section && flat.floor == floor);
   },
+  getFlatsStat: state => () => {
+    let stat = { flats: 0, busy: 0, persons: 0 };
+    if (state.flats == null) return stat;
+    
+    const busyFlats = state.flats.filter(flat => flat.residents.length != 0);
+    stat.flats = state.flats.length;
+    stat.busy = busyFlats.length;
+    stat.persons = busyFlats.reduce((sum, flat) => sum + flat.residents.length, 0);
+
+    return stat;
+  },
 };

@@ -1,5 +1,13 @@
 <template>
   <v-container fluid>
+    <v-card color="#1F7087" dark>
+      <v-card-title>Статистика</v-card-title>
+      <v-card-subtitle>
+        Квартир: {{ stat.flats }}<br />
+        Заселено: {{ stat.busy }} ({{ (stat.busy / stat.flats * 100).toFixed(2) }}% от общего числа квартир)<br />
+        Жильцов: {{ stat.persons }}
+      </v-card-subtitle>
+    </v-card>
     <v-row dense>
       <v-col v-for="item in getSections()" :key="item.section" cols="12">
         <v-card>
@@ -36,6 +44,7 @@ export default {
   name: "SectionsPage",
   data() {
     return {
+      stat: null,
       toast: {
         show: false,
         text: "Метод в разработке",
@@ -43,10 +52,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getSections"]),
+    ...mapGetters(["getSections", "getFlatsStat"]),
   },
   created() {
     this.setTitle("Подъезды");
+    this.stat = this.getFlatsStat();
   },
   methods: {
     chat() {
