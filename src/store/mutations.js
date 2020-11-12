@@ -32,7 +32,12 @@ export default {
     const posts = state.posts.filter(item => item.id == post.id);
     if (posts.length == 0) state.posts.push(post);
   },
-  setChannelsReady(state, status) {
-    state.channels.ready = status;
+  setInstruction(state, instruction) {
+    if (state.instructions == null) state.instructions = [];
+    const instructions = state.instructions.filter(item => item.id == instruction.id);
+    if (instructions.length == 0) state.instructions.push(instruction);
+  },
+  setChannelsReady(state, { channel, status }) {
+    state.ready[channel] = status;
   }
 };

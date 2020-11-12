@@ -34,8 +34,11 @@ client.on("flats", flat => {
 client.on("posts", post => {
   store.commit("setPost", post.data);
 });
+client.on("instructions", instruction => {
+  store.commit("setInstruction", instruction.data);
+});
 client.on("channel.ready", data => {
-  if (data.name == "flats") store.commit("setChannelsReady", true);
+  store.commit("setChannelsReady", { channel: data.name, status: true });
 });
 store.commit("setClient", client);
 

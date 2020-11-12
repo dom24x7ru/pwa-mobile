@@ -30,6 +30,7 @@ export default new Router({
     { path: "/services", name: "services", component: ServicesPage },
     { path: "/documents", name: "documents", component: DocumentsPage },
     { path: "/instructions", name: "instructions", component: InstructionsPage },
+    { path: "/instruction/:instrId", name: "instruction", component: InstructionsPage },
     { path: "/contacts", name: "contacts", component: ContactsPage },
     { path: "/votes", name: "votes", component: VotesPage },
 

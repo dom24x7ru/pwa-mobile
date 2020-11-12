@@ -4,7 +4,7 @@
       <v-col cols="6">
         <v-card color="#1F7087" dark to="/instructions">
           <v-card-title>Инструкции</v-card-title>
-          <v-card-subtitle>Доступно: 0</v-card-subtitle>
+          <v-card-subtitle>Доступно: {{ getInstructionsCount() }}</v-card-subtitle>
         </v-card>
       </v-col>
       <v-col cols="6">
@@ -30,10 +30,13 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "ServicesPage",
+  computed: {
+    ...mapGetters(["getInstructionsCount"]),
+  },
   created() {
     this.setTitle("Сервисы");
   },

@@ -10,7 +10,7 @@
       :error-messages="flat.errors" 
       persistent-hint
       required
-      :disabled="!channels.ready" />
+      :disabled="!ready.flats" />
     <br /><br />
     <v-btn x-large color="success" dark @click="save">Сохранить</v-btn>
     <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toastClose" />
@@ -42,7 +42,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["client", "user", "flats", "channels"]),
+    ...mapState(["client", "user", "flats", "ready"]),
   },
   created() {
     this.setTitle("Настройки");
@@ -56,7 +56,7 @@ export default {
        this.name = this.user.person.name;
        this.midname = this.user.person.midname;
       }
-      if (this.channels.ready) {
+      if (this.ready.flats) {
         if (this.user.resident != null) {
           const flat = this.user.resident.flat;
           this.flat = { id: flat.id, number: flat.number, hint: this.getHint(flat) };
@@ -110,7 +110,7 @@ export default {
     user() {
       this.init();
     },
-    "channels.ready"() {
+    "ready.flats"() {
       if (this.user.resident != null) {
         const flat = this.user.resident.flat;
         this.flat = { id: flat.id, number: flat.number, hint: this.getHint(flat) };

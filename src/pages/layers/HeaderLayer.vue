@@ -59,6 +59,7 @@ export default {
         case "invite":
         case "documents":
         case "instructions":
+        case "instruction":
         case "votes":
         case "contacts":
           return false;

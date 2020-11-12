@@ -36,4 +36,8 @@ export default {
 
     return stat;
   },
+  getInstructionsCount: state => () => {
+    if (state.instructions == null) return 0;
+    return state.instructions.length;
+  },
 };
