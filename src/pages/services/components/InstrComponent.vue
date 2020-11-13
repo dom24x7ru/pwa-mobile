@@ -1,20 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>{{ item.title }}</v-card-title>
-    <v-list>
-      <v-list-item-group>
-        <v-list-item>
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Выполнено</v-list-item-title>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
+    <v-card-subtitle><v-checkbox :label="item.title" /></v-card-subtitle>
     <v-card-actions v-if="item.body">
       <v-btn text color="teal accent-4" @click="reveal = true">Подробности</v-btn>
       <v-spacer></v-spacer>
