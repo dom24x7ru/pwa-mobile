@@ -15,10 +15,7 @@
         </v-card>
       </v-col>
       <v-col v-for="item of instruction.body" :key="item.id" cols="12">
-        <v-card>
-          <v-card-title>{{ item.title }}</v-card-title>
-          <v-card-text v-if="item.body" v-html="item.body" />
-        </v-card>
+        <Instr :item="item" />
       </v-col>
     </v-row>
     <br /><br />
@@ -27,6 +24,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import Instr from "./components/InstrComponent";
 
 export default {
   name: "InstructionsPage",
@@ -60,6 +58,9 @@ export default {
     "ready.instructions"() {
       this.init();
     },
+  },
+  components: {
+    Instr,
   },
 };
 </script>

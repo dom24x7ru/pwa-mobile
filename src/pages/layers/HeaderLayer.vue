@@ -64,7 +64,7 @@ export default {
         case "contacts":
           return false;
         default:
-          return true;
+          return false;
       }
     },
     ...mapState(["appName", "pageName"]),

@@ -8,12 +8,12 @@
             <span v-if="flat.rooms != null">Комнат: {{ flat.rooms }}<br /></span>
             <span v-if="flat.square != null">Размер: {{ flat.square }} кв.м.</span>
           </v-card-subtitle>
-          <v-card-actions>
+          <!-- <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn v-if="!emptyFlat(flat)" icon @click="chat">
               <v-icon>mdi-chat-outline</v-icon>
             </v-btn>
-          </v-card-actions>
+          </v-card-actions> -->
         </v-card>
       </v-col>
     </v-row>
