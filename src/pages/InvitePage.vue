@@ -5,13 +5,22 @@
         <v-btn color="success" @click="invite">Сгенерировать код приглашения</v-btn>
       </v-col>
     </v-row>
-    <v-row justify="center">
+    <v-row v-if="code" justify="center">
       <v-col cols="10">
         <div class="pa-4 text-center text-h3">
           {{ code | codeFormat }}
         </div>
       </v-col>
     </v-row>
+    <v-list dense>
+      <v-subheader>ИСТОРИЯ</v-subheader>
+      <v-list-item v-for="item of list" :key="item.id">
+        <v-list-item-content>
+          <v-list-item-title>{{ item.code }}</v-list-item-title>
+          <v-list-item-subtitle>{{ item.status }}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </v-container>
 </template>
 
@@ -23,6 +32,10 @@ export default {
   data() {
     return {
       code: null,
+      list: [
+        { id: 1, code: "123-456", status: "кв. 432, этаж 10, подъезд 4" },
+        { id: 2, code: "789-012", status: "еще не воспользовались" },
+      ],
     };
   },
   computed: {
