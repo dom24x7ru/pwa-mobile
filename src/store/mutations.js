@@ -37,6 +37,16 @@ export default {
     const instructions = state.instructions.filter(item => item.id == instruction.id);
     if (instructions.length == 0) state.instructions.push(instruction);
   },
+  setInvite(state, invite) {
+    if (state.invites == null) state.invites = [];
+    const invites = state.invites.filter(item => item.id == invite.id);
+    if (invites.length == 0) state.invites.push(invite);
+  },
+  setInviteTop(state, invite) {
+    if (state.invites == null) state.invites = [];
+    const invites = state.invites.filter(item => item.id == invite.id);
+    if (invites.length == 0) state.invites.unshift(invite);
+  },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;
   }

@@ -14,10 +14,12 @@ export default new Vuex.Store({
     flats: null,
     posts: null,
     instructions: null,
+    invites: null,
     ready: {
       flats: false,
       posts: false,
       instructions: false,
+      invites: false,
     },
   },
   getters,

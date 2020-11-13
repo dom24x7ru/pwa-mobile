@@ -37,6 +37,9 @@ client.on("posts", post => {
 client.on("instructions", instruction => {
   store.commit("setInstruction", instruction.data);
 });
+client.on("invites", invite => {
+  store.commit("setInvite", invite.data);
+});
 client.on("channel.ready", data => {
   store.commit("setChannelsReady", { channel: data.name, status: true });
 });
