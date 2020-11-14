@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-list v-if="instrId == null">
+    <v-list v-if="instrId == null" dense>
       <v-list-item v-for="instr of instructions" :key="instr.id" :to="{ name: 'instruction', params: { instrId: instr.id } }">
         <v-list-item-content>
           <v-list-item-title>{{ instr.title }}</v-list-item-title>

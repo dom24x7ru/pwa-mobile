@@ -40,6 +40,9 @@ client.on("instructions", instruction => {
 client.on("invites", invite => {
   store.commit("setInvite", invite.data);
 });
+client.on("documents", document => {
+  store.commit("setDocument", document.data);
+});
 client.on("channel.ready", data => {
   store.commit("setChannelsReady", { channel: data.name, status: true });
 });

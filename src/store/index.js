@@ -15,11 +15,13 @@ export default new Vuex.Store({
     posts: null,
     instructions: null,
     invites: null,
+    documents: null,
     ready: {
       flats: false,
       posts: false,
       instructions: false,
       invites: false,
+      documents: false,
     },
   },
   getters,

@@ -40,4 +40,8 @@ export default {
     if (state.instructions == null) return 0;
     return state.instructions.length;
   },
+  getDocumentsCount: state => () => {
+    if (state.documents == null) return 0;
+    return state.documents.length;
+  },
 };

@@ -47,6 +47,11 @@ export default {
     const invites = state.invites.filter(item => item.id == invite.id);
     if (invites.length == 0) state.invites.unshift(invite);
   },
+  setDocument(state, document) {
+    if (state.documents == null) state.documents = [];
+    const documents = state.documents.filter(item => item.id == document.id);
+    if (documents.length == 0) state.documents.push(document);
+  },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;
   }
