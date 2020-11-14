@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <span>На текущий момент ни одного голосования не было проведено</span>
   </v-container>
 </template>
 

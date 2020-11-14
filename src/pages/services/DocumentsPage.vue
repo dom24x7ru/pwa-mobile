@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <span>Список документов пуст</span>
   </v-container>
 </template>
 

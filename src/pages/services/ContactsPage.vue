@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <span>Полезные контакты не найдены</span>
   </v-container>
 </template>
 
