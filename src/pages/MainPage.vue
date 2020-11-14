@@ -3,8 +3,11 @@
     <v-row dense>
       <v-col v-for="post of posts" :key="post.id" cols="12">
         <v-card elevation="0">
-          <v-card-title v-if="post.title != null">{{ post.title }}</v-card-title>
-          <v-card-subtitle>{{ post.createdAt | formatDate }}</v-card-subtitle>
+          <v-card-subtitle>
+            <v-icon left :color="postTypeIcon(post).color">{{ postTypeIcon(post).icon }}</v-icon>
+            <span class="font-weight-medium text-uppercase">{{ post.title }}</span><br />
+            <span class="text--disabled">{{ post.createdAt | formatDate }}</span>
+          </v-card-subtitle>
           <v-card-text>{{ post.body }}</v-card-text>
         </v-card>
       </v-col>
@@ -23,9 +26,15 @@ export default {
     ...mapState(["posts"]),
   },
   created() {
-    this.setTitle("Главная");
+    this.setTitle("Новости");
   },
   methods: {
+    postTypeIcon(post) {
+      if (post.type == "person") return { icon: "mdi-account", color: "green darken-2" };
+      if (post.type == "instruction") return { icon: "mdi-clipboard-check", color: "blue darken-2" };
+      if (post.type == "document") return { icon: "mdi-file", color: "purple darken-2" };
+      return { icon: "mdi-twitter", color: "orange darken-2" };
+    },
     ...mapMutations(["setTitle"]),
   },
   filters: {
