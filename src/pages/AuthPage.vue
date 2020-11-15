@@ -9,12 +9,15 @@
             <v-text-field v-if="isReg" v-model="invite" :counter="6" label="Введите код приглашения" required />
           </v-col>
         </v-row>
-        <v-row>
-          <v-col>
-            <v-btn x-large color="success" dark @click="isReg = !isReg">{{ inviteBtnCaption }}</v-btn>
-          </v-col>
-          <v-col>
+        <v-row class="text-center">
+          <v-col cols="12">
             <v-btn x-large color="primary" dark @click="sendMobile">{{ sendBtnCaption }}</v-btn>
+          </v-col>
+          <v-col cols="12" class="text--disabled">
+            &mdash; или &mdash;
+          </v-col>
+          <v-col cols="12">
+            <a @click="isReg = !isReg">{{ inviteBtnCaption }}</a>
           </v-col>
         </v-row>
       </v-container>
@@ -65,7 +68,7 @@ export default {
         color: "error",
       },
       sendBtnCaption: "Войти",
-      inviteBtnCaption: "Я новый пользователь",
+      inviteBtnCaption: "Зарегистрироваться",
     };
   },
   computed: {
@@ -122,7 +125,7 @@ export default {
     },
     isReg() {
       this.sendBtnCaption = this.isReg ? "Зарегистрироваться" : "Войти";
-      this.inviteBtnCaption = this.isReg ? "Уже зарегистрирован" : "Новый пользователь";
+      this.inviteBtnCaption = this.isReg ? "Авторизоваться" : "Зарегистрироваться";
     }
   },
   components: {
