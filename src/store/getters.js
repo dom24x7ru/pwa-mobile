@@ -26,13 +26,27 @@ export default {
     return state.flats.filter(flat => flat.section == section && flat.floor == floor);
   },
   getFlatsStat: state => () => {
-    let stat = { flats: 0, busy: 0, persons: 0 };
+    let stat = { flats: 0, busy: 0, persons: 0, sections: {} };
     if (state.flats == null) return stat;
     
-    const busyFlats = state.flats.filter(flat => flat.residents.length != 0);
-    stat.flats = state.flats.length;
-    stat.busy = busyFlats.length;
-    stat.persons = busyFlats.reduce((sum, flat) => sum + flat.residents.length, 0);
+    for (let flat of state.flats) {
+      // общая статистика
+      stat.flats++;
+      if (flat.residents.length != 0) stat.busy++;
+      stat.persons += flat.residents.length;
+      
+      // статистика по секциям
+      if (stat.sections[flat.section] == null) stat.sections[flat.section] = { flats: 0, busy: 0, persons: 0, floors: {} };
+      stat.sections[flat.section].flats++;
+      if (flat.residents.length != 0) stat.sections[flat.section].busy++;
+      stat.sections[flat.section].persons += flat.residents.length;
+
+      // статистика по этажам
+      if (stat.sections[flat.section].floors[flat.floor] == null) stat.sections[flat.section].floors[flat.floor] = { flats: 0, busy: 0, persons: 0 };
+      stat.sections[flat.section].floors[flat.floor].flats++;
+      if (flat.residents.length != 0) stat.sections[flat.section].floors[flat.floor].busy++;
+      stat.sections[flat.section].floors[flat.floor].persons += flat.residents.length;
+    }
 
     return stat;
   },

@@ -4,7 +4,7 @@
       <v-card-title>Статистика</v-card-title>
       <v-card-subtitle v-if="stat != null">
         Квартир: {{ stat.flats }}<br />
-        Заселено: {{ stat.busy }} ({{ (stat.busy / stat.flats * 100).toFixed(2) }}% от общего числа квартир)<br />
+        Заселено: {{ stat.busy }} ({{ (stat.busy / stat.flats * 100).toFixed(2) }}%)<br />
         Жильцов: {{ stat.persons }}
       </v-card-subtitle>
     </v-card>
@@ -14,7 +14,9 @@
           <v-card-title>Подъезд {{ item.section }}</v-card-title>
           <v-card-subtitle>
             Этажей: {{ item.floors }}<br />
-            Квартиры: {{ item.min }} - {{ item.max }}
+            Квартиры: {{ item.min }} - {{ item.max }}<br />
+            Заселено: <span v-if="stat != null">{{ stat.sections[item.section].busy }} ({{ (stat.sections[item.section].busy / stat.sections[item.section].flats * 100).toFixed(2) }}%)</span><br />
+            Жильцов: <span v-if="stat != null">{{ stat.sections[item.section].persons }}</span>
           </v-card-subtitle>
           <!-- <v-card-actions>
             <v-spacer></v-spacer>

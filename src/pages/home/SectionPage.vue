@@ -1,11 +1,21 @@
 <template>
   <v-container fluid>
+    <v-card color="#1F7087" dark>
+      <v-card-title>Статистика</v-card-title>
+      <v-card-subtitle v-if="stat != null">
+        Квартир: {{ stat.flats }}<br />
+        Заселено: {{ stat.busy }} ({{ (stat.busy / stat.flats * 100).toFixed(2) }}%)<br />
+        Жильцов: {{ stat.persons }}
+      </v-card-subtitle>
+    </v-card>
     <v-row dense>
       <v-col v-for="item in getFloors(sectionId)" :key="item.floor" cols="12">
         <v-card :to="{ name: 'floor', params: { sectionId, floorId: item.floor } }">
           <v-card-title>Этаж {{ item.floor }}</v-card-title>
           <v-card-subtitle>
-            Квартиры: {{ item.min }} - {{ item.max }}
+            Квартиры: {{ item.min }} - {{ item.max }}<br />
+            Заселено: <span v-if="stat != null">{{ stat.floors[item.floor].busy }} ({{ (stat.floors[item.floor].busy / stat.floors[item.floor].flats * 100).toFixed(2) }}%)</span><br />
+            Жильцов: <span v-if="stat != null">{{ stat.floors[item.floor].persons }}</span>
           </v-card-subtitle>
           <!-- <v-card-actions>
             <v-spacer></v-spacer>
@@ -25,13 +35,14 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 import Toast from "@/components/ToastComponent";
 
 export default {
   name: "SectionsPage",
   data() {
     return {
+      stat: null,
       toast: {
         show: false,
         text: "Метод в разработке",
@@ -42,10 +53,12 @@ export default {
     sectionId() {
       return this.$route.params.sectionId;
     },
-    ...mapGetters(["getFloors"]),
+    ...mapState(["ready"]),
+    ...mapGetters(["getFloors", "getFlatsStat"]),
   },
   created() {
     this.setTitle(`Подъезд ${this.sectionId}`);
+    if (this.ready.flats) this.stat = this.getFlatsStat().sections[this.sectionId];
   },
   methods: {
     chat() {
@@ -60,6 +73,11 @@ export default {
       this.toast.show = false;
     },
     ...mapMutations(["setTitle"]),
+  },
+  watch: {
+    "ready.flats"() {
+      this.stat = this.getFlatsStat().sections[this.sectionId];
+    },
   },
   components: {
     Toast,

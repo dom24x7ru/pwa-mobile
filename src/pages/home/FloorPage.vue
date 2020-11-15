@@ -1,10 +1,19 @@
 <template>
   <v-container fluid>
+    <v-card color="#1F7087" dark>
+      <v-card-title>Статистика</v-card-title>
+      <v-card-subtitle v-if="stat != null">
+        Квартир: {{ stat.flats }}<br />
+        Заселено: {{ stat.busy }} ({{ (stat.busy / stat.flats * 100).toFixed(2) }}%)<br />
+        Жильцов: {{ stat.persons }}
+      </v-card-subtitle>
+    </v-card>
     <v-row dense>
       <v-col v-for="flat in getFlats({ section: sectionId, floor: floorId })" :key="flat.number" cols="12">
         <v-card>
           <v-card-title class="blue-grey--text" :class="emptyFlatStyle(flat)">Квартира №{{ flat.number }}</v-card-title>
           <v-card-subtitle class="blue-grey--text" :class="emptyFlatStyle(flat)">
+            Жильцов: {{ flat.residents.length }}<br />
             <span v-if="flat.rooms != null">Комнат: {{ flat.rooms }}<br /></span>
             <span v-if="flat.square != null">Размер: {{ flat.square }} кв.м.</span>
           </v-card-subtitle>
@@ -23,13 +32,14 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 import Toast from "@/components/ToastComponent";
 
 export default {
   name: "FloorPage",
   data() {
     return {
+      stat: null,
       toast: {
         show: false,
         text: "Метод в разработке",
@@ -43,10 +53,12 @@ export default {
     floorId() {
       return this.$route.params.floorId;
     },
-    ...mapGetters(["getFlats"]),
+    ...mapState(["ready"]),
+    ...mapGetters(["getFlats", "getFlatsStat"]),
   },
   created() {
     this.setTitle(`Подъезд ${this.sectionId} этаж ${this.floorId}`);
+    if (this.ready.flats) this.stat = this.getFlatsStat().sections[this.sectionId].floors[this.floorId];
   },
   methods: {
     chat() {
@@ -68,6 +80,11 @@ export default {
       else return { "text--darken-4": true };
     },
     ...mapMutations(["setTitle"]),
+  },
+  watch: {
+    "ready.flats"() {
+      this.stat = this.getFlatsStat().sections[this.sectionId].floors[this.floorId];
+    },
   },
   components: {
     Toast,
