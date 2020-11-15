@@ -5,12 +5,13 @@
         <v-row>
           <v-col>
             <v-text-field v-model="mobile" prefix="+7" :rules="phoneRules" :counter="10" label="Ваш номер телефона" required />
-            <v-text-field v-if="showInviteCode" v-model="invite" :counter="6" label="Введите код приглашения" required />
+            <v-text-field v-if="isReg" v-model="mobile2" prefix="+7" :rules="[checkPhone]" :counter="10" label="Повторно ваш номер телефона" required />
+            <v-text-field v-if="isReg" v-model="invite" :counter="6" label="Введите код приглашения" required />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <v-btn x-large color="success" dark @click="showInviteCode = !showInviteCode">{{ inviteBtnCaption }}</v-btn>
+            <v-btn x-large color="success" dark @click="isReg = !isReg">{{ inviteBtnCaption }}</v-btn>
           </v-col>
           <v-col>
             <v-btn x-large color="primary" dark @click="sendMobile">{{ sendBtnCaption }}</v-btn>
@@ -43,6 +44,7 @@ export default {
   data() {
     return {
       mobile: null,
+      mobile2: null,
       invite: null,
       phoneRules: [
         (v) => !!v || "Необходимо указать номер телефона",
@@ -50,7 +52,7 @@ export default {
           /^\d{10}$/.test(v) ||
           "Номер телефона должен быть валидным и состоять из 10 цифр",
       ],
-      showInviteCode: false,
+      isReg: false,
       showSmsCodeForm: false,
       smsCode: null,
       smsCodeRules: [
@@ -70,7 +72,25 @@ export default {
     ...mapState(["client"]),
   },
   methods: {
+    checkPhone(value) {
+      if (this.mobile == value) return true;
+      return "Номера телефонов должны совпадать";
+    },
     async sendMobile() {
+      if (!/^\d{10}$/.test(this.mobile)) {
+        console.warn("mobile not valid");
+        return;
+      }
+      if (this.isReg) {
+        if (this.mobile != this.mobile2) {
+          console.warn("mobile != mobile2");
+          return;
+        }
+        if (!/^\d{6}$/.test(this.invite)) {
+          console.warn("invite code not valid");
+          return;
+        }
+      }
       console.log("send mobile: ", this.mobile);
       const result = await this.client.wrapEmit("user.auth", {
         mobile: `7${this.mobile}`,
@@ -100,9 +120,9 @@ export default {
       if (this.invite == null) return;
       this.invite = this.invite.replace("-", "");
     },
-    showInviteCode() {
-      this.sendBtnCaption = this.showInviteCode ? "Зарегистрироваться" : "Войти";
-      this.inviteBtnCaption = this.showInviteCode ? "Уже зарегистрирован" : "Новый пользователь";
+    isReg() {
+      this.sendBtnCaption = this.isReg ? "Зарегистрироваться" : "Войти";
+      this.inviteBtnCaption = this.isReg ? "Уже зарегистрирован" : "Новый пользователь";
     }
   },
   components: {
