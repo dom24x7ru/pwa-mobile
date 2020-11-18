@@ -7,6 +7,7 @@ export default {
   },
   setFlats(state, flats) {
     state.flats = flats;
+    state.ready.flats = true;
   },
   setFlat(state, flat) {
     if (state.flats == null) state.flats = [];
@@ -26,23 +27,23 @@ export default {
   },
   setPosts(state, posts) {
     state.posts = posts;
+    state.ready.posts = true;
   },
   setPost(state, post) {
     if (state.posts == null) state.posts = [];
     const posts = state.posts.filter(item => item.id == post.id);
-    if (posts.length == 0) state.posts.push(post);
+    if (posts.length == 0) state.posts.unshift(post);
   },
   setInstruction(state, instruction) {
     if (state.instructions == null) state.instructions = [];
     const instructions = state.instructions.filter(item => item.id == instruction.id);
     if (instructions.length == 0) state.instructions.push(instruction);
   },
-  setInvite(state, invite) {
-    if (state.invites == null) state.invites = [];
-    const invites = state.invites.filter(item => item.id == invite.id);
-    if (invites.length == 0) state.invites.push(invite);
+  setInvites(state, invites) {
+    state.invites = invites;
+    state.ready.invites = true;
   },
-  setInviteTop(state, invite) {
+  setInvite(state, invite) {
     if (state.invites == null) state.invites = [];
     const invites = state.invites.filter(item => item.id == invite.id);
     if (invites.length == 0) state.invites.unshift(invite);

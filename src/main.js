@@ -12,7 +12,7 @@ Vue.config.productionTip = PRODUCTION_MODE
 
 const client = new SocketClient({
   port: 8000,
-  hostname: "185.15.211.83",
+  // hostname: "185.15.211.83",
 });
 client.on("login", data => {
   console.log("emit login");
@@ -28,17 +28,32 @@ client.on("logout", () => {
   store.commit("setUser", null);
   if (router.currentRoute.name != "auth") router.push("/signin");
 });
+client.on("all", allData => {
+  const data = allData.data;
+  if (data.posts.length != 0) {
+    store.commit("setPosts", allData.data.posts);
+    client.initChannel("posts");
+  }
+  if (data.flats.length != 0) {
+    store.commit("setFlats", allData.data.flats);
+    client.initChannel("flats");
+  }
+  if (data.invites.length != 0) {
+    store.commit("setInvites", allData.data.invites);
+    client.initChannel("invites");
+  }
+});
 client.on("flats", flat => {
   store.commit("setFlat", flat.data);
 });
 client.on("posts", post => {
   store.commit("setPost", post.data);
 });
-client.on("instructions", instruction => {
-  store.commit("setInstruction", instruction.data);
-});
 client.on("invites", invite => {
   store.commit("setInvite", invite.data);
+});
+client.on("instructions", instruction => {
+  store.commit("setInstruction", instruction.data);
 });
 client.on("documents", document => {
   store.commit("setDocument", document.data);

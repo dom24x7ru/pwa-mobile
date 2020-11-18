@@ -13,7 +13,7 @@
       </v-col>
     </v-row>
     <v-list dense>
-      <v-subheader>ИСТОРИЯ</v-subheader>
+      <v-subheader>ПОСЛЕДНИЕ 10 ПРИГЛАШЕНИЙ</v-subheader>
       <v-list-item v-for="item of invites" :key="item.id">
         <v-list-item-content>
           <v-list-item-title>{{ item.code | codeFormat }}</v-list-item-title>
@@ -50,9 +50,9 @@ export default {
       const result = await this.client.wrapEmit("user.invite");
       console.log(result);
       this.code = result.code;
-      this.setInviteTop({ id: result.id, createdAt: new Date().getTime(), code: result.code, used: false });
+      this.setInvite({ id: result.id, createdAt: new Date().getTime(), code: result.code, used: false });
     },
-    ...mapMutations(["setTitle", "setInviteTop"]),
+    ...mapMutations(["setTitle", "setInvite"]),
   },
   filters: {
     codeFormat(code) {
