@@ -44,8 +44,6 @@ client.on("login", data => {
   store.commit("setUser", data.user);
   if (router.currentRoute.name == "auth") {
     router.push("/");
-  } else if (store.state.user.person == null && router.currentRoute.name != "settings") {
-    router.push("/settings");
   }
 });
 client.on("logout", () => {
@@ -55,6 +53,9 @@ client.on("logout", () => {
 });
 client.on("user", user => {
   store.commit("setUser", user.data);
+  if (store.state.user.person == null && router.currentRoute.name != "settings") {
+    router.push("/settings");
+  }
 });
 client.on("all", allData => {
   const data = allData.data;
