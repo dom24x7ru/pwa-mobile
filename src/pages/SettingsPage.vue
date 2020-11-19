@@ -11,8 +11,20 @@
       persistent-hint
       required
       :disabled="!ready.flats" />
+    <v-text-field prefix="@" v-model="telegram" label="Аккаунт в телеграм" />
+    <span class="text-subtitle-1">Настройки безопасности</span><br />
+    <span class="text-subtitle-2">Отображение имени</span>
+    <v-radio-group v-model="access.name">
+      <v-radio label="Не показывать имя" value="nothing" />
+      <v-radio label="Показывать только имя" value="name" />
+      <v-radio label="Показывать полностью" value="all" />
+    </v-radio-group>
+    <span class="text-subtitle-2">Отображение контактов</span>
+    <v-checkbox v-model="access.mobile" label="Показывать телефон" hide-details />
+    <v-checkbox v-model="access.telegram" label="Показывать аккаунт телеграм (если указан)" hide-details />
     <br /><br />
     <v-btn x-large color="success" dark @click="save">Сохранить</v-btn>
+    <br /><br /><br /><br />
     <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toastClose" />
   </v-container>
 </template>
@@ -28,6 +40,12 @@ export default {
       surname: null,
       name: null,
       midname: null,
+      telegram: null,
+      access: {
+        name: "nothing",
+        mobile: false,
+        telegram: false,
+      },
       flat: {
         id: null,
         number: null,
@@ -55,6 +73,15 @@ export default {
        this.surname = this.user.person.surname;
        this.name = this.user.person.name;
        this.midname = this.user.person.midname;
+       this.telegram = this.user.person.telegram;
+       
+       const access = this.user.person.access;
+       this.access = {
+         name: access.name.level == "nothing" ? "nothing" : access.name.format,
+         mobile: access.mobile.level == "all",
+         telegram: access.telegram.level == "all",
+       };
+
       }
       if (this.ready.flats) {
         if (this.user.resident != null) {
@@ -73,7 +100,16 @@ export default {
         surname: this.surname,
         name: this.name,
         midname: this.midname,
+        telegram: this.telegram,
         flat: this.flat.id,
+        access: {
+          name: {
+            level: this.access.name == "nothing" ? "nothing" : "all",
+            format: this.access.name == "all" ? "all" : "name",
+          },
+          mobile: { level: this.access.mobile ? "all" : "friends" },
+          telegram: { level: this.access.telegram ? "all" : "friends" },
+        },
       };
       const result = await this.client.wrapEmit("user.saveProfile", params);
       console.log(result);

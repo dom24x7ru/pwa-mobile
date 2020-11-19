@@ -58,8 +58,8 @@ export default class SocketClient extends EventEmitter {
     this.ready = false;
     this.emit("loading");
     if (this.socket.authToken) {
-      let { id, mobile, banned, role, person, resident } = this.socket.authToken;
-      let user = this.user = { id, mobile, banned, role, person, resident };
+      let { id, mobile, banned, role } = this.socket.authToken;
+      let user = this.user = { id, mobile, banned, role, person: null, resident: null };
       for (let name of this.userChannels()) this.initChannel(name);
       this.emit("login", { user });
     } else {
@@ -84,7 +84,7 @@ export default class SocketClient extends EventEmitter {
   initChannel(name) {
     this.channelReady[name] = false;
     this.emit("channel.loading", { name });
-    console.log("MODEL", name);
+    // console.log("MODEL", name);
     let channel = this.channels[name] = this.socket.subscribe(name);
     channel.watch(this.handleChannel.bind(this, channel));
   }
@@ -138,7 +138,7 @@ export default class SocketClient extends EventEmitter {
 
   userChannels() {
     if (!this.user) return [];
-    let channels = ["all.posts", "all.flats", "all.invites", "instructions", "documents"];
+    let channels = ["all.posts", "all.flats", "all.invites", `user.${this.user.id}`, `instructions.${this.user.id}`, "documents"];
     return channels;
   }
 

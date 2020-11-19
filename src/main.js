@@ -53,6 +53,9 @@ client.on("logout", () => {
   store.commit("setUser", null);
   if (router.currentRoute.name != "auth") router.push("/signin");
 });
+client.on("user", user => {
+  store.commit("setUser", user.data);
+});
 client.on("all", allData => {
   const data = allData.data;
   if (data.posts.length != 0) {
