@@ -53,7 +53,7 @@ client.on("logout", () => {
 });
 client.on("user", user => {
   store.commit("setUser", user.data);
-  if (store.state.user.person == null && router.currentRoute.name != "settings") {
+  if ((store.state.user.person == null || store.state.user.resident == null) && router.currentRoute.name != "settings") {
     router.push("/settings");
   }
 });

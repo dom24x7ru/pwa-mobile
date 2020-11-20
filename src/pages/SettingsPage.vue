@@ -165,7 +165,7 @@ export default {
         this.flat.hint = this.getHint(flat);
         this.flat.errors = [];
       } else {
-        this.flat.id == null;
+        this.flat.id = null;
         this.flat.hint = null;
         this.flat.errors = ["Указанный номер квартиры не найден в доме"];
       }
