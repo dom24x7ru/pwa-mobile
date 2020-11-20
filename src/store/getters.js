@@ -25,6 +25,13 @@ export default {
     if (state.flats == null) return {};
     return state.flats.filter(flat => flat.section == section && flat.floor == floor);
   },
+  getFlat: state => (flatNumber) => {
+    if (state.flats == null) return null;
+    for (let flat of state.flats) {
+      if (flat.number == flatNumber) return flat;
+    }
+    return null;
+  },
   getFlatsStat: state => () => {
     let stat = { flats: 0, busy: 0, persons: 0, sections: {} };
     if (state.flats == null) return stat;

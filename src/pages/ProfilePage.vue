@@ -7,7 +7,11 @@
         </v-avatar>
       </div>
       <v-card-title>{{ fio }}</v-card-title>
-      <v-card-subtitle>{{ address }}</v-card-subtitle>
+      <v-card-subtitle>
+        <v-icon small>mdi-map-marker</v-icon> {{ address }}<br />
+        <v-icon small>mdi-cellphone-android</v-icon> {{ mobile | formatMobile }}<br />
+        <v-icon small>mdi-telegram</v-icon> {{ telegram }}
+      </v-card-subtitle>
     </v-card>
   </v-container>
 </template>
@@ -41,6 +45,14 @@ export default {
       const flat = this.user.resident.flat;
       return `подъезд ${flat.section}, этаж ${flat.floor}, кв. ${flat.number}`;
     },
+    mobile() {
+      if (this.user == null) return "";
+      return this.user.mobile;
+    },
+    telegram() {
+      if (this.user == null || this.user.person == null) return "";
+      return this.user.person.telegram;
+    },
     ...mapState(["user"]),
   },
   created() {
@@ -48,7 +60,13 @@ export default {
   },
   methods: {
     ...mapMutations(["setTitle"]),
-  }
+  },
+  filters: {
+    formatMobile(value) {
+      if (value == null) return "";
+      return `+${value}`;
+    },
+  },
 };
 </script>
 

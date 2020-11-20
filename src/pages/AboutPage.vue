@@ -6,7 +6,7 @@
       </v-col>
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mb-3">Dom24x7</h1>
-        <p class="subheading font-weight-regular">Версия 1 сборка 10</p>
+        <p class="subheading font-weight-regular">Версия 2 сборка 1</p>
       </v-col>
     </v-row>
   </v-container>

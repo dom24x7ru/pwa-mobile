@@ -10,7 +10,7 @@
     </v-card>
     <v-row dense>
       <v-col v-for="flat in getFlats({ section: sectionId, floor: floorId })" :key="flat.number" cols="12">
-        <v-card>
+        <v-card :to="{ name: 'flat', params: { flatNumber: flat.number } }">
           <v-card-title class="blue-grey--text" :class="emptyFlatStyle(flat)">Квартира №{{ flat.number }}</v-card-title>
           <v-card-subtitle class="blue-grey--text" :class="emptyFlatStyle(flat)">
             Жильцов: {{ flat.residents.length }}<br />

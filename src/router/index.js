@@ -13,6 +13,7 @@ import VotesPage from "@/pages/services/VotesPage";
 import SectionsPage from "@/pages/home/SectionsPage";
 import SectionPage from "@/pages/home/SectionPage";
 import FloorPage from "@/pages/home/FloorPage";
+import FlatPage from "@/pages/home/FlatPage";
 
 import AboutPage from "@/pages/AboutPage";
 import ProfilePage from "@/pages/ProfilePage";
@@ -37,6 +38,7 @@ export default new Router({
     { path: "/sections", name: "sections", component: SectionsPage },
     { path: "/section/:sectionId/floors", name: "section", component: SectionPage },
     { path: "/section/:sectionId/floor/:floorId", name: "floor", component: FloorPage },
+    { path: "/flat/:flatNumber", name: "flat", component: FlatPage },
 
     { path: "/about", name: "about", component: AboutPage },
     { path: "/profile", name: "profile", component: ProfilePage },
