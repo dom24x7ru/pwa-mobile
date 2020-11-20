@@ -55,7 +55,7 @@ export default {
       const surname = profile.surname != null ? profile.surname : "";
       const midname = profile.midname != null ? profile.midname : "";
       const result = `${surname} ${name} ${midname}`;
-      return empty(result) ? "Сосед не желает показывать" : result;
+      return empty(result) ? "Сосед не желает показывать имя" : result;
     },
     formatMobile(value) {
       if (value == null) return "";

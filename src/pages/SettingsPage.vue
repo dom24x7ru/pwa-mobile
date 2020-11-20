@@ -12,7 +12,7 @@
       required
       :disabled="!ready.flats" />
     <v-text-field prefix="@" v-model="telegram" label="Аккаунт в телеграм" />
-    <span class="text-subtitle-1">Настройки безопасности</span><br />
+    <span class="text-subtitle-1">Настройки приватности</span><br />
     <span class="text-subtitle-2">Отображение имени</span>
     <v-radio-group v-model="access.name">
       <v-radio label="Не показывать имя" value="nothing" />
