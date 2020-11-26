@@ -7,37 +7,15 @@ import store from "./store";
 
 import SocketClient from "./api/SocketClient";
 
-// import firebase from "firebase/app";
-
 const PRODUCTION_MODE = false;
 Vue.config.productionTip = PRODUCTION_MODE
-
-// firebase.initializeApp({
-//   apiKey: "AIzaSyCjmBpkkvQz0W81xMs9_1Dyw0IX3LPr5lo",
-//   authDomain: "dom24x7-f28f7.firebaseapp.com",
-//   databaseURL: "https://dom24x7-f28f7.firebaseio.com",
-//   projectId: "dom24x7-f28f7",
-//   storageBucket: "dom24x7-f28f7.appspot.com",
-//   messagingSenderId: "631025425076",
-//   appId: "1:631025425076:web:0125df1c64403c783ed5e1",
-//   measurementId: "G-0YR7766JHF"
-// });
-// const messaging = firebase.messaging();
-// Notification.requestPermission().then(permission => {
-//   if (permission === "granted") {
-//     messaging.getToken().then(token => {
-//       // отправка токена на сервер
-//       console.log(`push token: ${token}`);
-//     });
-//   } else {
-//     console.log("Не удалось получить разрешение для отправки клиенту push-уведомлений");
-//   }
-// });
 
 const client = new SocketClient({
   port: 443,
   hostname: "dom24x7-backend.nl.yapahost.ru",
   secure: true,
+  // port: 8000,
+  // hostname: "185.15.211.83",
 });
 client.on("login", data => {
   console.log("emit login");

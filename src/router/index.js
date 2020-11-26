@@ -21,6 +21,8 @@ import SettingsPage from "@/pages/SettingsPage";
 import AuthPage from "@/pages/AuthPage";
 import InvitePage from "@/pages/InvitePage";
 
+import NotifPage from "@/pages/NotifPage";
+
 Vue.use(Router);
 
 export default new Router({
@@ -45,6 +47,8 @@ export default new Router({
     { path: "/invite", name: "invite", component: InvitePage },
     { path: "/settings", name: "settings", component: SettingsPage },
     { path: "/signin", name: "auth", component: AuthPage },
+
+    { path: "/notif", name: "notif", component: NotifPage },
   ],
   scrollBehavior() {
     return { x: 0, y: 0 }

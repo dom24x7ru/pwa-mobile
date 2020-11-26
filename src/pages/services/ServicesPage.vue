@@ -20,8 +20,14 @@
         </v-card>
       </v-col>
       <v-col cols="6">
+        <v-card color="#1F7087" dark>
+          <v-card-title>ЧаВо</v-card-title>
+          <v-card-subtitle>Доступно: 0</v-card-subtitle>
+        </v-card>
+      </v-col>
+      <v-col cols="12">
         <v-card color="#1F7087" dark to="/contacts">
-          <v-card-title>Контакты</v-card-title>
+          <v-card-title>Полезные контакты</v-card-title>
           <v-card-subtitle>Доступно: 0</v-card-subtitle>
         </v-card>
       </v-col>

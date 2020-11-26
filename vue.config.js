@@ -3,11 +3,9 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
-  "devServer": {
-    "https": {
-      "key": fs.readFileSync("./certs/example.com+5-key.pem"),
-      "cert": fs.readFileSync("./certs/example.com+5.pem"),
-    },
-    "public": "https://localhost:8080/",
+  pwa: {
+    name: "Dom24x7",
+    themeColor: "#1A76D2",
+    msTileColor: "#FFFFFF",
   },
 }
