@@ -8,7 +8,8 @@
             <span class="font-weight-medium text-uppercase">{{ post.title }}</span><br />
             <span class="text--disabled">{{ post.createdAt | formatDate }}</span>
           </v-card-subtitle>
-          <v-card-text>{{ post.body }}</v-card-text>
+          <v-card-text v-if="post.url != null"><router-link :to="post.url">{{ post.body }}</router-link></v-card-text>
+          <v-card-text v-else>{{ post.body }}</v-card-text>
         </v-card>
       </v-col>
     </v-row>
