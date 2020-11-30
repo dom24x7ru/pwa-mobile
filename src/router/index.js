@@ -10,6 +10,9 @@ import InstructionsPage from "@/pages/services/InstructionsPage";
 import ContactsPage from "@/pages/services/ContactsPage";
 import VotesPage from "@/pages/services/VotesPage";
 
+import FAQCategoryPage from "@/pages/services/faq/FAQCategoryPage";
+import FAQListPage from "@/pages/services/faq/FAQListPage";
+
 import SectionsPage from "@/pages/home/SectionsPage";
 import SectionPage from "@/pages/home/SectionPage";
 import FloorPage from "@/pages/home/FloorPage";
@@ -36,6 +39,9 @@ export default new Router({
     { path: "/instruction/:instrId", name: "instruction", component: InstructionsPage },
     { path: "/contacts", name: "contacts", component: ContactsPage },
     { path: "/votes", name: "votes", component: VotesPage },
+
+    { path: "/faq", name: "faq", component: FAQCategoryPage },
+    { path: "/faq/:categoryId", name: "faqCategory", component: FAQListPage },
 
     { path: "/sections", name: "sections", component: SectionsPage },
     { path: "/section/:sectionId/floors", name: "section", component: SectionPage },

@@ -20,9 +20,9 @@
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card color="#1F7087" dark>
+        <v-card color="#1F7087" dark to="/faq">
           <v-card-title>ЧаВо</v-card-title>
-          <v-card-subtitle>Доступно: 0</v-card-subtitle>
+          <v-card-subtitle>Доступно: {{ getFAQCount() }}</v-card-subtitle>
         </v-card>
       </v-col>
       <v-col cols="12">
@@ -41,7 +41,7 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "ServicesPage",
   computed: {
-    ...mapGetters(["getInstructionsCount", "getDocumentsCount"]),
+    ...mapGetters(["getInstructionsCount", "getDocumentsCount", "getFAQCount"]),
   },
   created() {
     this.setTitle("Сервисы");

@@ -65,4 +65,26 @@ export default {
     if (state.documents == null) return 0;
     return state.documents.length;
   },
+  getFAQCount: state => (categoryId) => {
+    if (state.faq == null) return 0;
+    if (categoryId == null) return state.faq.length;
+    return state.faq.filter(item => item.category.id == categoryId).length;
+  },
+  getFAQCategories: state => () => {
+    if (state.faq == null) return [];
+    let categories = {};
+    for (let answer of state.faq) {
+      categories[answer.category.id] = {
+        id: answer.category.id,
+        name: answer.category.name,
+        description: answer.category.description
+      };
+    }
+    return categories;
+  },
+  getFAQList: state => (categoryId) => {
+    if (state.faq == null) return [];
+    if (categoryId == null) return state.faq;
+    return state.faq.filter(item => item.category.id == categoryId);
+  },
 };

@@ -65,6 +65,9 @@ client.on("instructions", instruction => {
 client.on("documents", document => {
   store.commit("setDocument", document.data);
 });
+client.on("faq", answer => {
+  store.commit("setFAQ", answer.data);
+});
 client.on("channel.ready", data => {
   store.commit("setChannelsReady", { channel: data.name, status: true });
 });

@@ -53,6 +53,11 @@ export default {
     const documents = state.documents.filter(item => item.id == document.id);
     if (documents.length == 0) state.documents.push(document);
   },
+  setFAQ(state, answer) {
+    if (state.faq == null) state.faq = [];
+    const faq = state.faq.filter(item => item.id == answer.id);
+    if (faq.length == 0) state.faq.push(answer);
+  },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;
   }
