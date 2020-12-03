@@ -63,6 +63,7 @@ export default {
     for (let i = 0; i < state.votes.length; i++) {
       if (state.votes[i].id == vote.id) {
         state.votes.splice(i, 1, vote);
+        state.changed.votes++;
         return;
       }
     }

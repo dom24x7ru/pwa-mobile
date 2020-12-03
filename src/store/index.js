@@ -27,6 +27,9 @@ export default new Vuex.Store({
       faq: false,
       votes: false,
     },
+    changed: {
+      votes: 0, // счетчик пришедших изменений по голосовании, нужно, чтобы подхватывать обновления в онлайне
+    },
   },
   getters,
   mutations,

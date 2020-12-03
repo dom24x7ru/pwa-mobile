@@ -92,7 +92,7 @@ export default {
 
       return answers.filter(answer => answer.person.id == person.id).length != 0;
     },
-    ...mapState(["ready", "client", "user"]),
+    ...mapState(["ready", "client", "user", "changed"]),
     ...mapGetters(["getVote"]),
   },
   created() {
@@ -154,6 +154,9 @@ export default {
   },
   watch: {
     "ready.votes"() {
+      this.vote = this.getVote(this.voteId);
+    },
+    "changed.votes"() {
       this.vote = this.getVote(this.voteId);
     },
     answers() {
