@@ -17,6 +17,7 @@ export default new Vuex.Store({
     invites: null,
     documents: null,
     faq: null,
+    votes: null,
     ready: {
       flats: false,
       posts: false,
@@ -24,6 +25,7 @@ export default new Vuex.Store({
       invites: false,
       documents: false,
       faq: false,
+      votes: false,
     },
   },
   getters,

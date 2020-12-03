@@ -16,7 +16,7 @@
       <v-col cols="6">
         <v-card color="#1F7087" dark to="/votes">
           <v-card-title>Голосование</v-card-title>
-          <v-card-subtitle>Доступно: 0</v-card-subtitle>
+          <v-card-subtitle>Доступно: {{ getVotesCount() }}</v-card-subtitle>
         </v-card>
       </v-col>
       <v-col cols="6">
@@ -41,7 +41,7 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "ServicesPage",
   computed: {
-    ...mapGetters(["getInstructionsCount", "getDocumentsCount", "getFAQCount"]),
+    ...mapGetters(["getInstructionsCount", "getDocumentsCount", "getFAQCount", "getVotesCount"]),
   },
   created() {
     this.setTitle("Сервисы");

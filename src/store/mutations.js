@@ -58,6 +58,11 @@ export default {
     const faq = state.faq.filter(item => item.id == answer.id);
     if (faq.length == 0) state.faq.push(answer);
   },
+  setVote(state, vote) {
+    if (state.votes == null) state.votes = [];
+    const votes = state.votes.filter(item => item.id == vote.id);
+    if (votes.length == 0) state.votes.push(vote);
+  },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;
   }

@@ -68,8 +68,12 @@ client.on("documents", document => {
 client.on("faq", answer => {
   store.commit("setFAQ", answer.data);
 });
+client.on("votes", vote => {
+  store.commit("setVote", vote.data);
+});
 client.on("channel.ready", data => {
-  store.commit("setChannelsReady", { channel: data.name, status: true });
+  
+  store.commit("setChannelsReady", { channel: data.name.split(".")[0], status: true });
 });
 store.commit("setClient", client);
 

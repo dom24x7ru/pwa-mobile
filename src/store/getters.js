@@ -87,4 +87,15 @@ export default {
     if (categoryId == null) return state.faq;
     return state.faq.filter(item => item.category.id == categoryId);
   },
+  getVotesCount: state => () => {
+    if (state.votes == null) return 0;
+    return state.votes.length;
+  },
+  getVote: state => (voteId) => {
+    if (state.votes == null) return null;
+    for (let i = 0; i < state.votes.length; i++) {
+      if (state.votes[i].id == voteId) return state.votes[i];
+    }
+    return null;
+  },
 };
