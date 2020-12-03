@@ -60,8 +60,13 @@ export default {
   },
   setVote(state, vote) {
     if (state.votes == null) state.votes = [];
-    const votes = state.votes.filter(item => item.id == vote.id);
-    if (votes.length == 0) state.votes.push(vote);
+    for (let i = 0; i < state.votes.length; i++) {
+      if (state.votes[i].id == vote.id) {
+        state.votes.splice(i, 1, vote);
+        return;
+      }
+    }
+    state.votes.push(vote);
   },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;
