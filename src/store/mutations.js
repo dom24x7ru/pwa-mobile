@@ -67,7 +67,7 @@ export default {
         return;
       }
     }
-    state.votes.push(vote);
+    state.votes.unshift(vote);
   },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;

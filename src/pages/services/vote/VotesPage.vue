@@ -11,6 +11,7 @@
           <v-card-subtitle>
             <span class="font-weight-medium text-uppercase">{{ vote.title }}</span><br />
             <span class="text--disabled">{{ vote.createdAt | formatDate }}</span>
+            <span v-if="answered(vote)" class="blue--text"><br />Вы уже проголосовали</span>
             <span v-if="vote.closed" class="text--disabled"><br />Голосование завершено</span>
           </v-card-subtitle>
           <v-card-text>
@@ -27,14 +28,23 @@ import { mapState, mapMutations } from "vuex";
 import moment from "moment";
 
 export default {
-  name: "DocumentsPage",
+  name: "VotesPage",
   computed: {
-    ...mapState(["votes"]),
+    ...mapState(["votes", "user"]),
   },
   created() {
     this.setTitle("Голосование");
   },
   methods: {
+    answered(vote) {
+      const answers = vote.answers;
+      if (answers == null) return false;
+
+      const person = this.user.person;
+      if (person == null) return null;
+
+      return answers.filter(answer => answer.person.id == person.id).length != 0;
+    },
     ...mapMutations(["setTitle"]),
   },
   filters: {
