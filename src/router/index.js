@@ -11,6 +11,7 @@ import ContactsPage from "@/pages/services/ContactsPage";
 
 import VotesPage from "@/pages/services/vote/VotesPage";
 import VotePage from "@/pages/services/vote/VotePage";
+import VoteCreatePage from "@/pages/services/vote/VoteCreatePage";
 
 import FAQCategoryPage from "@/pages/services/faq/FAQCategoryPage";
 import FAQListPage from "@/pages/services/faq/FAQListPage";
@@ -43,6 +44,7 @@ export default new Router({
     
     { path: "/votes", name: "votes", component: VotesPage },
     { path: "/vote/:voteId", name: "vote", component: VotePage },
+    { path: "/votes/create", name: "voteCreate", component: VoteCreatePage },
 
     { path: "/faq", name: "faq", component: FAQCategoryPage },
     { path: "/faq/:categoryId", name: "faqCategory", component: FAQListPage },

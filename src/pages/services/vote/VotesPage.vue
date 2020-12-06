@@ -1,5 +1,10 @@
 <template>
   <v-container fluid>
+    <v-row>
+      <v-col cols="12" class="text-center">
+        <v-btn color="primary" to="/votes/create">Новое голосование</v-btn>
+      </v-col>
+    </v-row>
     <v-row dense>
       <v-col v-for="vote of votes" :key="vote.id" cols="12">
         <v-card :to="{ name: 'vote', params: { voteId: vote.id } }">
