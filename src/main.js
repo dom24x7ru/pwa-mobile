@@ -7,7 +7,7 @@ import store from "./store";
 
 import SocketClient from "./api/SocketClient";
 
-const PRODUCTION_MODE = false;
+const PRODUCTION_MODE = true;
 Vue.config.productionTip = PRODUCTION_MODE
 
 const client = new SocketClient({
