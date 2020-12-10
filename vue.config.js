@@ -12,7 +12,8 @@ module.exports = {
   // devServer: {
   //   https: {
   //     key: fs.readFileSync("./certs/localhost+2-key.pem"),
-  //     cert: fs.readFileSync("./certs/localhost+2.pem")
+  //     cert: fs.readFileSync("./certs/localhost+2.pem"),
+  //     ca: fs.readFileSync('./certs/rootCA.pem'),
   //   }
   // }
 }
