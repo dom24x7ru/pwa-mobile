@@ -15,7 +15,7 @@
     </v-radio-group>
 
     <v-btn color="primary" @click="save" :disabled="!checkVote || waitResult">Сохранить</v-btn>
-    <br /><br />
+    <br /><br /><br /><br />
     <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toastClose" />
   </v-container>
 </template>

@@ -22,3 +22,39 @@ firebase.initializeApp({
 
 // Retrieve an instance of Firebase Messaging so that it can handle background messages.
 const messaging = firebase.messaging();
+
+messaging.setBackgroundMessageHandler(function (payload) {
+  const data = { ...payload.notification, ...payload.data };
+  const notificationTitle = data.title;
+  const notificationOptions = {
+    body: data.body,
+    icon: data.icon,
+    image: data.image,
+    requireInteraction: true,
+    click_action: data.click_action,
+    data
+  };
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener("notificationclick", function (event) {
+  const target = event.notification.data.click_action;
+  event.notification.close();
+  event.waitUntil(
+    clients
+      .matchAll({
+        type: "window",
+        includeUncontrolled: true
+      })
+      .then(function (clientList) {
+        for (var i = 0; i < clientList.length; i++) {
+          var client = clientList[i];
+          console.log(client.url, client.focus);
+          if (client.url === target && "focus" in client) {
+            return client.focus();
+          }
+        }
+        return clients.openWindow(target);
+      })
+  );
+});
