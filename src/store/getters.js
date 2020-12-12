@@ -98,4 +98,19 @@ export default {
     }
     return null;
   },
+  getRndVote: state => () => {
+    if (state.votes == null) return null;
+    const votes = state.votes.filter(vote => {
+      // уже закрытые нам не интересны
+      if (vote.closed) return false;
+      
+      // также отфильтровываем те, на которые мы уже ответили
+      if (vote.answers == null) return true; // еще никто не ответил
+      const person = state.user.person;
+      if (person == null) return false; // пока нет данных по нам
+      return vote.answers.filter(answer => answer.person.id == person.id).length == 0;
+    });
+    if (votes.length == 0) return null;
+    return votes[0]; // TODO: взять случайный из списка
+  },
 };
