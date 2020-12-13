@@ -24,6 +24,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
+
 export default {
   name: "FlatPage",
   data() {

@@ -20,30 +20,7 @@
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tbody>
                   <tr v-for="question of vote.questions" :key="question.id">
-                    <td>
-                      <table width="100%" cellpadding="0" cellspacing="0">
-                        <tbody>
-                          <tr>
-                            <td width="60" align="right">
-                              {{ percent(question) }}%
-                            </td>
-                            <td width="3"></td>
-                            <td>
-                              {{ question.body }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td width="60" align="right">
-                              <v-icon small v-if="checked(question)" color="primary">mdi-check-circle</v-icon>
-                            </td>
-                            <td width="3"></td>
-                            <td height="24">
-                              <v-progress-linear :value="percent(question)" height="2" />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
+                    <td><VoteQuestionResult :vote="vote" :question="question" :person="user.person" @click="if (!vote.anonymous) sheet = !sheet" /></td>
                   </tr>
                 </tbody>
               </table>
@@ -56,7 +33,16 @@
       </v-col>
     </v-row>
     <br /><br />
-    <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toastClose" />
+    <v-bottom-sheet v-if="vote != null && !vote.anonymous" v-model="sheet" scrollable>
+      <v-card>
+        <v-card-title>Результаты</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 300px;">
+          <VoteResults :vote="vote" />
+        </v-card-text>
+      </v-card>
+    </v-bottom-sheet>
+    <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toast.show = !toast.show" />
   </v-container>
 </template>
 
@@ -64,6 +50,8 @@
 import { mapState, mapGetters, mapMutations } from "vuex";
 import moment from "moment";
 import Toast from "@/components/ToastComponent";
+import VoteQuestionResult from "./components/VoteQuestionResultComponent";
+import VoteResults from "./components/VoteResultsComponent";
 
 export default {
   name: "VotePage",
@@ -77,6 +65,7 @@ export default {
         text: null,
         color: null
       },
+      sheet: false,
     };
   },
   computed: {
@@ -130,20 +119,6 @@ export default {
       }
       this.waitResult = false;
     },
-    checked(question) {
-      if (this.vote.answers == null || this.vote.answers.length == 0) return false;
-      if (this.user == null || this.user.person == null) return false;
-      const qAnswers = this.vote.answers.filter(answer => answer.question.id == question.id);
-      return qAnswers.filter(answer => answer.person.id == this.user.person.id).length != 0
-    },
-    percent(question) {
-      if (this.vote.answers == null || this.vote.answers.length == 0) return 0;
-      const qAnswers = this.vote.answers.filter(answer => answer.question.id == question.id);
-      return (qAnswers.length / this.vote.persons * 100).toFixed(2);
-    },
-    toastClose() {
-      this.toast.show = false;
-    },
     ...mapMutations(["setTitle"]),
   },
   filters: {
@@ -168,7 +143,7 @@ export default {
     },
   },
   components: {
-    Toast,
+    Toast, VoteQuestionResult, VoteResults,
   },
 };
 </script>
