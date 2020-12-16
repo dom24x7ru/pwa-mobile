@@ -30,21 +30,34 @@
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
 import moment from "moment";
+import firebase from "firebase/app";
+import "firebase/messaging";
 
 export default {
   name: "MainPage",
   data() {
     return {
-      vote: null
+      vote: null,
+      toast: {
+        show: false,
+        text: null,
+        color: "blue"
+      },
     };
   },
   computed: {
-    ...mapState(["posts", "ready", "changed"]),
+    ...mapState(["posts", "ready", "changed", "client"]),
     ...mapGetters(["getRndVote"]),
   },
   created() {
     this.setTitle("Новости");
     if (this.ready.votes) this.vote = this.getRndVote();
+    if ("Notification" in window && Notification.permission == "default") {
+      Notification.requestPermission().then(permission => {
+        if (permission == "denied") return;
+        this.subscribe();
+      });
+    }
   },
   methods: {
     postTypeIcon(post) {
@@ -52,6 +65,35 @@ export default {
       if (post.type == "instruction") return { icon: "mdi-clipboard-check", color: "blue darken-2" };
       if (post.type == "document") return { icon: "mdi-file", color: "purple darken-2" };
       return { icon: "mdi-twitter", color: "orange darken-2" };
+    },
+    subscribe() {
+      firebase.initializeApp({
+        apiKey: "AIzaSyCjmBpkkvQz0W81xMs9_1Dyw0IX3LPr5lo",
+        authDomain: "dom24x7-f28f7.firebaseapp.com",
+        databaseURL: "https://dom24x7-f28f7.firebaseio.com",
+        projectId: "dom24x7-f28f7",
+        storageBucket: "dom24x7-f28f7.appspot.com",
+        messagingSenderId: "631025425076",
+        appId: "1:631025425076:web:0125df1c64403c783ed5e1",
+        measurementId: "G-0YR7766JHF"
+      });
+
+      let messaging = firebase.messaging();
+      
+      messaging.requestPermission()
+        .then(() => {
+          messaging.getToken()
+            .then(currentToken => {
+              console.log(currentToken);
+              this.client.wrapEmit("notification.saveToken", { token: currentToken });
+            })
+            .catch(error => {
+              console.warn(`При получении токена произошла ошибка. ${error}`);
+            });
+        })
+        .catch(error => {
+          console.warn(`Не удалось получить разрешение на показ уведомлений. ${error}`);
+        });
     },
     ...mapMutations(["setTitle"]),
   },

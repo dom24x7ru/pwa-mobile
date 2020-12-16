@@ -18,14 +18,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "VoteResultsComponent",
   props: ["vote"],
-  computed: {
-    ...mapGetters(["getFlat"]),
-  },
   methods: {
     checked(question) {
       if (this.vote.answers == null || this.vote.answers.length == 0) return false;
@@ -45,13 +40,11 @@ export default {
       return (this.qAnswersCount(question) / this.vote.persons * 100).toFixed(2);
     },
     showPersonInfo(answer) {
-      const flat = this.getFlat(answer.person.flat.number);
-      console.log(flat);
-      const profiles = flat.residents.filter(resident => resident.personId == answer.person.id);
-      if (profiles == null || profiles.length == 0) return "неизвестный пользователь";
-      const profile = profiles[0];
-
       const empty = value => value == null || value.trim().length == 0;
+
+      const profile = answer.person;
+      const flat = answer.person.flat;
+      
       const name = profile.name != null ? profile.name : "";
       const surname = profile.surname != null ? profile.surname : "";
       const midname = profile.midname != null ? profile.midname : "";

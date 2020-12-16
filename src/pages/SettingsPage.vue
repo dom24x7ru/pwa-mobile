@@ -22,22 +22,16 @@
     <span class="text-subtitle-2">Отображение контактов</span>
     <v-checkbox v-model="access.mobile" label="Показывать телефон" hide-details />
     <v-checkbox v-model="access.telegram" label="Показывать аккаунт телеграм (если указан)" hide-details />
-    <br />
-    <span class="text-subtitle-2">Уведомления</span>
-    <v-checkbox v-model="notification.permission" label="Показывать нотификации" :disabled="notification.disabled" hide-details />
-    <span class="text-caption text--disabled">К сожалению, нотификации пока не работают в IE, а также в Safari (например, на устройствах под iOS)</span>
     <br /><br />
     <v-btn x-large color="success" dark @click="save">Сохранить</v-btn>
     <br /><br /><br /><br />
-    <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toastClose" />
+    <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toast.show = !toast.show" />
   </v-container>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
 import Toast from "@/components/ToastComponent";
-import firebase from "firebase/app";
-import "firebase/messaging";
 
 export default {
   name: "SettingsPage",
@@ -58,10 +52,6 @@ export default {
         hint: null,
         errors: [],
       },
-      notification: {
-        permission: false,
-        disabled: false,
-      },
       toast: {
         show: false,
         text: null,
@@ -74,10 +64,6 @@ export default {
   },
   created() {
     this.setTitle("Настройки");
-    if ("Notification" in window) {
-      this.notification.permission = Notification.permission == "granted";
-      this.notification.disabled = Notification.permission != "default";
-    }
     this.init();
   },
   methods: {
@@ -109,26 +95,6 @@ export default {
       if (this.flat.id == null) {
         console.error("Необходимо указать номер кватиры");
         return;
-      }
-
-      if (this.notification.permission) {
-        try {
-          firebase.initializeApp({
-            apiKey: "AIzaSyCjmBpkkvQz0W81xMs9_1Dyw0IX3LPr5lo",
-            authDomain: "dom24x7-f28f7.firebaseapp.com",
-            databaseURL: "https://dom24x7-f28f7.firebaseio.com",
-            projectId: "dom24x7-f28f7",
-            storageBucket: "dom24x7-f28f7.appspot.com",
-            messagingSenderId: "631025425076",
-            appId: "1:631025425076:web:0125df1c64403c783ed5e1",
-            measurementId: "G-0YR7766JHF"
-          });
-
-          let messaging = firebase.messaging();
-          this.subscribe(messaging);
-        } catch(error) {
-          console.error(error.message);
-        }
       }
 
       const params = {
@@ -163,22 +129,6 @@ export default {
         console.error(this.toast.text);
       }
     },
-    subscribe(messaging) {
-      messaging.requestPermission()
-        .then(() => {
-          messaging.getToken()
-            .then(currentToken => {
-              console.log(currentToken);
-              this.client.wrapEmit("notification.saveToken", { token: currentToken });
-            })
-            .catch(error => {
-              console.warn(`При получении токена произошла ошибка. ${error}`);
-            });
-        })
-        .catch(error => {
-          console.warn(`Не удалось получить разрешение на показ уведомлений. ${error}`);
-        });
-    },
     getFlat(number) {
       for (let flat of this.flats) {
         if (flat.number == number) return flat;
@@ -187,9 +137,6 @@ export default {
     },
     getHint(flat) {
       return `кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}`;
-    },
-    toastClose() {
-      this.toast.show = false;
     },
     ...mapMutations(["setTitle", "setPerson", "setResident"]),
   },
@@ -219,14 +166,6 @@ export default {
         this.flat.id = null;
         this.flat.hint = null;
         this.flat.errors = ["Указанный номер квартиры не найден в доме"];
-      }
-    },
-    "notification.permission"() {
-      if ("Notification" in window) {
-        Notification.requestPermission().then(permission => {
-          this.notification.permission = permission == "granted";
-          this.notification.disabled = permission != "default";
-        });
       }
     },
   },

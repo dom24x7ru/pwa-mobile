@@ -8,6 +8,7 @@ module.exports = {
     name: "Dom24x7",
     themeColor: "#1A76D2",
     msTileColor: "#1A76D2",
+    appleMobileWebAppCapable: "yes",
     manifestOptions: {
       background_color: "#FFFFFF"
     }
