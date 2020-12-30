@@ -69,6 +69,17 @@ export default {
     }
     state.votes.unshift(vote);
   },
+  setIMChannel(state, channel) {
+    if (state.imChannels == null) state.imChannels = [];
+    for (let i = 0; i < state.imChannels.length; i++) {
+      if (state.imChannels[i].id == channel.id) {
+        state.imChannels.splice(i, 1, channel);
+        state.changed.imChannels++;
+        return;
+      }
+    }
+    state.imChannels.unshift(channel);
+  },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;
   }

@@ -2,7 +2,9 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import MainPage from "@/pages/MainPage";
-import ChatPage from "@/pages/ChatPage";
+
+import IMChannelsPage from "@/pages/im/IMChannelsPage";
+import IMMessagesPage from "@/pages/im/IMMessagesPage";
 
 import ServicesPage from "@/pages/services/ServicesPage";
 import DocumentsPage from "@/pages/services/DocumentsPage";
@@ -32,7 +34,9 @@ Vue.use(Router);
 export default new Router({
   routes: [
     { path: "/", name: "main", component: MainPage },
-    { path: "/im", name: "im", component: ChatPage },
+
+    { path: "/im", name: "im", component: IMChannelsPage },
+    { path: "/im/:channelId", name: "imMessages", component: IMMessagesPage },
 
     { path: "/services", name: "services", component: ServicesPage },
     { path: "/documents", name: "documents", component: DocumentsPage },

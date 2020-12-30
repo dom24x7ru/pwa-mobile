@@ -7,6 +7,10 @@ import store from "./store";
 
 import SocketClient from "./api/SocketClient";
 
+import moment from "moment";
+
+moment.locale("ru");
+
 const PRODUCTION_MODE = true;
 Vue.config.productionTip = PRODUCTION_MODE
 
@@ -14,9 +18,8 @@ const client = new SocketClient({
   port: 443,
   hostname: "dom24x7-backend.nl.yapahost.ru",
   secure: true,
-  // port: 8000,
-  // hostname: "185.15.211.83",
 });
+// const client = new SocketClient({ port: 8000 });
 client.on("login", data => {
   console.log("emit login");
   store.commit("setUser", data.user);
@@ -47,7 +50,7 @@ client.on("all", allData => {
   }
   if (data.invites.length != 0) {
     store.commit("setInvites", allData.data.invites);
-    client.initChannel("invites");
+    client.initChannel(`invites.${store.state.user.id}`);
   }
 });
 client.on("flats", flat => {
@@ -71,8 +74,10 @@ client.on("faq", answer => {
 client.on("votes", vote => {
   store.commit("setVote", vote.data);
 });
+client.on("imChannels", channel => {
+  store.commit("setIMChannel", channel.data);
+});
 client.on("channel.ready", data => {
-  
   store.commit("setChannelsReady", { channel: data.name.split(".")[0], status: true });
 });
 store.commit("setClient", client);

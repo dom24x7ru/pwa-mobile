@@ -64,6 +64,7 @@ export default {
       if (post.type == "person") return { icon: "mdi-account", color: "green darken-2" };
       if (post.type == "instruction") return { icon: "mdi-clipboard-check", color: "blue darken-2" };
       if (post.type == "document") return { icon: "mdi-file", color: "purple darken-2" };
+      if (post.type == "faq") return { icon: "mdi-lightbulb", color: "yellow accent-3" };
       return { icon: "mdi-twitter", color: "orange darken-2" };
     },
     subscribe() {

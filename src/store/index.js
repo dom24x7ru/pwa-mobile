@@ -18,6 +18,7 @@ export default new Vuex.Store({
     documents: null,
     faq: null,
     votes: null,
+    imChannels: null,
     ready: {
       flats: false,
       posts: false,
@@ -26,9 +27,12 @@ export default new Vuex.Store({
       documents: false,
       faq: false,
       votes: false,
+      imChannels: false,
     },
+    // счетчик пришедших изменений, нужно, чтобы подхватывать обновления в онлайне
     changed: {
-      votes: 0, // счетчик пришедших изменений по голосовании, нужно, чтобы подхватывать обновления в онлайне
+      votes: 0,
+      imChannels: 0,
     },
   },
   getters,
