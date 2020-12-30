@@ -23,6 +23,9 @@ const client = new SocketClient({
 client.on("login", data => {
   console.log("emit login");
   store.commit("setUser", data.user);
+  client.wrapEmit("version.current").then(version => {
+    store.commit("setAppCurrentVertion", version);
+  });
   if (router.currentRoute.name == "auth") {
     router.push("/");
   }

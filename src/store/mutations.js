@@ -1,4 +1,7 @@
 export default {
+  setAppCurrentVertion(state, version) {
+    state.appCurrentVersion = version;
+  },
   setClient(state, client) {
     state.client = client;
   },

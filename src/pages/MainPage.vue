@@ -24,29 +24,42 @@
       </v-col>
     </v-row>
     <br /><br />
+    <Toast v-if="toast.show"
+      :show="toast.show"
+      :text="toast.text"
+      :color="toast.color"
+      :timeout="toast.timeout"
+      :btnText="toast.btnText"
+      @close="reload" />
   </v-container>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
+import Toast from "@/components/ToastComponent";
+
 import moment from "moment";
 import firebase from "firebase/app";
 import "firebase/messaging";
+import config from "../../config";
 
 export default {
   name: "MainPage",
   data() {
     return {
+      version: config.version,
       vote: null,
       toast: {
         show: false,
-        text: null,
-        color: "blue"
+        text: "Версия приложения устарела. Необходимо обновить.",
+        btnText: "Обновить",
+        color: "blue",
+        timeout: 15000,
       },
     };
   },
   computed: {
-    ...mapState(["posts", "ready", "changed", "client"]),
+    ...mapState(["posts", "ready", "changed", "client", "appCurrentVersion"]),
     ...mapGetters(["getRndVote"]),
   },
   created() {
@@ -57,6 +70,12 @@ export default {
         if (permission == "denied") return;
         this.subscribe();
       });
+    }
+    if (this.appCurrentVersion != null) {
+      if (this.version.number < this.appCurrentVersion.number) {
+        // версия устарела, отображаем сообщение, что нужно обновить приложение
+        this.toast.show = true;
+      }
     }
   },
   methods: {
@@ -96,6 +115,10 @@ export default {
           console.warn(`Не удалось получить разрешение на показ уведомлений. ${error}`);
         });
     },
+    reload() {
+      this.toast.show = false;
+      location.reload(true);
+    },
     ...mapMutations(["setTitle"]),
   },
   filters: {
@@ -111,6 +134,15 @@ export default {
     "changed.votes"() {
       this.vote = this.getVote(this.vote.id);
     },
+    "appCurrentVersion"() {
+      if (this.version.number < this.appCurrentVersion.number) {
+        // версия устарела, отображаем сообщение, что нужно обновить приложение
+        this.toast.show = true;
+      }
+    }
+  },
+  components: {
+    Toast,
   },
 };
 </script>

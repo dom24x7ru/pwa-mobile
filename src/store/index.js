@@ -9,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     appName: "Dom24x7",
+    appCurrentVersion: null,
     pageName: null,
     user: null,
     flats: null,

@@ -2,7 +2,7 @@
   <v-snackbar v-model="visible" :color="color" :timeout="dataTimeout" @input="close">
     {{ text }}
     <template v-slot:action="{ attrs }">
-      <v-btn dark text v-bind="attrs" @click="close">Закрыть</v-btn>
+      <v-btn dark text v-bind="attrs" @click="close">{{ dataBtnText }}</v-btn>
     </template>
   </v-snackbar>
 </template>
@@ -15,16 +15,19 @@ export default {
     color: String,
     text: String,
     timeout: Number,
+    btnText: String,
   },
   data() {
     return {
       visible: false,
       dataTimeout: 5000,
+      dataBtnText: "Закрыть",
     };
   },
   created() {
     this.visible = this.show;
     if (this.timeout != null) this.dataTimeout = this.timeout;
+    if (this.btnText != null) this.dataBtnText = this.btnText;
   },
   methods: {
     close() {
