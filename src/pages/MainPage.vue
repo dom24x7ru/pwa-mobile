@@ -30,7 +30,7 @@
       :color="toast.color"
       :timeout="toast.timeout"
       :btnText="toast.btnText"
-      @close="reload" />
+      @click="reload" />
   </v-container>
 </template>
 
@@ -84,6 +84,7 @@ export default {
       if (post.type == "instruction") return { icon: "mdi-clipboard-check", color: "blue darken-2" };
       if (post.type == "document") return { icon: "mdi-file", color: "purple darken-2" };
       if (post.type == "faq") return { icon: "mdi-lightbulb", color: "yellow accent-3" };
+      if (post.type == "holiday") return { icon: "mdi-party-popper", color: "orange darken-2" }
       return { icon: "mdi-twitter", color: "orange darken-2" };
     },
     subscribe() {

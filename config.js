@@ -1,6 +1,6 @@
 const config = {
   version: {
-    number: 6,
+    number: 8,
     build: 1,
   }
 };

@@ -8,7 +8,7 @@
         <h1 class="display-2 font-weight-bold mb-3">Dom24x7</h1>
         <p class="subheading font-weight-regular">
           Версия {{ version.number }} сборка {{ version.build }}
-          <span v-if="version.number < appCurrentVersion.number" class="red--text"><br />(версия устарела)</span>
+          <span v-if="appCurrentVersion != null && version.number < appCurrentVersion.number" class="red--text"><br />(версия устарела)</span>
         </p>
       </v-col>
     </v-row>
