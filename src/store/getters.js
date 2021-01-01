@@ -113,4 +113,11 @@ export default {
     if (votes.length == 0) return null;
     return votes[0]; // TODO: взять случайный из списка
   },
+  getIMChannel: state => (channelId) => {
+    if (state.imChannels == null) return null;
+    for (let i = 0; i < state.imChannels.length; i++) {
+      if (state.imChannels[i].id == channelId) return state.imChannels[i];
+    }
+    return null;
+  },
 };

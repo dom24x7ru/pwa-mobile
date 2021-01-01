@@ -8,12 +8,12 @@
       <span>Соседи</span>
       <v-icon>mdi-account-supervisor-outline</v-icon>
     </v-btn>
-    <!-- <v-btn value="im" to="/im">
+    <v-btn value="im" to="/im">
       <span>Мессенджер</span>
       <v-badge content="" value="" color="primary" overlap>
         <v-icon>mdi-chat-outline</v-icon>
       </v-badge>
-    </v-btn> -->
+    </v-btn>
     <v-btn value="services" to="/services">
       <span>Сервисы</span>
       <v-icon>mdi-cube-outline</v-icon>
