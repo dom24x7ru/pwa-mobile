@@ -4,7 +4,7 @@
     <v-main>
       <router-view></router-view>
     </v-main>
-    <FooterLayer v-if="user != null" />
+    <FooterLayer v-if="user != null && $route.name != 'imMessages'" />
   </v-app>
 </template>
 

@@ -1,12 +1,17 @@
 <template>
   <v-container fluid>
-    {{ message.body.text }}
+    <ServiceMessage :message="message" />
   </v-container>
 </template>
 
 <script>
+import ServiceMessage from "./SeviceMessageBlockComponent";
+
 export default {
   name: "MessageBlockComponent",
   props: ["message"],
+  components: {
+    ServiceMessage,
+  },
 }
 </script>
