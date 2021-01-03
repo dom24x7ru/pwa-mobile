@@ -1,5 +1,6 @@
 <template>
   <div class="text-caption text-center">
+    <br />
     <span class="text--disabled">{{ message.createdAt | formatDate }}<br /></span>
     {{ message.body.text }}
   </div>
@@ -9,7 +10,7 @@
 import moment from "moment";
 
 export default {
-  name: "MessageBlockComponent",
+  name: "ServiceMessageBlockComponent",
   props: ["message"],
   filters: {
     formatDate(value) {

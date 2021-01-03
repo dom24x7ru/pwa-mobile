@@ -1,11 +1,11 @@
 <template>
   <v-container fluid>
-    <Message v-for="message of messages" :key="message.id" :message="message" />
-    <br /><br /><br />
+    <Message v-for="(message, index) in messages" :key="message.id" :message="message" :prevMessage="getPrevMessage(index)" />
+    <br /><br /><br /><br />
     <v-footer color="primary" :dark="true" :fixed="true">
       <v-row>
         <v-col cols="12">
-          <v-text-field v-model="message" label="Сообщение..." append-outer-icon="mdi-send" @click:append-outer="send" />
+          <v-text-field v-model="message" label="Сообщение..." append-outer-icon="mdi-send" @keydown.enter="send" @click:append-outer="send" />
         </v-col>
       </v-row>
     </v-footer>
@@ -63,10 +63,14 @@ export default {
         this.$vuetify.goTo(99999);
       }
     },
-    send() {
+    getPrevMessage(index) {
+      if (index == 0) return null;
+      else return this.messages[index - 1];
+    },
+    async send() {
       if (this.message == null || this.message.trim().length == 0) return;
-      this.messages.push({ id: -1, createdAt: new Date().getTime(), body: { text: this.message } });
-      this.message = null;
+      const result = await this.client.wrapEmit("im.save", { channelId: this.channelId, body: { text: this.message.trim() } });
+      if (result.status == "OK") this.message = null;
     },
     ...mapMutations(["setTitle"]),
   },
