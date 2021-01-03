@@ -1,5 +1,10 @@
 <template>
   <v-container fluid>
+    <v-row v-if="more" class="text-center">
+      <v-col cols="12">
+        <v-progress-circular indeterminate color="primary" v-intersect="onIntersect" />
+      </v-col>
+    </v-row>
     <Message v-for="(message, index) in messages" :key="message.id" :message="message" :prevMessage="getPrevMessage(index)" />
     <br /><br /><br /><br />
     <v-footer color="primary" :dark="true" :fixed="true">
@@ -24,6 +29,7 @@ export default {
       channel: null,
       messages: [],
       message: null,
+      more: false,
     };
   },
   computed: {
@@ -56,11 +62,12 @@ export default {
           return;
         }
       }
-      this.messages.push(message.data);
+      this.messages.unshift(message.data);
     },
     loadMessagesReady({ name }) {
       if (name.indexOf("imMessages") != -1) {
         this.$vuetify.goTo(99999);
+        setTimeout(() => { this.more = (this.messages.length < this.channel.count); }, 2000);
       }
     },
     getPrevMessage(index) {
@@ -71,6 +78,11 @@ export default {
       if (this.message == null || this.message.trim().length == 0) return;
       const result = await this.client.wrapEmit("im.save", { channelId: this.channelId, body: { text: this.message.trim() } });
       if (result.status == "OK") this.message = null;
+    },
+    onIntersect (entries) {
+      if (entries[0].intersectionRatio > 0) {
+        console.log("Необходимо загрузить еще пачку сообщений");
+      }
     },
     ...mapMutations(["setTitle"]),
   },
