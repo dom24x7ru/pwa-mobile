@@ -15,7 +15,7 @@ export default {
   filters: {
     formatDate(value) {
       if (value == null) return "";
-      return moment(value).fromNow();
+      return moment(value).format("DD.MM.YYYY HH:mm");
     },
   },
 }

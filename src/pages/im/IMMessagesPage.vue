@@ -6,6 +6,7 @@
       </v-col>
     </v-row>
     <Message v-for="(message, index) in messages" :key="message.id" :message="message" :prevMessage="getPrevMessage(index)" />
+    <span id="footer"></span>
     <br /><br /><br /><br />
     <v-footer color="primary" :dark="true" :fixed="true">
       <v-row>
@@ -62,13 +63,31 @@ export default {
           return;
         }
       }
-      this.messages.unshift(message.data);
+      this.messages.push(message.data);
     },
     loadMessagesReady({ name }) {
       if (name.indexOf("imMessages") != -1) {
-        this.$vuetify.goTo(99999);
-        setTimeout(() => { this.more = (this.messages.length < this.channel.count); }, 2000);
+        this.$vuetify.goTo("#footer");
+        setTimeout(async () => {
+          this.more = (this.messages.length < this.channel.count);
+          while (this.more) {
+            await this.loadMoreMessages();
+          }
+        }, 2000);
       }
+    },
+    async loadMoreMessages() {
+      const messages = await this.client.wrapEmit("im.load", { channelId: this.channelId, limit: 20, offset: this.messages.length });
+      for (let i = messages.length - 1; i >= 0; i--) {
+        for (let j = 0; j < this.messages.length; j++) {
+          if (this.messages[j].id == messages[i].id) {
+            this.messages.splice(j, 1, messages[i]);
+            return;
+          }
+        }
+        this.messages.unshift(messages[i]);
+      }
+      this.more = (this.messages.length < this.channel.count);
     },
     getPrevMessage(index) {
       if (index == 0) return null;
@@ -79,9 +98,10 @@ export default {
       const result = await this.client.wrapEmit("im.save", { channelId: this.channelId, body: { text: this.message.trim() } });
       if (result.status == "OK") this.message = null;
     },
-    onIntersect (entries) {
+    async onIntersect (entries) {
       if (entries[0].intersectionRatio > 0) {
         console.log("Необходимо загрузить еще пачку сообщений");
+        if (this.more) await this.loadMoreMessages();
       }
     },
     ...mapMutations(["setTitle"]),
