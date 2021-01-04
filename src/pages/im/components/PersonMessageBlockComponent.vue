@@ -1,8 +1,8 @@
 <template>
   <div class="text-body-2 text-left">
     <span v-if="!light" class="font-weight-bold blue--text"><br />{{ message.person | showName }}<br /></span>
-    <span class="text--disabled">{{ message.createdAt | formatDate }}<br /></span>
     {{ message.body.text }}
+    <span class="text--disabled text-caption">{{ message.createdAt | formatDate }}</span>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
     },
     formatDate(value) {
       if (value == null) return "";
-      return moment(value).format("DD.MM.YYYY HH:mm");
+      return moment(value).format("HH:mm");
     },
   },
 }
