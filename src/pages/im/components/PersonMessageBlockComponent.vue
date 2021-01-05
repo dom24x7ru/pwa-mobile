@@ -1,8 +1,15 @@
 <template>
-  <div class="text-body-2 text-left">
+  <div class="text-body-2 text-left" @click="showMenu">
     <span v-if="!light" class="font-weight-bold blue--text"><br />{{ message.person | showName }}<br /></span>
     {{ message.body.text }}
     <span class="text--disabled text-caption">{{ message.createdAt | formatDate }}</span>
+    <v-menu v-model="menu.show" :position-x="menu.x" :position-y="menu.y" absolute offset-y>
+      <v-list>
+        <v-list-item v-for="(item, index) in menu.items" :key="index" >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
   </div>
 </template>
 
@@ -14,6 +21,28 @@ export default {
   props: {
     message: Object,
     light: Boolean,
+  },
+  data() {
+    return {
+      menu: {
+        show: false,
+        x: 0,
+        y: 0,
+        items: [
+          { title: "Menu item", },
+        ],
+      },
+    };
+  },
+  methods: {
+    showMenu(e) {
+      console.log("Отображения меню с действиями");
+      e.preventDefault();
+      this.menu.show = false;
+      this.menu.x = e.clientX
+      this.menu.y = e.clientY
+      this.$nextTick(() => { this.menu.show = true; });
+    },
   },
   filters: {
     showName(profile) {
