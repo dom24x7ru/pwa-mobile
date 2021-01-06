@@ -4,9 +4,14 @@
     {{ message.body.text }}
     <span class="text--disabled text-caption">{{ message.createdAt | formatDate }}</span>
     <v-menu v-model="menu.show" :position-x="menu.x" :position-y="menu.y" absolute offset-y>
-      <v-list>
-        <v-list-item v-for="(item, index) in menu.items" :key="index" >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+      <v-list dense>
+        <v-list-item v-for="(item, index) in menuItems()" :key="index">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -15,6 +20,7 @@
 
 <script>
 import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   name: "PersonMessageBlockComponent",
@@ -29,20 +35,42 @@ export default {
         x: 0,
         y: 0,
         items: [
-          { title: "Menu item", },
+          { title: "Ответить", icon: "mdi-subdirectory-arrow-left", for: "all", disabled: false },
+          { title: "Копировать", icon: "mdi-content-copy", for: "all", disabled: false },
+          { title: "Закрепить", icon: "mdi-pin-outline", for: "all", disabled: false },
+          { title: "Изменить", icon: "mdi-pencil-outline", for: "mine", disabled: false },
+          { title: "Пожаловаться", icon: "mdi-car-brake-alert", for: "other", disabled: false },
+          { title: "История", icon: "mdi-history", for: "all", disabled: false },
+          { title: "Просмотрено", icon: "mdi-account-multiple-outline", for: "all", disabled: false },
+          { title: "Удалить", icon: "mdi-trash-can-outline", for: "mine", disabled: false },
         ],
       },
     };
   },
+  computed: {
+    mine() {
+      if (this.message.person == null) return false;
+      return (this.message.person.id == this.user.person.id);
+    },
+    ...mapState(["user"]),
+  },
   methods: {
     showMenu(e) {
-      console.log("Отображения меню с действиями");
       e.preventDefault();
       this.menu.show = false;
       this.menu.x = e.clientX
       this.menu.y = e.clientY
       this.$nextTick(() => { this.menu.show = true; });
     },
+    menuItems() {
+      return this.menu.items.filter(item => {
+        if (item.disabled === true) return false;
+        if (item.for == "all") return true;
+        if (item.for == "mine" && this.mine) return true;
+        if (item.for == "other" && !this.mine) return true;
+        return false;
+      });
+    }
   },
   filters: {
     showName(profile) {
