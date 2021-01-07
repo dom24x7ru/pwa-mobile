@@ -1,7 +1,7 @@
 <template>
   <div>
     <DayBlock v-if="isNextDay()" :date="message.createdAt" />
-    <PersonMessage v-if="message.person != null" :message="message" :light="light()" />
+    <PersonMessage v-if="message.person != null" :message="message" :light="light() && !isNextDay()" />
     <ServiceMessage v-else :message="message" />
   </div>
 </template>

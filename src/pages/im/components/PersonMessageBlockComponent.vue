@@ -5,7 +5,7 @@
     <span class="text--disabled text-caption">{{ message.createdAt | formatDate }}</span>
     <v-menu v-model="menu.show" :position-x="menu.x" :position-y="menu.y" absolute offset-y>
       <v-list dense>
-        <v-list-item v-for="(item, index) in menuItems()" :key="index">
+        <v-list-item v-for="(item, index) in menuItems()" :key="index" @click="action(item.code)">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -35,14 +35,14 @@ export default {
         x: 0,
         y: 0,
         items: [
-          { title: "Ответить", icon: "mdi-subdirectory-arrow-left", for: "all", disabled: false },
-          { title: "Копировать", icon: "mdi-content-copy", for: "all", disabled: false },
-          { title: "Закрепить", icon: "mdi-pin-outline", for: "all", disabled: false },
-          { title: "Изменить", icon: "mdi-pencil-outline", for: "mine", disabled: false },
-          { title: "Пожаловаться", icon: "mdi-car-brake-alert", for: "other", disabled: false },
-          { title: "История", icon: "mdi-history", for: "all", disabled: false },
-          { title: "Просмотрено", icon: "mdi-account-multiple-outline", for: "all", disabled: false },
-          { title: "Удалить", icon: "mdi-trash-can-outline", for: "mine", disabled: false },
+          { code: "answer", title: "Ответить", icon: "mdi-subdirectory-arrow-left", for: "all", disabled: true },
+          { code: "copy", title: "Копировать", icon: "mdi-content-copy", for: "all", disabled: true },
+          { code: "fix", title: "Закрепить", icon: "mdi-pin-outline", for: "all", disabled: true },
+          { code: "edit", title: "Изменить", icon: "mdi-pencil-outline", for: "mine", disabled: true },
+          { code: "claim", title: "Пожаловаться", icon: "mdi-car-brake-alert", for: "other", disabled: true },
+          { code: "history", title: "История", icon: "mdi-history", for: "all", disabled: true },
+          { code: "shown", title: "Просмотрено", icon: "mdi-account-multiple-outline", for: "all", disabled: true },
+          { code: "delete", title: "Удалить", icon: "mdi-trash-can-outline", for: "mine" },
         ],
       },
     };
@@ -52,7 +52,7 @@ export default {
       if (this.message.person == null) return false;
       return (this.message.person.id == this.user.person.id);
     },
-    ...mapState(["user"]),
+    ...mapState(["user", "client"]),
   },
   methods: {
     showMenu(e) {
@@ -70,7 +70,31 @@ export default {
         if (item.for == "other" && !this.mine) return true;
         return false;
       });
-    }
+    },
+    action(code) {
+      switch (code) {
+        case "answer":
+          break;
+        case "copy":
+          break;
+        case "fix":
+          break;
+        case "edit":
+          break;
+        case "claim":
+          break;
+        case "history":
+          break;
+        case "shown":
+          break;
+        case "delete":
+          this.delete();
+          break;
+      }
+    },
+    async delete() {
+      await this.client.wrapEmit("im.del", { messageId: this.message.id });
+    },
   },
   filters: {
     showName(profile) {

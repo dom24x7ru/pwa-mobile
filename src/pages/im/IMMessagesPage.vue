@@ -59,7 +59,12 @@ export default {
     loadMessages(message) {
       for (let i = 0; i < this.messages.length; i++) {
         if (this.messages[i].id == message.data.id) {
-          this.messages.splice(i, 1, message.data);
+          if (message.event == "destroy") {
+            this.messages.splice(i, 1);
+            this.channel.count--;
+          } else {
+            this.messages.splice(i, 1, message.data);
+          }
           return;
         }
       }
