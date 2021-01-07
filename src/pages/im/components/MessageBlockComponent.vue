@@ -1,7 +1,7 @@
 <template>
   <div>
     <DayBlock v-if="isNextDay()" :date="message.createdAt" />
-    <PersonMessage v-if="message.person != null" :message="message" :light="light() && !isNextDay()" />
+    <PersonMessage v-if="message.person != null" :message="message" :light="light() && !isNextDay()" @click-menu-item="action" />
     <ServiceMessage v-else :message="message" />
   </div>
 </template>
@@ -28,6 +28,9 @@ export default {
     },
     light() {
       return this.prevMessage != null && this.prevMessage.person != null && this.message.person.id == this.prevMessage.person.id;
+    },
+    action(code, message) {
+      this.$emit("click-menu-item", code, message);
     }
   },
   components: {

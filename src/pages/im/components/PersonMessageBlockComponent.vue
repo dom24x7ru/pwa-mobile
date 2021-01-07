@@ -52,7 +52,7 @@ export default {
       if (this.message.person == null) return false;
       return (this.message.person.id == this.user.person.id);
     },
-    ...mapState(["user", "client"]),
+    ...mapState(["user"]),
   },
   methods: {
     showMenu(e) {
@@ -72,28 +72,7 @@ export default {
       });
     },
     action(code) {
-      switch (code) {
-        case "answer":
-          break;
-        case "copy":
-          break;
-        case "fix":
-          break;
-        case "edit":
-          break;
-        case "claim":
-          break;
-        case "history":
-          break;
-        case "shown":
-          break;
-        case "delete":
-          this.delete();
-          break;
-      }
-    },
-    async delete() {
-      await this.client.wrapEmit("im.del", { messageId: this.message.id });
+      this.$emit("click-menu-item", code, this.message);
     },
   },
   filters: {

@@ -5,7 +5,7 @@
         <v-progress-circular indeterminate color="primary" v-intersect="onIntersect" />
       </v-col>
     </v-row>
-    <Message v-for="(message, index) in messages" :key="message.id" :message="message" :prevMessage="getPrevMessage(index)" />
+    <Message v-for="(message, index) in messages" :key="message.id" :message="message" :prevMessage="getPrevMessage(index)" @click-menu-item="action" />
     <span id="footer"></span>
     <br /><br /><br /><br />
     <v-footer color="primary" :dark="true" :fixed="true">
@@ -108,6 +108,12 @@ export default {
         console.log("Необходимо загрузить еще пачку сообщений");
         if (this.more) await this.loadMoreMessages();
       }
+    },
+    action(code, message) {
+      this[code](message);
+    },
+    async delete(message) {
+      await this.client.wrapEmit("im.del", { messageId: message.id });
     },
     ...mapMutations(["setTitle"]),
   },
