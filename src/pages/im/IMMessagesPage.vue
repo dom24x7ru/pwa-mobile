@@ -8,7 +8,7 @@
     <Message v-for="(message, index) in messages" :key="message.id" :message="message" :prevMessage="getPrevMessage(index)" @click-menu-item="action" />
     <span id="footer"></span>
     <br /><br /><br /><br />
-    <InputMessage :channel="channel" />
+    <InputMessage :channel="channel" :copy="inputMessageProps.copy" />
   </v-container>
 </template>
 
@@ -25,6 +25,9 @@ export default {
       channel: null,
       messages: [],
       more: false,
+      inputMessageProps: {
+        copy: null,
+      },
     };
   },
   computed: {
@@ -102,6 +105,9 @@ export default {
     },
     action(code, message) {
       this[code](message);
+    },
+    copy(message) {
+      this.inputMessageProps.copy = message;
     },
     async delete(message) {
       await this.client.wrapEmit("im.del", { messageId: message.id });

@@ -14,7 +14,10 @@ import { mapState } from "vuex";
 export default {
   name: "InputMessageComponent",
   props: {
-    channel: Object,
+    channel: Object, // к какому каналу относится поле ввода
+    edit: Object,    // сообщение, которое необходимо отредактировать
+    answer: Object,  // сообщение, на которое отвечаем
+    copy: Object,    // сообщение, текст которого нужно скопировать
   },
   data() {
     return {
@@ -30,6 +33,11 @@ export default {
       const result = await this.client.wrapEmit("im.save", { channelId: this.channel.id, body: { text: this.message.trim() } });
       if (result.status == "OK") this.message = null;
     },
-  }
+  },
+  watch: {
+    copy() {
+      this.message = this.copy.body.text;
+    },
+  },
 };
 </script>

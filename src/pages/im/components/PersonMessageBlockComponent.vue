@@ -36,7 +36,7 @@ export default {
         y: 0,
         items: [
           { code: "answer", title: "Ответить", icon: "mdi-subdirectory-arrow-left", for: "all", disabled: true },
-          { code: "copy", title: "Копировать", icon: "mdi-content-copy", for: "all", disabled: true },
+          { code: "copy", title: "Копировать", icon: "mdi-content-copy", for: "all" },
           { code: "fix", title: "Закрепить", icon: "mdi-pin-outline", for: "all", disabled: true },
           { code: "edit", title: "Изменить", icon: "mdi-pencil-outline", for: "mine", disabled: true },
           { code: "claim", title: "Пожаловаться", icon: "mdi-car-brake-alert", for: "other", disabled: true },
