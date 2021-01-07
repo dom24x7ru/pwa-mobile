@@ -8,19 +8,14 @@
     <Message v-for="(message, index) in messages" :key="message.id" :message="message" :prevMessage="getPrevMessage(index)" @click-menu-item="action" />
     <span id="footer"></span>
     <br /><br /><br /><br />
-    <v-footer color="primary" :dark="true" :fixed="true">
-      <v-row>
-        <v-col cols="12">
-          <v-text-field v-model="message" label="Сообщение..." append-outer-icon="mdi-send" @keydown.enter="send" @click:append-outer="send" />
-        </v-col>
-      </v-row>
-    </v-footer>
+    <InputMessage :channel="channel" />
   </v-container>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
 import Message from "./components/MessageBlockComponent";
+import InputMessage from "./components/InputMessageComponent";
 
 export default {
   name: "IMMessagesPage",
@@ -29,7 +24,6 @@ export default {
       channelId: null,
       channel: null,
       messages: [],
-      message: null,
       more: false,
     };
   },
@@ -60,10 +54,12 @@ export default {
       for (let i = 0; i < this.messages.length; i++) {
         if (this.messages[i].id == message.data.id) {
           if (message.event == "destroy") {
-            this.messages.splice(i, 1);
-            this.channel.count--;
+            this.$nextTick(() => {
+              this.messages.splice(i, 1);
+              this.channel.count--;
+            });
           } else {
-            this.messages.splice(i, 1, message.data);
+            this.$nextTick(() => { this.messages.splice(i, 1, message.data); });
           }
           return;
         }
@@ -98,11 +94,6 @@ export default {
       if (index == 0) return null;
       else return this.messages[index - 1];
     },
-    async send() {
-      if (this.message == null || this.message.trim().length == 0) return;
-      const result = await this.client.wrapEmit("im.save", { channelId: this.channelId, body: { text: this.message.trim() } });
-      if (result.status == "OK") this.message = null;
-    },
     async onIntersect (entries) {
       if (entries[0].intersectionRatio > 0) {
         console.log("Необходимо загрузить еще пачку сообщений");
@@ -129,7 +120,7 @@ export default {
     },
   },
   components: {
-    Message,
+    Message, InputMessage,
   },
 };
 </script>
