@@ -5,12 +5,12 @@
         <v-list-item-content>
           <v-list-item-title>{{ channel.title }}</v-list-item-title>
           <v-list-item-subtitle v-if="channel.lastMessage">
-            {{ channel.lastMessage.person | showName }}
+            <span v-if="channel.lastMessage.person != null" class="blue--text">{{ channel.lastMessage.person | showName }}:</span>
             {{ channel.lastMessage.body.text }}
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-list-item-action-text v-if="channel.lastMessage">{{ channel.lastMessage.createdAt | dtFormat }}</v-list-item-action-text>
+          <v-list-item-action-text v-if="channel.lastMessage" class="text--disabled">{{ channel.lastMessage.createdAt | dtFormat }}</v-list-item-action-text>
         </v-list-item-action>
       </v-list-item>
     </v-list>
@@ -42,7 +42,7 @@ export default {
       const surname = profile.surname != null ? profile.surname : "";
       const midname = profile.midname != null ? profile.midname : "";
       const result = `${surname} ${name} ${midname}`;
-      return empty(result) ? `Сосед(ка) из кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}:` : `${result}:`;
+      return empty(result) ? `Сосед(ка) из кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}` : result;
     },
     dtFormat(value) {
       if (value == null) return "";

@@ -35,10 +35,10 @@ export default {
         x: 0,
         y: 0,
         items: [
-          { code: "answer", title: "Ответить", icon: "mdi-subdirectory-arrow-left", for: "all", disabled: true },
+          { code: "answer", title: "Ответить", icon: "mdi-subdirectory-arrow-left", for: "all" },
           { code: "copy", title: "Копировать", icon: "mdi-content-copy", for: "all" },
           { code: "fix", title: "Закрепить", icon: "mdi-pin-outline", for: "all", disabled: true },
-          { code: "edit", title: "Изменить", icon: "mdi-pencil-outline", for: "mine", disabled: true },
+          { code: "edit", title: "Изменить", icon: "mdi-pencil-outline", for: "mine" },
           { code: "claim", title: "Пожаловаться", icon: "mdi-car-brake-alert", for: "other", disabled: true },
           { code: "history", title: "История", icon: "mdi-history", for: "all", disabled: true },
           { code: "shown", title: "Просмотрено", icon: "mdi-account-multiple-outline", for: "all", disabled: true },
