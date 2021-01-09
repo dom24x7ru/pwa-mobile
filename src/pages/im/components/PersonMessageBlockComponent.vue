@@ -2,7 +2,10 @@
   <div class="text-body-2 text-left" @click="showMenu">
     <span v-if="!light" class="font-weight-bold blue--text"><br />{{ message.person | showName }}<br /></span>
     {{ message.body.text }}
-    <span class="text--disabled text-caption">{{ message.createdAt | formatDate }}</span>
+    <span class="text--disabled text-caption">
+      <span v-if="message.body.history != null && message.body.history.length != 0">исправлено</span>
+      {{ message.createdAt | formatDate }}
+    </span>
     <v-menu v-model="menu.show" :position-x="menu.x" :position-y="menu.y" absolute offset-y>
       <v-list dense>
         <v-list-item v-for="(item, index) in menuItems()" :key="index" @click="action(item.code)">
