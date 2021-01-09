@@ -1,6 +1,10 @@
 <template>
   <div class="text-body-2 text-left" @click="showMenu">
     <span v-if="!light" class="font-weight-bold blue--text"><br />{{ message.person | showName }}<br /></span>
+    <v-alert v-if="message.body.aMessage != null" class="text-body-2 mb-0" dense border="left" colored-border color="primary">
+      <span class="font-weight-bold blue--text">{{ message.body.aMessage.person | showName }}<br /></span>
+      {{ message.body.aMessage.body.text }}
+    </v-alert>
     {{ message.body.text }}
     <span class="text--disabled text-caption">
       <span v-if="message.body.history != null && message.body.history.length != 0">исправлено</span>

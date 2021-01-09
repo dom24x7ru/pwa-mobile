@@ -80,7 +80,7 @@ export default {
   watch: {
     msg() {
       if (this.msg == null) this.message = null;
-      else this.message = this.msg.body.text;
+      else if (this.action != "answer") this.message = this.msg.body.text;
     },
   },
 };
