@@ -44,8 +44,26 @@ export default {
   methods: {
     async send() {
       if (this.message == null || this.message.trim().length == 0) return;
-      const result = await this.client.wrapEmit("im.save", { channelId: this.channel.id, body: { text: this.message.trim() } });
-      if (result.status == "OK") this.message = null;
+      
+      let data = { channelId: this.channel.id, body: { text: this.message.trim() } };
+      if (this.action == "edit") {
+        // редактируем сообщение
+        data.messageId = this.msg.id;
+        data.body = JSON.parse(JSON.stringify(this.msg.body)); // копируем объект
+        data.body.text = this.message.trim();
+        if (data.body.history == null) data.body.history = [];
+        data.body.history.unshift({ createdAt: this.msg.updatedAt, text: this.msg.body.text });
+      }
+      if (this.action == "answer") {
+        // отвечаем на другое сообщение
+        data.body.aMessage = { id: this.msg.id, createdAt: this.msg.createdAt, text: this.msg.body.text };
+      }
+      
+      const result = await this.client.wrapEmit("im.save", data);
+      if (result.status == "OK") {
+        this.message = null;
+        this.close();
+      }
     },
     close() {
       this.$emit("cancel");
