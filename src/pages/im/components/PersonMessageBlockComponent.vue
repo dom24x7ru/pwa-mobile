@@ -1,14 +1,16 @@
 <template>
-  <div class="text-body-2 text-left" @click="showMenu">
+  <div :id="'msg' + message.id" class="text-body-2 text-left">
     <span v-if="!light" class="font-weight-bold blue--text"><br />{{ message.person | showName }}<br /></span>
-    <v-alert v-if="message.body.aMessage != null" class="text-body-2 mb-0" dense border="left" colored-border color="primary">
+    <v-alert v-if="message.body.aMessage != null" class="text-body-2 mb-0" dense border="left" colored-border color="primary" @click="goMessage(message.body.aMessage)">
       <span class="font-weight-bold blue--text">{{ message.body.aMessage.person | showName }}<br /></span>
       {{ message.body.aMessage.body.text }}
     </v-alert>
-    {{ message.body.text }}
-    <span class="text--disabled text-caption">
-      <span v-if="message.body.history != null && message.body.history.length != 0">исправлено</span>
-      {{ message.createdAt | formatDate }}
+    <span @click="showMenu">
+      {{ message.body.text }}
+      <span class="text--disabled text-caption">
+        <span v-if="message.body.history != null && message.body.history.length != 0">исправлено</span>
+        {{ message.createdAt | formatDate }}
+      </span>
     </span>
     <v-menu v-model="menu.show" :position-x="menu.x" :position-y="menu.y" absolute offset-y>
       <v-list dense>
@@ -80,6 +82,9 @@ export default {
     },
     action(code) {
       this.$emit("click-menu-item", code, this.message);
+    },
+    goMessage(message) {
+      this.$vuetify.goTo(`#msg${message.id}`);
     },
   },
   filters: {

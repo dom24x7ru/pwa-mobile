@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     title() {
-      return this.appName + " - " + this.pageName;
+      return this.pageName;
     },
     showNavBack() {
       switch (this.$route.name) {
@@ -71,7 +71,11 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.go(-1);
+      if (window.history.length == 0 && this.$route.name == "imMessages") {
+        this.$router.push("im");
+      } else {
+        this.$router.go(-1);
+      }
     },
     chat() {
       console.log("chat");
