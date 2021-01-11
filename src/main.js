@@ -77,11 +77,29 @@ client.on("faq", answer => {
 client.on("votes", vote => {
   store.commit("setVote", vote.data);
 });
+client.on("vote", vote => {
+  store.commit("setVote", vote.data);
+});
 client.on("imChannels", channel => {
   store.commit("setIMChannel", channel.data);
 });
+client.on("imChannel", channel => {
+  store.commit("setIMChannel", channel.data);
+});
 client.on("channel.ready", data => {
-  store.commit("setChannelsReady", { channel: data.name.split(".")[0], status: true });
+  const info = { channel: data.name.split(".")[0], status: true };
+  store.commit("setChannelsReady", info);
+  if (info.channel == "imChannels") {
+    // подписываемся на конкретные каналы групп, чтобы получать обновленную информацию по ним
+    for (let imChannel of store.state.imChannels) {
+      client.initChannel(`imChannel.${imChannel.id}`);
+    }
+  } else if (info.channel == "votes") {
+    // подписываемся на конкретные каналы голосования, чтобы получать обновленную информацию по ним
+    for (let vote of store.state.votes) {
+      client.initChannel(`vote.${vote.id}`);
+    }
+  }
 });
 store.commit("setClient", client);
 

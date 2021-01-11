@@ -133,7 +133,7 @@ export default {
       this.vote = this.getRndVote();
     },
     "changed.votes"() {
-      this.vote = this.getVote(this.vote.id);
+      if (this.vote != null) this.vote = this.getVote(this.vote.id);
     },
     "appCurrentVersion"() {
       if (this.version.number < this.appCurrentVersion.number) {
