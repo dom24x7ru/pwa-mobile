@@ -34,7 +34,7 @@ export default {
   computed: {
     channelName() {
       if (this.user == null) return null;
-      return `imMessages.${this.channelId}.${this.user.id}`;
+      return `imMessages.${this.channelId}`;
     },
     ...mapState(["client", "user", "ready"]),
     ...mapGetters(["getIMChannel"]),
