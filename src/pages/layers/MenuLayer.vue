@@ -22,8 +22,8 @@
       <!-- <v-divider></v-divider>
       <v-list-item to="/signin" @click="logout">
         <v-list-item-title>Выход</v-list-item-title>
-      </v-list-item>
-    </v-list> -->
+      </v-list-item> -->
+    </v-list>
   </v-menu>
 </template>
 
