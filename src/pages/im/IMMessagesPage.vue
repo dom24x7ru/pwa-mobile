@@ -39,9 +39,11 @@ export default {
     ...mapState(["client", "user", "ready"]),
     ...mapGetters(["getIMChannel"]),
   },
-  created() {
+  async created() {
     this.setTitle("...");
     this.channelId = this.$route.params.channelId;
+    const result = await this.client.wrapEmit("im.getMute", { channelId: this.channelId });
+    this.setIMChannelMute(result.mute);
     if (this.ready.imChannels) this.channel = this.getIMChannel(this.channelId);
     this.client.on("channel.ready", this.loadMessagesReady);
     this.client.on("imMessages", this.loadMessages);
@@ -126,7 +128,7 @@ export default {
       this.inputMessageProps.action = null;
       this.inputMessageProps.message = null;
     },
-    ...mapMutations(["setTitle"]),
+    ...mapMutations(["setTitle", "setIMChannelMute"]),
   },
   watch: {
     "ready.imChannels"() {

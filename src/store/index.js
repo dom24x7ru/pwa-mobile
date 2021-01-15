@@ -20,6 +20,7 @@ export default new Vuex.Store({
     faq: null,
     votes: null,
     imChannels: null,
+    imChannelMute: false,
     ready: {
       flats: false,
       posts: false,

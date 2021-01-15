@@ -5,6 +5,10 @@
     </v-btn>
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer></v-spacer>
+    <v-btn icon v-if="$route.name == 'imMessages'" @click="mute">
+      <v-icon v-if="imChannelMute">mdi-volume-variant-off</v-icon>
+      <v-icon v-else>mdi-volume-low</v-icon>
+    </v-btn>
     <MenuLayer />
     <template v-if="showFabBtnMenu" v-slot:extension>
       <FabBtnMenuLayer @chat="chat" @vote="vote" />
@@ -14,7 +18,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import MenuLayer from "@/pages/layers/MenuLayer";
 import FabBtnMenuLayer from "@/pages/layers/FabBtnMenuLayer";
 import Toast from "@/components/ToastComponent";
@@ -67,7 +71,7 @@ export default {
           return false;
       }
     },
-    ...mapState(["appName", "pageName"]),
+    ...mapState(["appName", "pageName", "imChannelMute", "client"]),
   },
   methods: {
     goBack() {
@@ -88,6 +92,13 @@ export default {
     toastClose() {
       this.toast.show = false;
     },
+    async mute() {
+      if (this.$route.name != "imMessages") return;
+      const channelId = this.$route.params.channelId;
+      const result = await this.client.wrapEmit("im.setMute", { channelId, mute: !this.imChannelMute });
+      if (result.mute != null) this.setIMChannelMute(result.mute);
+    },
+    ...mapMutations(["setIMChannelMute"]),
   },
   components: {
     MenuLayer, FabBtnMenuLayer, Toast,

@@ -83,6 +83,9 @@ export default {
     }
     state.imChannels.unshift(channel);
   },
+  setIMChannelMute(state, mute) {
+    state.imChannelMute = mute;
+  },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;
   }
