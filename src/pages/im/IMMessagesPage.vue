@@ -109,6 +109,10 @@ export default {
     action(code, message) {
       this[code](message);
     },
+    flat(message) {
+      if (message.person == null) return;
+      this.$router.push({ name: "flat", params: { flatNumber: message.person.flat.number } });
+    },
     copy(message) {
       this.inputMessageProps.action = "copy";
       this.inputMessageProps.message = message;

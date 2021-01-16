@@ -1,6 +1,6 @@
 <template>
   <div :id="'msg' + message.id" class="text-body-2 text-left">
-    <span v-if="!light" class="font-weight-bold blue--text"><br />{{ message.person | showName }}<br /></span>
+    <span v-if="!light" class="font-weight-bold blue--text" @click="showMenu"><br />{{ message.person | showName }}<br /></span>
     <v-alert v-if="message.body.aMessage != null" class="text-body-2 mb-0" dense border="left" colored-border color="primary" @click="goMessage(message.body.aMessage)">
       <span class="font-weight-bold blue--text">{{ message.body.aMessage.person | showName }}<br /></span>
       {{ message.body.aMessage.body.text }}
@@ -44,6 +44,7 @@ export default {
         x: 0,
         y: 0,
         items: [
+          { code: "flat", title: "Профиль", icon: "mdi-account-outline", for: "other" },
           { code: "answer", title: "Ответить", icon: "mdi-subdirectory-arrow-left", for: "all" },
           { code: "copy", title: "Копировать", icon: "mdi-content-copy", for: "all" },
           { code: "fix", title: "Закрепить", icon: "mdi-pin-outline", for: "all", disabled: true },
