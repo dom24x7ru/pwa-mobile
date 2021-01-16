@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card v-if="flat != null" color="#1F7087" dark>
+    <v-card v-if="flat != null" color="#1F7087" dark class="mb-2">
       <v-card-title>Квартира №{{ flat.number }}</v-card-title>
       <v-card-subtitle>
         Жильцов: {{ flat.residents.length }}<br />
@@ -16,6 +16,12 @@
             <v-icon v-if="resident.mobile != null" small>mdi-cellphone-android</v-icon> {{ resident.mobile | formatMobile }}<br />
             <v-icon v-if="resident.telegram != null" small>mdi-telegram</v-icon> <a :href="`https://t.me/${resident.telegram}`">{{ resident.telegram }}</a>
           </v-card-subtitle>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="sendMessage(resident)">
+              <v-icon>mdi-chat-outline</v-icon>
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -46,6 +52,10 @@ export default {
     if (residents != null) this.flat.residents = residents;
   },
   methods: {
+    async sendMessage(resident) {
+      const result = await this.client.wrapEmit("im.createPrivateChannel", { personId: resident.personId });
+      if (result.channelId != null) this.$router.push({ name: "imMessages", params: { channelId: result.channelId } });
+    },
     ...mapMutations(["setTitle"]),
   },
   filters: {
