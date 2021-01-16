@@ -45,9 +45,6 @@ export default {
     const result = await this.client.wrapEmit("im.getMute", { channelId: this.channelId });
     this.setIMChannelMute(result.mute);
     if (this.ready.imChannels) this.channel = this.getIMChannel(this.channelId);
-    this.client.on("channel.ready", this.loadMessagesReady);
-    this.client.on("imMessages", this.loadMessages);
-    if (this.channelName != null) this.client.initChannel(this.channelName);
   },
   destroyed() {
     // отписаться от канала чата
@@ -142,6 +139,8 @@ export default {
       this.setTitle(this.channel.title);
     },
     "channelName"() {
+      this.client.on("channel.ready", this.loadMessagesReady);
+      this.client.on("imMessages", this.loadMessages);
       if (this.channelName != null) this.client.initChannel(this.channelName);
     },
   },
