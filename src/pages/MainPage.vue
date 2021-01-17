@@ -75,6 +75,9 @@ export default {
       if (this.version.number < this.appCurrentVersion.number) {
         // версия устарела, отображаем сообщение, что нужно обновить приложение
         this.toast.show = true;
+      } else if (this.version.number == this.appCurrentVersion.number && this.version.build < this.appCurrentVersion.build ) {
+        // найдена более свежая сборка приложения
+        this.toast.show = true;
       }
     }
   },
