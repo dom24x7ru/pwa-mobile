@@ -3,9 +3,9 @@
     <v-list>
       <v-list-item v-for="channel of imChannels" :key="channel.id" :to="{ name: 'imMessages', params: { channelId: channel.id } }">
         <v-list-item-content>
-          <v-list-item-title>{{ channel.title }}</v-list-item-title>
+          <v-list-item-title>{{ showTitle(channel) }}</v-list-item-title>
           <v-list-item-subtitle v-if="channel.lastMessage">
-            <span v-if="channel.lastMessage.person != null" class="blue--text">{{ channel.lastMessage.person | showName }}:</span>
+            <span v-if="channel.lastMessage.person != null" class="blue--text">{{ showName(channel.lastMessage.person) }}:</span>
             {{ channel.lastMessage.body.text }}
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -24,15 +24,12 @@ import moment from "moment";
 export default {
   name: "IMChannelsPage",
   computed: {
-    ...mapState(["imChannels"]),
+    ...mapState(["user", "imChannels"]),
   },
   created() {
     this.setTitle("Чаты");
   },
   methods: {
-    ...mapMutations(["setTitle"]),
-  },
-  filters: {
     showName(profile) {
       const empty = value => value == null || value.trim().length == 0;
 
@@ -44,6 +41,22 @@ export default {
       const result = `${surname} ${name} ${midname}`;
       return empty(result) ? `Сосед(ка) из кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}` : result;
     },
+    showTitle(channel) {
+      if (channel == null) return "";
+      if (channel.title != null && channel.title.trim().length != 0) return channel.title;
+      if (channel.private) {
+        for (let person of channel.persons) {
+          if (person.id != this.user.person.id) {
+            return this.showName(person);
+          }
+        }
+        return "Приватный чат";
+      }
+      return "Чат без названия";
+    },
+    ...mapMutations(["setTitle"]),
+  },
+  filters: {
     dtFormat(value) {
       if (value == null) return "";
       return moment(value).fromNow();

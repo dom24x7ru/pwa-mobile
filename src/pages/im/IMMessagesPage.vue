@@ -129,6 +129,30 @@ export default {
       this.inputMessageProps.action = null;
       this.inputMessageProps.message = null;
     },
+    showName(profile) {
+      const empty = value => value == null || value.trim().length == 0;
+
+      if (profile == null) return "";
+      const flat = profile.flat;
+      const name = profile.name != null ? profile.name : "";
+      const surname = profile.surname != null ? profile.surname : "";
+      const midname = profile.midname != null ? profile.midname : "";
+      const result = `${surname} ${name} ${midname}`;
+      return empty(result) ? `Сосед(ка) из кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}` : result;
+    },
+    showTitle(channel) {
+      if (channel == null) return "";
+      if (channel.title != null && channel.title.trim().length != 0) return channel.title;
+      if (channel.private) {
+        for (let person of channel.persons) {
+          if (person.id != this.user.person.id) {
+            return this.showName(person);
+          }
+        }
+        return "Приватный чат";
+      }
+      return "Чат без названия";
+    },
     ...mapMutations(["setTitle", "setIMChannelMute"]),
   },
   watch: {
@@ -136,7 +160,7 @@ export default {
       this.channel = this.getIMChannel(this.channelId);
     },
     "channel"() {
-      this.setTitle(this.channel.title);
+      this.setTitle(this.showTitle(this.channel));
     },
     "channelName"() {
       this.client.on("channel.ready", this.loadMessagesReady);
