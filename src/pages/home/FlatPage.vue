@@ -47,11 +47,14 @@ export default {
   },
   async created() {
     this.setTitle(`кв. ${this.flatNumber}`);
-    if (this.ready.flats) this.flat = this.getFlat(this.flatNumber);
-    const residents = await this.client.wrapEmit("flat.info", { flatNumber: this.flatNumber });
-    if (residents != null) this.flat.residents = residents;
+    if (this.ready.flats) await this.loadFlatInfo();
   },
   methods: {
+    async loadFlatInfo() {
+      this.flat = this.getFlat(this.flatNumber);
+      const residents = await this.client.wrapEmit("flat.info", { flatNumber: this.flatNumber });
+      if (residents != null) this.flat.residents = residents;
+    },
     async sendMessage(resident) {
       const result = await this.client.wrapEmit("im.createPrivateChannel", { personId: resident.personId });
       if (result.channelId != null) this.$router.push({ name: "imMessages", params: { channelId: result.channelId } });
@@ -74,8 +77,8 @@ export default {
     },
   },
   watch: {
-    "ready.flats"() {
-      this.flat = this.getFlat(this.flatNumber);
+    async "ready.flats"() {
+      await this.loadFlatInfo();
     },
   },
 };
