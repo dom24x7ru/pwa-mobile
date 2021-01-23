@@ -20,15 +20,24 @@ const client = new SocketClient({
   secure: true,
 });
 // const client = new SocketClient({ port: 8000 });
-client.on("login", data => {
+client.on("login", async (data) => {
   console.log("emit login");
   store.commit("setUser", data.user);
-  client.wrapEmit("version.current").then(version => {
-    store.commit("setAppCurrentVertion", version);
-  });
-  if (router.currentRoute.name == "auth") {
-    router.push("/");
+  
+  const version = await client.wrapEmit("version.current");
+  if (version.status == "ERROR") {
+    if (version.message == "BANNED" || version.message == "DELETED") {
+      await client.wrapEmit("user.logout");
+      store.commit("setUser", null);
+      if (router.currentRoute.name != "auth") {
+        router.push("/signin");
+        return;
+      }
+    }
   }
+  store.commit("setAppCurrentVertion", version);
+  
+  if (router.currentRoute.name == "auth") router.push("/");
 });
 client.on("logout", () => {
   console.log("emit logout");
