@@ -16,7 +16,7 @@
             <v-icon v-if="resident.mobile != null" small>mdi-cellphone-android</v-icon> {{ resident.mobile | formatMobile }}<br />
             <v-icon v-if="resident.telegram != null" small>mdi-telegram</v-icon> <a :href="`https://t.me/${resident.telegram}`">{{ resident.telegram }}</a>
           </v-card-subtitle>
-          <v-card-actions>
+          <v-card-actions v-if="!resident.deleted">
             <v-spacer></v-spacer>
             <v-btn icon @click="sendMessage(resident)">
               <v-icon>mdi-chat-outline</v-icon>
@@ -65,6 +65,7 @@ export default {
     fio(profile) {
       const empty = value => value == null || value.trim().length == 0;
       if (profile == null) return "";
+      if (profile.deleted) return "Удаленный аккаунт";
       const name = profile.name != null ? profile.name : "";
       const surname = profile.surname != null ? profile.surname : "";
       const midname = profile.midname != null ? profile.midname : "";
