@@ -141,6 +141,7 @@ export default class SocketClient extends EventEmitter {
     let channels = [
       `user.${this.user.id}`,
       "all.posts", "all.flats", "all.invites",
+      "pinnedPosts",
       `imChannels.${this.user.id}`,
       "instructions",
       `votes.${this.user.id}`,

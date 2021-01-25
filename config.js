@@ -1,7 +1,7 @@
 const config = {
   version: {
-    number: 12,
-    build: 5,
+    number: 13,
+    build: 1,
   }
 };
 

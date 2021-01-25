@@ -71,6 +71,9 @@ client.on("flats", flat => {
 client.on("posts", post => {
   store.commit("setPost", post.data);
 });
+client.on("pinnedPosts", post => {
+  store.commit("setPinnedPost", post.data);
+});
 client.on("invites", invite => {
   store.commit("setInvite", invite.data);
 });

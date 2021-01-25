@@ -41,6 +41,7 @@ export default {
   },
   created() {
     this.setTitle("Инструкции");
+    if (this.ready.instructions) this.init();
   },
   updated() {
     if (this.ready.instructions) this.init();
@@ -49,7 +50,10 @@ export default {
     init() {
       if (this.instrId == null) return;
       for (let instr of this.instructions) {
-        if (instr.id == this.instrId) this.instruction = instr;
+        if (instr.id == this.instrId) {
+          this.instruction = instr;
+          this.setTitle(this.instruction.title);
+        }
       }
     },
     ...mapMutations(["setTitle"]),

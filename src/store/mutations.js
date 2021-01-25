@@ -37,6 +37,11 @@ export default {
     const posts = state.posts.filter(item => item.id == post.id);
     if (posts.length == 0) state.posts.unshift(post);
   },
+  setPinnedPost(state, post) {
+    if (state.pinnedPosts == null) state.pinnedPosts = [];
+    const posts = state.pinnedPosts.filter(item => item.id == post.id);
+    if (posts.length == 0) state.pinnedPosts.unshift(post);
+  },
   setInstruction(state, instruction) {
     if (state.instructions == null) state.instructions = [];
     const instructions = state.instructions.filter(item => item.id == instruction.id);

@@ -1,6 +1,16 @@
 <template>
   <v-container fluid>
     <v-row dense>
+      <v-col v-for="post of pinnedPosts" :key="post.id" cols="12">
+        <v-card dark color="red" elevation="0" :to="post.url">
+          <v-card-subtitle>
+            <v-icon left>{{ postTypeIcon(post).icon }}</v-icon>
+            <span class="font-weight-medium text-uppercase">{{ post.title }}</span><br />
+            <span>{{ post.createdAt | formatDate }}</span>
+          </v-card-subtitle>
+          <v-card-text>{{ post.body }}</v-card-text>
+        </v-card>
+      </v-col>
       <v-col v-if="vote != null" cols="12">
         <v-card dark color="#952175" :to="{ name: 'vote', params: { voteId: vote.id } }">
           <v-card-subtitle>
@@ -59,7 +69,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["posts", "ready", "changed", "client", "appCurrentVersion"]),
+    ...mapState(["posts", "pinnedPosts", "ready", "changed", "client", "appCurrentVersion"]),
     ...mapGetters(["getRndVote"]),
   },
   created() {
@@ -88,6 +98,7 @@ export default {
       if (post.type == "document") return { icon: "mdi-file", color: "purple darken-2" };
       if (post.type == "faq") return { icon: "mdi-lightbulb", color: "yellow accent-3" };
       if (post.type == "holiday") return { icon: "mdi-party-popper", color: "orange darken-2" }
+      if (post.type == "attention") return { icon: "mdi-alert-decagram-outline", color: "red darken-2" }
       return { icon: "mdi-twitter", color: "orange darken-2" };
     },
     subscribe() {

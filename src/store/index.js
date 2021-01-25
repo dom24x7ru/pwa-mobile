@@ -14,6 +14,7 @@ export default new Vuex.Store({
     user: null,
     flats: null,
     posts: null,
+    pinnedPosts: null,
     instructions: null,
     invites: null,
     documents: null,
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     ready: {
       flats: false,
       posts: false,
+      pinnedPosts: false,
       instructions: false,
       invites: false,
       documents: false,
