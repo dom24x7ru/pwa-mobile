@@ -33,26 +33,38 @@ export default {
     return null;
   },
   getFlatsStat: state => () => {
-    let stat = { flats: 0, busy: 0, persons: 0, sections: {} };
+    let stat = { flats: 0, busy: 0, persons: 0, squares: 0, busySquares: 0, sections: {} };
     if (state.flats == null) return stat;
     
     for (let flat of state.flats) {
       // общая статистика
       stat.flats++;
-      if (flat.residents.length != 0) stat.busy++;
+      if (flat.residents.length != 0) {
+        stat.busy++;
+        stat.busySquares += flat.square;
+      }
       stat.persons += flat.residents.length;
+      stat.squares += flat.square;
       
       // статистика по секциям
-      if (stat.sections[flat.section] == null) stat.sections[flat.section] = { flats: 0, busy: 0, persons: 0, floors: {} };
+      if (stat.sections[flat.section] == null) stat.sections[flat.section] = { flats: 0, busy: 0, persons: 0, squares: 0, busySquares: 0, floors: {} };
       stat.sections[flat.section].flats++;
-      if (flat.residents.length != 0) stat.sections[flat.section].busy++;
+      if (flat.residents.length != 0) {
+        stat.sections[flat.section].busy++;
+        stat.sections[flat.section].busySquares += flat.square;
+      }
       stat.sections[flat.section].persons += flat.residents.length;
+      stat.sections[flat.section].squares += flat.square;
 
       // статистика по этажам
-      if (stat.sections[flat.section].floors[flat.floor] == null) stat.sections[flat.section].floors[flat.floor] = { flats: 0, busy: 0, persons: 0 };
+      if (stat.sections[flat.section].floors[flat.floor] == null) stat.sections[flat.section].floors[flat.floor] = { flats: 0, busy: 0, persons: 0, squares: 0, busySquares: 0 };
       stat.sections[flat.section].floors[flat.floor].flats++;
-      if (flat.residents.length != 0) stat.sections[flat.section].floors[flat.floor].busy++;
+      if (flat.residents.length != 0) {
+        stat.sections[flat.section].floors[flat.floor].busy++;
+        stat.sections[flat.section].floors[flat.floor].busySquares += flat.square;
+      }
       stat.sections[flat.section].floors[flat.floor].persons += flat.residents.length;
+      stat.sections[flat.section].floors[flat.floor].squares += flat.square;
     }
 
     return stat;
