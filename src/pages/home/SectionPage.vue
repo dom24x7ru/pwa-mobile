@@ -1,13 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card color="#1F7087" dark>
-      <v-card-title>Статистика</v-card-title>
-      <v-card-subtitle v-if="stat != null">
-        Квартир: {{ stat.flats }}<br />
-        Заселено: {{ stat.busy }} ({{ (stat.busy / stat.flats * 100).toFixed(2) }}%)<br />
-        Жильцов: {{ stat.persons }}
-      </v-card-subtitle>
-    </v-card>
+    <HomeStat :stat="stat" />
     <v-row dense>
       <v-col v-for="item in getFloors(sectionId)" :key="item.floor" cols="12">
         <v-card :to="{ name: 'floor', params: { sectionId, floorId: item.floor } }">
@@ -17,15 +10,6 @@
             Заселено: <span v-if="stat != null">{{ stat.floors[item.floor].busy }} ({{ (stat.floors[item.floor].busy / stat.floors[item.floor].flats * 100).toFixed(2) }}%)</span><br />
             Жильцов: <span v-if="stat != null">{{ stat.floors[item.floor].persons }}</span>
           </v-card-subtitle>
-          <!-- <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn icon @click="vote">
-              <v-icon>mdi-ballot-outline</v-icon>
-            </v-btn>
-            <v-btn icon @click="chat">
-              <v-icon>mdi-chat-outline</v-icon>
-            </v-btn>
-          </v-card-actions> -->
         </v-card>
       </v-col>
     </v-row>
@@ -37,6 +21,7 @@
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
 import Toast from "@/components/ToastComponent";
+import HomeStat from "./components/HomeStatComponent";
 
 export default {
   name: "SectionsPage",
@@ -80,7 +65,7 @@ export default {
     },
   },
   components: {
-    Toast,
+    Toast, HomeStat
   },
 };
 </script>
