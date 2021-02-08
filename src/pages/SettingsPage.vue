@@ -5,12 +5,12 @@
     <v-text-field v-model="midname" label="Отчество" required />
     <v-text-field
       v-model="flat.number"
-      label="Выберите свою квартиру"
+      label="Введите номер квартиры"
       :hint="flat.hint"
       :error-messages="flat.errors" 
       persistent-hint
       required
-      :disabled="!ready.flats" />
+      :disabled="!ready.flats || flat != null" />
     <v-text-field prefix="@" v-model="telegram" label="Аккаунт в телеграм" />
     <span class="text-subtitle-1">Настройки приватности</span><br />
     <span class="text-subtitle-2">Отображение имени</span>

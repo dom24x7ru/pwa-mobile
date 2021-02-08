@@ -12,6 +12,10 @@ export default {
     state.flats = flats;
     state.ready.flats = true;
   },
+  setHouse(state, house) {
+    state.house = house;
+    state.ready.house = true;
+  },
   setFlat(state, flat) {
     if (state.flats == null) state.flats = [];
     const flats = state.flats.filter(item => item.number == flat.number);

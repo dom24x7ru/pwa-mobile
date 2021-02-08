@@ -1,6 +1,14 @@
 <template>
   <v-container fluid>
-    <HomeStat :stat="stat" />
+    <HomeStat :stat="stat" :extra="house != null">
+      <template v-if="house != null">
+        Общая площадь: {{ house.extra.square.total }} кв. м. (заселено {{ ((stat != null ? stat.busySquares : 0) / house.extra.square.total * 100).toFixed(2) }}%)<br />
+        Площадь квартир (БТИ): {{ house.extra.square.flats }} кв. м.<br />
+        Подземная автостоянка: {{ house.extra.square.parking }} кв. м.<br />
+        Нежилые помещения: {{ house.extra.square.nonresidential }} кв. м.<br />
+        Кладовые помещения: {{ house.extra.square.pantries }} кв. м.
+      </template>
+    </HomeStat>
     <v-row dense>
       <v-col v-for="item in getSections()" :key="item.section" cols="12">
         <v-card :to="{ name: 'section', params: { sectionId: item.section } }">
@@ -36,7 +44,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["ready"]),
+    ...mapState(["ready", "house"]),
     ...mapGetters(["getSections", "getFlatsStat"]),
   },
   created() {
