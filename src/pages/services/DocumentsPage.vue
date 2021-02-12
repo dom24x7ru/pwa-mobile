@@ -1,13 +1,16 @@
 <template>
   <v-container fluid>
-    <v-list dense three-line>
-      <v-list-item v-for="doc of documents" :key="doc.id" :href="doc.url">
-        <v-list-item-content>
-          <v-list-item-title>{{ doc.title }}</v-list-item-title>
-          <v-list-item-subtitle v-if="doc.annotation != null">{{ doc.annotation }}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    <v-row dense>
+      <v-col v-for="doc of documents" :key="doc.id" cols="12">
+        <v-card :href="doc.url">
+          <v-card-subtitle>
+            <v-icon left>mdi-file</v-icon>
+            <span class="font-weight-medium text-uppercase">{{ doc.title }}</span><br />
+          </v-card-subtitle>
+          <v-card-text v-if="doc.annotation != null">{{ doc.annotation }}</v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
     <br /><br />
   </v-container>
 </template>

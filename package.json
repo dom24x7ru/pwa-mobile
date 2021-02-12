@@ -1,6 +1,6 @@
 {
   "name": "dom24x7-mobile",
-  "version": "14.0.3",
+  "version": "15.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
