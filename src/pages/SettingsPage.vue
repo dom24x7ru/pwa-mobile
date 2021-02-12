@@ -10,7 +10,7 @@
       :error-messages="flat.errors" 
       persistent-hint
       required
-      :disabled="!ready.flats || flat != null" />
+      :disabled="btnDisabled()" />
     <v-text-field prefix="@" v-model="telegram" label="Аккаунт в телеграм" />
     <span class="text-subtitle-1">Настройки приватности</span><br />
     <span class="text-subtitle-2">Отображение имени</span>
@@ -137,6 +137,10 @@ export default {
     },
     getHint(flat) {
       return `кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}`;
+    },
+    btnDisabled() {
+      const result = !this.ready.flats;
+      return result;
     },
     ...mapMutations(["setTitle", "setPerson", "setResident"]),
   },
