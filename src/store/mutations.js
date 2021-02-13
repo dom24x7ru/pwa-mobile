@@ -70,6 +70,11 @@ export default {
     const faq = state.faq.filter(item => item.id == answer.id);
     if (faq.length == 0) state.faq.push(answer);
   },
+  setRecommendations(state, recommendation) {
+    if (state.recommendations == null) state.recommendations = [];
+    const recommendations = state.recommendations.filter(item => item.id == recommendation.id);
+    if (recommendations.length == 0) state.recommendations.push(recommendation);
+  },
   setVote(state, vote) {
     if (state.votes == null) state.votes = [];
     for (let i = 0; i < state.votes.length; i++) {

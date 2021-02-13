@@ -89,6 +89,9 @@ client.on("documents", document => {
 client.on("faq", answer => {
   store.commit("setFAQ", answer.data);
 });
+client.on("recommendations", recommendation => {
+  store.commit("setRecommendation", recommendation.data);
+});
 client.on("votes", vote => {
   store.commit("setVote", vote.data);
 });

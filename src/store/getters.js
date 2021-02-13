@@ -99,6 +99,27 @@ export default {
     if (categoryId == null) return state.faq;
     return state.faq.filter(item => item.category.id == categoryId);
   },
+  getRecommendationsCount: state => (categoryId) => {
+    if (state.recommendations == null) return 0;
+    if (categoryId == null) return state.recommendations.length;
+    return state.recommendations.filter(item => item.category.id == categoryId).length;
+  },
+  getRecommendationCategories: state => () => {
+    if (state.recommendations == null) return [];
+    let categories = {};
+    for (let recommendation of state.recommendations) {
+      categories[recommendation.category.id] = {
+        id: recommendation.category.id,
+        name: recommendation.category.name
+      };
+    }
+    return categories;
+  },
+  getRecommendationList: state => (categoryId) => {
+    if (state.recommendations == null) return [];
+    if (categoryId == null) return state.recommendations;
+    return state.recommendations.filter(item => item.category.id == categoryId);
+  },
   getVotesCount: state => () => {
     if (state.votes == null) return 0;
     return state.votes.length;

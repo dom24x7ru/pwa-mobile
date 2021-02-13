@@ -18,6 +18,11 @@ import VoteCreatePage from "@/pages/services/vote/VoteCreatePage";
 import FAQCategoryPage from "@/pages/services/faq/FAQCategoryPage";
 import FAQListPage from "@/pages/services/faq/FAQListPage";
 
+import RecommendationCategoryPage from "@/pages/services/recommendation/RecommendationCategoryPage";
+import RecommendationListPage from "@/pages/services/recommendation/RecommendationListPage";
+import RecommendationPage from "@/pages/services/recommendation/RecommendationPage";
+import RecommendationCreatePage from "@/pages/services/recommendation/RecommendationCreatePage";
+
 import SectionsPage from "@/pages/home/SectionsPage";
 import SectionPage from "@/pages/home/SectionPage";
 import FloorPage from "@/pages/home/FloorPage";
@@ -50,6 +55,11 @@ export default new Router({
 
     { path: "/faq", name: "faq", component: FAQCategoryPage },
     { path: "/faq/:categoryId", name: "faqCategory", component: FAQListPage },
+
+    { path: "/recommendations", name: "recommendations", component: RecommendationCategoryPage },
+    { path: "/recommendations/:categoryId", name: "recommendationCategory", component: RecommendationListPage },
+    { path: "/recommendation/:recommendationId", name: "recommendation", component: RecommendationPage },
+    { path: "/recommendation/create", name: "recommendationCreate", component: RecommendationCreatePage },
 
     { path: "/sections", name: "sections", component: SectionsPage },
     { path: "/section/:sectionId/floors", name: "section", component: SectionPage },

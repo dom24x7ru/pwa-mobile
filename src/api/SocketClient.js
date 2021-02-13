@@ -146,7 +146,8 @@ export default class SocketClient extends EventEmitter {
       "instructions",
       `votes.${this.user.id}`,
       "documents",
-      "faq"
+      "faq",
+      "recommendations"
     ];
     return channels;
   }
