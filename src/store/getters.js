@@ -99,6 +99,13 @@ export default {
     if (categoryId == null) return state.faq;
     return state.faq.filter(item => item.category.id == categoryId);
   },
+  getRecommendation: state => (recommendationId) => {
+    if (state.recommendations == null) return null;
+    for (let recommendation of state.recommendations) {
+      if (recommendation.id == recommendationId) return recommendation;
+    }
+    return null;
+  },
   getRecommendationsCount: state => (categoryId) => {
     if (state.recommendations == null) return 0;
     if (categoryId == null) return state.recommendations.length;
@@ -110,7 +117,8 @@ export default {
     for (let recommendation of state.recommendations) {
       categories[recommendation.category.id] = {
         id: recommendation.category.id,
-        name: recommendation.category.name
+        name: recommendation.category.name,
+        img: recommendation.category.img
       };
     }
     return categories;
