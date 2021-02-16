@@ -8,7 +8,7 @@
     <v-row dense>
       <v-col v-for="category in getRecommendationCategories()" :key="category.id" cols="12">
         <v-card :to="{ name: 'recommendationCategory', params: { categoryId: category.id } }">
-          <v-img :src="category.img" class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
+          <v-img :src="category.img" class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="150px">
             <v-card-title>{{ category.name }}</v-card-title>
           </v-img>
         </v-card>
