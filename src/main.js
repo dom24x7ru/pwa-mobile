@@ -14,12 +14,23 @@ moment.locale("ru");
 const PRODUCTION_MODE = true;
 Vue.config.productionTip = PRODUCTION_MODE
 
+// production
 const client = new SocketClient({
   port: 443,
   hostname: "dom24x7-backend.nl.yapahost.ru",
   secure: true,
 });
+
+// development
+// const client = new SocketClient({
+//   port: 8000,
+//   hostname: "136.144.31.27",
+//   // secure: true,
+// });
+
+// local
 // const client = new SocketClient({ port: 8000 });
+
 client.on("login", async (data) => {
   console.log("emit login");
   store.commit("setUser", data.user);
