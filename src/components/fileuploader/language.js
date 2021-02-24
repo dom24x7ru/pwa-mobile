@@ -1,4 +1,34 @@
 export default {
+  ru: {
+    insertFile: "Добавление файла",
+    insertNewFile: "Добавление нового файла",
+    add: "Добавить",
+    delete: "Удалить",
+    edit: "Редактировать",
+    deleteDialog: {
+      message: "Вы действительно хотите удалить этот файл?",
+      cancel: "отмена"
+    },
+    table: {
+      thumb: "Миниатюра",
+      name: "Название",
+      size: "Размер",
+      tags: "тэги",
+      action: {
+        action: "Действия",
+        deleteTooltip: "Удаление"
+      }
+    },
+    size: {
+      kb: "Кб",
+      mb: "Мб"
+    },
+    maxFileSizeAlert: "Максимальный размер файла",
+    maxFileCountAlert: "Максимальное количество файлов",
+    fileName: "Название файла",
+    fileDescription: "Описание файла",
+    fileTags: "Тэги файла"
+  },
   en: {
     insertFile: "Insert File",
     insertNewFile: "Insert New File",
