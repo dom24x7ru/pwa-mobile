@@ -102,5 +102,11 @@ export default {
   },
   setChannelsReady(state, { channel, status }) {
     state.ready[channel] = status;
-  }
+  },
+  setFiles(state, files) {
+    state.files = files;
+  },
+  clearFiles(state) {
+    state.files = [];
+  },
 };

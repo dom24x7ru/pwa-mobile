@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <handy-uploader
-      :documentAttachment.sync="registryDocFile"
+      :documentAttachment.sync="uploadFiles"
       :fileUploaderType="'thumbnail'"
       :cardType= "'outlined'"
       :maxFileSize="10240"
@@ -17,18 +17,29 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 import handyUploader from "@/components/fileuploader";
 
 export default {
   name: "FileUploaderPage",
   data() {
     return {
-      registryDocFile: [],
+      uploadFiles: [],
     };
   },
+  computed: {
+    ...mapState(["files"]),
+  },
+  created() {
+    this.setTitle("Загрузка файлов");
+    this.uploadFiles = this.files;
+  },
+  methods: {
+    ...mapMutations(["setFiles", "setTitle"]),
+  },
   watch: {
-    registryDocFile() {
-      console.log(this.registryDocFile);
+    uploadFiles() {
+      this.setFiles(this.uploadFiles);
     }
   },
   components: {

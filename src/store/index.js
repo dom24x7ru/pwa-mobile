@@ -42,6 +42,7 @@ export default new Vuex.Store({
       votes: 0,
       imChannels: 0,
     },
+    files: [], // хранил файл, которые мы загрузили в приложение для дальнейшего сохраниения на сервере
   },
   getters,
   mutations,

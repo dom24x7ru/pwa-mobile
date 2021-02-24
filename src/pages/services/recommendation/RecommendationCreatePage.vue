@@ -10,7 +10,8 @@
     <v-text-field v-model="recommendation.extra.address" label="Адрес" prepend-icon="mdi-map-marker-outline" />
     <v-text-field v-model="recommendation.extra.instagram" label="Инстаграм" prepend-icon="mdi-instagram" prefix="@" />
     <v-text-field v-model="recommendation.extra.telegram" label="Телеграм" prepend-icon="mdi-telegram" prefix="@" />
-    <br />
+    <router-link to="/upload">загрузить картирки</router-link>
+    <br /><br />
     <v-btn x-large color="success" dark @click="save">Сохранить</v-btn>
     <br /><br /><br /><br />
     <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toast.show = !toast.show" />
@@ -37,7 +38,8 @@ export default {
           address: null,
           instagram: null,
           telegram: null,
-        }
+        },
+        files: []
       },
       categories: [],
       toast: {
@@ -51,7 +53,7 @@ export default {
     recommendationId() {
       return this.$route.params.recommendationId;
     },
-    ...mapState(["client"]),
+    ...mapState(["client", "files"]),
     ...mapGetters(["getRecommendation"])
   },
   async created() {
@@ -84,10 +86,13 @@ export default {
     },
     async save() {
       console.log("сохранение рекомендации");
+      this.recommendation.files = this.files;
       console.log(this.recommendation);
       const result = await this.client.wrapEmit("recommendation.save", this.recommendation);
       console.log(result);
       if (result.status == "OK") {
+        this.clearFiles();
+        this.recommendation.id = result.recommendation.id;
         this.toast.text = "Успешно сохранили";
         this.toast.color = "success";
         this.toast.show = true;
@@ -99,7 +104,7 @@ export default {
         console.error(this.toast.text);
       }
     },
-    ...mapMutations(["setTitle"]),
+    ...mapMutations(["setTitle", "clearFiles"]),
   },
   components: {
     Toast
