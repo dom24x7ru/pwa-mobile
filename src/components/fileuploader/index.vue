@@ -1335,12 +1335,7 @@
     <!--Insert New Document Dialog End-------------------------------------------------------------------->
     <!--Update Document Dialog Start---------------------------------------------------------------------->
     <v-row justify="center">
-      <v-dialog
-        v-model="editDocumentDialog"
-        :scrollable="false"
-        persistent
-        width="50%"
-      >
+      <v-dialog v-model="editDocumentDialog" :scrollable="false" persistent>
         <v-card>
           <v-card-title>
             <v-icon @click="editDocumentDialog = false">mdi-close</v-icon>
@@ -1549,7 +1544,7 @@
     <!--File Uploader SnackBar Alert Start -->
     <!--DELETE Dialog End----------------------------------------------------------START---->
     <v-row justify="center">
-      <v-dialog v-model="deleteDocumentDialog" persistent width="30%">
+      <v-dialog v-model="deleteDocumentDialog" persistent>
         <v-card>
           <v-card-title>
             <v-icon color="red"></v-icon>

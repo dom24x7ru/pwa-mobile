@@ -34,6 +34,8 @@ import SettingsPage from "@/pages/SettingsPage";
 import AuthPage from "@/pages/AuthPage";
 import InvitePage from "@/pages/InvitePage";
 
+import FileUploaderPage from "@/pages/FileUploaderPage";
+
 Vue.use(Router);
 
 export default new Router({
@@ -72,6 +74,8 @@ export default new Router({
     { path: "/invite", name: "invite", component: InvitePage },
     { path: "/settings", name: "settings", component: SettingsPage },
     { path: "/signin", name: "auth", component: AuthPage },
+
+    { path: "/upload", name: "uploader", component: FileUploaderPage },
   ],
   scrollBehavior() {
     return { x: 0, y: 0 }
