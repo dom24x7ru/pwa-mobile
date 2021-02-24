@@ -25,7 +25,6 @@ const client = new SocketClient({
 // const client = new SocketClient({
 //   port: 8000,
 //   hostname: "136.144.31.27",
-//   // secure: true,
 // });
 
 // local
