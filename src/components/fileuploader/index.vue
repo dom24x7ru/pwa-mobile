@@ -1833,6 +1833,7 @@ export default {
     if (this.rtlSupport) this.changeRTL();
     this.setLang();
     this.setCardTheme();
+    this.registryDocFile = this.documentAttachment;
   },
   destroyed() {
     this.registryDocFile = [];
