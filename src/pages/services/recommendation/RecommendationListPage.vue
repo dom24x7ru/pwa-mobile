@@ -41,6 +41,9 @@
           <v-divider class="mx-4" />
           <v-card-text>
             <div v-html="html(recommendation.body)" />
+            <v-carousel cycle height="200" v-if="recommendation.extra.files != null && recommendation.extra.files.length != 0">
+              <v-carousel-item v-for="(img, i) in recommendation.extra.files" :key="i" :src="img" />
+            </v-carousel>
           </v-card-text>
           <v-card-actions v-if="owner">
               <v-spacer></v-spacer>
