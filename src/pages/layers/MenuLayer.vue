@@ -7,17 +7,17 @@
     </template>
     <v-list>
       <v-list-item to="/about">
-        <v-list-item-title>О приложении</v-list-item-title>
+        <v-list-item-title>{{ $t("about.title") }}</v-list-item-title>
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item to="/profile">
-        <v-list-item-title>Профиль</v-list-item-title>
+        <v-list-item-title>{{ $t("profile.title") }}</v-list-item-title>
       </v-list-item>
       <v-list-item to="/invite">
-        <v-list-item-title>Пригласить</v-list-item-title>
+        <v-list-item-title>{{ $t("invite.title") }}</v-list-item-title>
       </v-list-item>
       <v-list-item to="/settings">
-        <v-list-item-title>Настройки</v-list-item-title>
+        <v-list-item-title>{{ $t("settings.title") }}</v-list-item-title>
       </v-list-item>
       <!-- <v-divider></v-divider>
       <v-list-item to="/signin" @click="logout">

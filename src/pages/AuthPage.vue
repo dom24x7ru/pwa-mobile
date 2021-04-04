@@ -4,9 +4,9 @@
       <v-container v-if="!showSmsCodeForm">
         <v-row>
           <v-col>
-            <v-text-field v-model="mobile" prefix="+7" :rules="phoneRules" :counter="10" label="Ваш номер телефона" required />
-            <v-text-field v-if="isReg" v-model="mobile2" prefix="+7" :rules="[checkPhone]" :counter="10" label="Повторно ваш номер телефона" required />
-            <v-text-field v-if="isReg" v-model="invite" :counter="6" label="Введите код приглашения" required />
+            <v-text-field v-model="mobile" prefix="+7" :rules="phoneRules" :counter="10" :label="$t('security.mobile.first')" required />
+            <v-text-field v-if="isReg" v-model="mobile2" prefix="+7" :rules="[checkPhone]" :counter="10" :label="$t('security.mobile.second')" required />
+            <v-text-field v-if="isReg" v-model="invite" :counter="6" :label="$t('security.reg.invite')" required />
           </v-col>
         </v-row>
         <v-row class="text-center">
@@ -24,12 +24,12 @@
       <v-container v-else>
         <v-row>
           <v-col>
-            <v-text-field v-model="smsCode" :rules="smsCodeRules" :counter="4" label="СМС код" required />
+            <v-text-field v-model="smsCode" :rules="smsCodeRules" :counter="4" :label="$t('security.auth')" required />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <v-btn x-large color="primary" dark @click="sendSmsCode">Отправить</v-btn>
+            <v-btn x-large color="primary" dark @click="sendSmsCode">{{ $t("security.auth.send") }}</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -50,25 +50,23 @@ export default {
       mobile2: null,
       invite: null,
       phoneRules: [
-        (v) => !!v || "Необходимо указать номер телефона",
-        (v) =>
-          /^\d{10}$/.test(v) ||
-          "Номер телефона должен быть валидным и состоять из 10 цифр",
+        (v) => !!v || this.$t("security.mobile.rules.empty"),
+        (v) => /^\d{10}$/.test(v) || this.$t("security.mobile.rules.format"),
       ],
       isReg: false,
       showSmsCodeForm: false,
       smsCode: null,
       smsCodeRules: [
-        (v) => !!v || "Необходимо указать смс код",
-        (v) => /^\d{4}$/.test(v) || "СМС код состоит из 4 цифр",
+        (v) => !!v || this.$t("security.auth.rules.sms.empty"),
+        (v) => /^\d{4}$/.test(v) || this.$t("security.auth.rules.sms.format"),
       ],
       toast: {
         show: false,
         text: null,
         color: "error",
       },
-      sendBtnCaption: "Войти",
-      inviteBtnCaption: "Зарегистрироваться",
+      sendBtnCaption: this.$tc("security.auth.signin", 1),
+      inviteBtnCaption: this.$t("security.reg.send"),
     };
   },
   computed: {
@@ -77,7 +75,7 @@ export default {
   methods: {
     checkPhone(value) {
       if (this.mobile == value) return true;
-      return "Номера телефонов должны совпадать";
+      return this.$t("security.mobile.rules.repeat");
     },
     async sendMobile() {
       if (!/^\d{10}$/.test(this.mobile)) {
@@ -124,8 +122,8 @@ export default {
       this.invite = this.invite.replace("-", "");
     },
     isReg() {
-      this.sendBtnCaption = this.isReg ? "Зарегистрироваться" : "Войти";
-      this.inviteBtnCaption = this.isReg ? "Авторизоваться" : "Зарегистрироваться";
+      this.sendBtnCaption = this.isReg ? this.$t("security.reg.send") : this.$tc("security.auth.signin", 1);
+      this.inviteBtnCaption = this.isReg ? this.$tc("security.auth.signin", 2) : this.$t("security.reg.send");
     }
   },
   components: {

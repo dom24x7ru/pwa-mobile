@@ -8,6 +8,7 @@ import store from "./store";
 import SocketClient from "./api/SocketClient";
 
 import moment from "moment";
+import i18n from './i18n'
 
 moment.locale("ru");
 
@@ -23,8 +24,9 @@ const client = new SocketClient({
 
 // development
 // const client = new SocketClient({
-//   port: 8000,
-//   hostname: "136.144.31.27",
+//   port: 443,
+//   hostname: "dom24x7-backend-test.ru.yapahost.ru",
+//   secure: true,
 // });
 
 // local
@@ -145,5 +147,6 @@ new Vue({
   router,
   store,
   vuetify,
+  i18n,
   render: h => h(App)
 }).$mount("#app");

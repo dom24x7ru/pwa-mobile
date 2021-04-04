@@ -5,10 +5,10 @@
         <v-img :src="require('@/assets/logo.png')" class="my-3" contain height="128" />
       </v-col>
       <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">Dom24x7</h1>
+        <h1 class="display-2 font-weight-bold mb-3">{{ $t("about.app") }}</h1>
         <p class="subheading font-weight-regular">
-          Версия {{ version.number }} сборка {{ version.build }}
-          <span v-if="appCurrentVersion != null && version.number < appCurrentVersion.number" class="red--text"><br />(версия устарела)</span>
+          {{ $t("about.version.info", { number: version.number, build: version.build }) }}
+          <span v-if="appCurrentVersion != null && version.number < appCurrentVersion.number" class="red--text"><br />({{ $t("about.version.old") }})</span>
         </p>
       </v-col>
     </v-row>
@@ -30,7 +30,7 @@ export default {
     ...mapState(["appCurrentVersion"]),
   },
   created() {
-    this.setTitle("О приложении");
+    this.setTitle(this.$t("about.title"));
   },
   methods: {
     ...mapMutations(["setTitle"]),
