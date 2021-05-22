@@ -86,6 +86,10 @@ export default {
     }
     state.votes.unshift(vote);
   },
+  setVotes(state, votes) {
+    state.votes = votes;
+    state.ready.votes = true;
+  },
   setIMChannel(state, channel) {
     if (state.imChannels == null) state.imChannels = [];
     for (let i = 0; i < state.imChannels.length; i++) {
@@ -96,6 +100,10 @@ export default {
       }
     }
     state.imChannels.unshift(channel);
+  },
+  setIMChannels(state, channels) {
+    state.imChannels = channels;
+    state.ready.imChannels = true;
   },
   setIMChannelMute(state, mute) {
     state.imChannelMute = mute;
