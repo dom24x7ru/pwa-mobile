@@ -67,7 +67,7 @@ client.on("user", user => {
     // пользователь уже полностью сформирован и можно подписаться на нужные каналы
     const houseId = user.data.resident.flat.houseId;
     const channels = [
-      `all.posts.${houseId}`, `all.flats.${houseId}`, `all.invites.${houseId}`, // начальная инициализация
+      `all.${houseId}.posts`, `all.${houseId}.flats`, `all.${houseId}.invites`, // начальная инициализация
       `pinnedPosts.${houseId}`,
       `instructions.${houseId}`,
       `documents.${houseId}`,
@@ -86,17 +86,17 @@ client.on("all", allData => {
 
   if (data.posts.length != 0) {
     store.commit("setPosts", allData.data.posts);
-    client.closeChannel(`all.posts.${houseId}`);
+    client.closeChannel(`all.${houseId}.posts`);
     client.initChannel("posts");
   }
   if (data.flats.length != 0) {
     store.commit("setFlats", allData.data.flats);
-    client.closeChannel(`all.flats.${houseId}`);
+    client.closeChannel(`all.${houseId}.flats`);
     client.initChannel("flats");
   }
   if (data.invites.length != 0) {
     store.commit("setInvites", allData.data.invites);
-    client.closeChannel(`all.invites.${houseId}`);
+    client.closeChannel(`all.${houseId}.invites`);
     client.initChannel(`invites.${user.id}`);
   }
 });
