@@ -47,7 +47,7 @@
           </v-card-text>
           <v-card-actions v-if="owner">
               <v-spacer></v-spacer>
-              <v-btn v-if="owner" icon :to="{ name: 'recommendationCreate', params: { recommendationId: recommendation.id } }">
+              <v-btn v-if="owner(recommendation)" icon :to="{ name: 'recommendationCreate', params: { recommendationId: recommendation.id } }">
                 <v-icon>mdi-pencil-outline</v-icon>
               </v-btn>
             </v-card-actions>
