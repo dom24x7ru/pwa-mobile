@@ -61,7 +61,7 @@ client.on("user", user => {
     if (router.currentRoute.name != "settings") router.push("/settings");
   } else {
     // пользователь уже полностью сформирован и можно подписаться на нужные каналы
-    const houseId = user.data.resident.flat.houseId;
+    const houseId = user.data.houseId;
     const channels = [
       `all.${houseId}.posts`, `all.${houseId}.flats`, `all.${houseId}.invites`, // начальная инициализация
       `pinnedPosts.${houseId}`,
