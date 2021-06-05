@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12" class="text-center">
-        <v-btn color="primary" to="/recommendation/create">Новая рекомендация</v-btn>
+        <v-btn color="primary" :to="{ name: 'recommendationCreate' }">Новая рекомендация</v-btn>
       </v-col>
     </v-row>
     <v-row dense>

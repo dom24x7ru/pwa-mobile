@@ -60,7 +60,8 @@ export default new Router({
 
     { path: "/recommendations", name: "recommendations", component: RecommendationCategoryPage },
     { path: "/recommendations/:categoryId", name: "recommendationCategory", component: RecommendationListPage },
-    { path: "/recommendation/create/:recommendationId", name: "recommendationCreate", component: RecommendationCreatePage },
+    { path: "/recommendation/create", name: "recommendationCreate", component: RecommendationCreatePage },
+    { path: "/recommendation/create/:recommendationId", name: "recommendationEdit", component: RecommendationCreatePage },
     { path: "/recommendation/:recommendationId", name: "recommendation", component: RecommendationPage },
 
     { path: "/sections", name: "sections", component: SectionsPage },
