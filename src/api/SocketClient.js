@@ -7,12 +7,6 @@ export default class SocketClient extends EventEmitter {
   constructor(options) {
     super();
 
-    // if (!options) options = {};
-    // if (!options.port) options.port = config.scPort;
-    // if (!options.hostname) options.hostname = config.scHost;
-    // if (!options.secure) options.secure = config.secure;
-    // if (!options.authEngine) options.authEngine = config.authEngine;
-
     this.user = null;
 
     this.data = {};
@@ -33,7 +27,7 @@ export default class SocketClient extends EventEmitter {
         this.handleRefresh()
       }
     });
-    this.socket.on("logout", () => {
+    this.socket.on("deauthenticate", () => {
       this.handleLogout()
     });
     this.socket.on("disconnect", () => {

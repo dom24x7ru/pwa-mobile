@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
-    <HomeStat :stat="stat" :extra="house != null">
-      <template v-if="house != null">
+    <HomeStat :stat="stat" :extra="house != null && house.extra != null">
+      <template v-if="house != null && house.extra != null">
         Общая площадь: {{ house.extra.square.total }} кв. м. (заселено {{ ((stat != null ? stat.busySquares : 0) / house.extra.square.total * 100).toFixed(2) }}%)<br />
         Площадь квартир (БТИ): {{ house.extra.square.flats }} кв. м.<br />
         Подземная автостоянка: {{ house.extra.square.parking }} кв. м.<br />

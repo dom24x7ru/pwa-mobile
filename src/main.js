@@ -16,11 +16,11 @@ const PRODUCTION_MODE = true;
 Vue.config.productionTip = PRODUCTION_MODE
 
 // production
-// const client = new SocketClient({
-//   port: 443,
-//   hostname: "dom24x7-backend.nl.yapahost.ru",
-//   secure: true,
-// });
+const client = new SocketClient({
+  port: 443,
+  hostname: "dom24x7-backend.nl.yapahost.ru",
+  secure: true,
+});
 
 // development
 // const client = new SocketClient({
@@ -30,7 +30,7 @@ Vue.config.productionTip = PRODUCTION_MODE
 // });
 
 // local
-const client = new SocketClient({ port: 8000 });
+// const client = new SocketClient({ port: 8000 });
 
 client.on("login", async (data) => {
   console.log("emit login");
@@ -48,8 +48,6 @@ client.on("login", async (data) => {
     }
   }
   store.commit("setAppCurrentVertion", version);
-  
-  if (router.currentRoute.name == "auth") router.push("/");
 });
 client.on("logout", () => {
   console.log("emit logout");
@@ -60,9 +58,7 @@ client.on("user", user => {
   store.commit("setUser", user.data);
   if (store.state.user.person == null || store.state.user.resident == null) {
     // пользователь новый и еще не сформирована персона и нет привязки к квартире
-    if (router.currentRoute.name != "settings") {
-      router.push("/settings");
-    }
+    if (router.currentRoute.name != "settings") router.push("/settings");
   } else {
     // пользователь уже полностью сформирован и можно подписаться на нужные каналы
     const houseId = user.data.resident.flat.houseId;
@@ -77,6 +73,8 @@ client.on("user", user => {
     for (let channel of channels) {
       client.initChannel(channel);
     }
+
+    if (router.currentRoute.name == "auth") router.push("/");
   }
 });
 client.on("all", allData => {

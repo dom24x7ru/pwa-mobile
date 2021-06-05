@@ -22,6 +22,8 @@
     <span class="text-subtitle-2">Отображение контактов</span>
     <v-checkbox v-model="access.mobile" label="Показывать телефон" hide-details />
     <v-checkbox v-model="access.telegram" label="Показывать аккаунт телеграм (если указан)" hide-details />
+    <br />
+    Я хочу <a @click="logout">выйти</a> из приложения
     <br /><br />
     <v-btn x-large color="success" dark @click="save">Сохранить</v-btn>
     <br /><br /><br /><br />
@@ -89,6 +91,10 @@ export default {
           this.flat = { id: flat.id, number: flat.number, hint: this.getHint(flat) };
         }
       }
+    },
+    async logout() {
+      console.log("send logout");
+      await this.client.wrapEmit("user.logout");
     },
     async save() {
       console.log("Сохранение профиля");
