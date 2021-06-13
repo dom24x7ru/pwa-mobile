@@ -56,14 +56,15 @@ client.on("logout", () => {
 });
 client.on("user", user => {
   store.commit("setUser", user.data);
+  const houseId = user.data.houseId;
+  client.initChannel(`all.${houseId}.flats`);
   if (store.state.user.person == null || store.state.user.resident == null) {
     // пользователь новый и еще не сформирована персона и нет привязки к квартире
     if (router.currentRoute.name != "settings") router.push("/settings");
   } else {
     // пользователь уже полностью сформирован и можно подписаться на нужные каналы
-    const houseId = user.data.houseId;
     const channels = [
-      `all.${houseId}.posts`, `all.${houseId}.flats`, `all.${houseId}.invites`, // начальная инициализация
+      `all.${houseId}.posts`, `all.${houseId}.invites`, // начальная инициализация
       `pinnedPosts.${houseId}`,
       `instructions.${houseId}`,
       `documents.${houseId}`,
@@ -80,7 +81,7 @@ client.on("user", user => {
 client.on("all", allData => {
   const data = allData.data;
   const user = store.state.user;
-  const houseId = user.resident.flat.houseId;
+  const houseId = user.houseId;
 
   if (data.posts.length != 0) {
     store.commit("setPosts", allData.data.posts);
