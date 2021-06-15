@@ -50,24 +50,51 @@
               <v-btn v-if="owner(recommendation)" icon :to="{ name: 'recommendationEdit', params: { recommendationId: recommendation.id } }">
                 <v-icon>mdi-pencil-outline</v-icon>
               </v-btn>
+              <v-btn v-if="owner(recommendation)" icon @click="openDeleteDialog(recommendation)">
+                <v-icon>mdi-trash-can-outline</v-icon>
+              </v-btn>
             </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
     <br /><br />
+    <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toast.show = !toast.show" />
+    <v-dialog v-model="dialog" persistent>
+      <v-card>
+        <v-card-title>Вы действительно хотите удалить свою рекоммендацию?</v-card-title>
+        <v-card-text>После удаления восстановить рекомендацию будет не возможно.</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" text @click="del()">Удалить</v-btn>
+          <v-btn color="green darken-1" text @click="closeDeleteDialog()">Отменить</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
+import Toast from "@/components/ToastComponent";
 
 export default {
   name: "RecommendationListPage",
+  data() {
+    return {
+      dialog: false,
+      delRecommendation: null,
+      toast: {
+        show: false,
+        text: null,
+        color: null
+      },
+    };
+  },
   computed: {
     categoryId() {
       return this.$route.params.categoryId;
     },
-    ...mapState(["user"]),
+    ...mapState(["user", "client"]),
     ...mapGetters(["getRecommendationList"]),
   },
   created() {
@@ -86,6 +113,26 @@ export default {
     notEmpty(value) {
       return value != null && value.trim().length != 0;
     },
+    openDeleteDialog(recommendation) {
+      this.dialog = true;
+      this.delRecommendation = recommendation;
+    },
+    closeDeleteDialog() {
+      this.dialog = false;
+      this.delRecommendation = null;
+    },
+    async del() {
+      console.log("Удаление рекоммендации");
+      const result = await this.client.wrapEmit("recommendation.del", this.delRecommendation);
+      console.log(result);
+      if (result.status != "OK") {
+        this.toast.text = "Сохранить не удалось. Попробуйте позже";
+        this.toast.color = "error";
+        this.toast.show = true;
+        console.error(this.toast.text);
+      }
+      this.closeDeleteDialog();
+    },
     ...mapMutations(["setTitle"]),
   },
   filters: {
@@ -103,6 +150,9 @@ export default {
       const result = `${surname} ${name} ${midname}`;
       return empty(result) ? `сосед(ка) из кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}` : result;
     },
+  },
+  components: {
+    Toast
   },
 };
 </script>

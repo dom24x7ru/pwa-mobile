@@ -72,8 +72,17 @@ export default {
   },
   setRecommendation(state, recommendation) {
     if (state.recommendations == null) state.recommendations = [];
-    const recommendations = state.recommendations.filter(item => item.id == recommendation.id);
-    if (recommendations.length == 0) state.recommendations.push(recommendation);
+    for (let i = 0; i < state.recommendations.length; i++) {
+      if (state.recommendations[i].id == recommendation.id) {
+        if (recommendation.deleted) {
+          state.recommendations.splice(i, 1);
+        } else {
+          state.recommendations.splice(i, 1, recommendation);
+        }
+        return;
+      }
+    }
+    state.recommendations.push(recommendation);
   },
   setVote(state, vote) {
     if (state.votes == null) state.votes = [];
