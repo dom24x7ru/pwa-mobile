@@ -128,6 +128,12 @@ export default {
     if (categoryId == null) return state.recommendations;
     return state.recommendations.filter(item => item.category.id == categoryId);
   },
+  getRecommendationCategory: state => (categoryId) => {
+    if (categoryId == null || state.recommendations == null) return "Неизвестная категория";
+    const list = state.recommendations.filter(item => item.category.id == categoryId);
+    if (list.length == 0) return "Неизвестная категория";
+    return list[0].category.name;
+  },
   getVotesCount: state => () => {
     if (state.votes == null) return 0;
     return state.votes.length;

@@ -94,11 +94,11 @@ export default {
     categoryId() {
       return this.$route.params.categoryId;
     },
-    ...mapState(["user", "client"]),
-    ...mapGetters(["getRecommendationList"]),
+    ...mapState(["user", "client", "ready"]),
+    ...mapGetters(["getRecommendationList", "getRecommendationCategory"]),
   },
   created() {
-    this.setTitle("Рекомендации");
+    this.setTitle(this.getRecommendationCategory(this.categoryId));
   },
   methods: {
     owner(recommendation) {
@@ -149,6 +149,11 @@ export default {
       const midname = profile.midname != null ? profile.midname : "";
       const result = `${surname} ${name} ${midname}`;
       return empty(result) ? `сосед(ка) из кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}` : result;
+    },
+  },
+  watch: {
+    "ready.recommendations"() {
+      this.setTitle(this.getRecommendationCategory(this.categoryId));
     },
   },
   components: {
