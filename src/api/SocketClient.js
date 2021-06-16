@@ -76,14 +76,15 @@ export default class SocketClient extends EventEmitter {
   }
 
   initChannel(name) {
+    // console.log("INIT CHANNEL", name);
     this.channelReady[name] = false;
     this.emit("channel.loading", { name });
-    // console.log("MODEL", name);
     let channel = this.channels[name] = this.socket.subscribe(name);
     channel.watch(this.handleChannel.bind(this, channel));
   }
 
   closeChannel(name) {
+    // console.log("CLOSE CHANNEL", name);
     this.emit("channel.close", { name });
     let channel = this.channels[name];
     delete this.channelReady[name];

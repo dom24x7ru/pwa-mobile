@@ -40,7 +40,7 @@ client.on("login", async (data) => {
   if (version.status == "ERROR") {
     if (version.message == "BANNED" || version.message == "DELETED") {
       await client.wrapEmit("user.logout");
-      store.commit("setUser", null);
+      store.commit("clearAll");
       if (router.currentRoute.name != "auth") {
         router.push("/signin");
         return;
@@ -51,7 +51,7 @@ client.on("login", async (data) => {
 });
 client.on("logout", () => {
   console.log("emit logout");
-  store.commit("setUser", null);
+  store.commit("clearAll");
   if (router.currentRoute.name != "auth") router.push("/signin");
 });
 client.on("user", user => {

@@ -126,4 +126,37 @@ export default {
   clearFiles(state) {
     state.files = [];
   },
+  clearAll(state) {
+    state.appCurrentVersion = null;
+    state.user = null;
+    state.house = null;
+    state.flats = null;
+    state.posts = null;
+    state.pinnedPosts = null;
+    state.instructions = null;
+    state.invites = null;
+    state.documents = null;
+    state.faq = null;
+    state.recommendations = null;
+    state.votes = null;
+    state.imChannels = null;
+    state.imChannelMute = null;
+
+    state.ready.house = false;
+    state.ready.flats = false;
+    state.ready.posts = false;
+    state.ready.pinnedPosts = false;
+    state.ready.instructions = false;
+    state.ready.invites = false;
+    state.ready.documents = false;
+    state.ready.faq = false;
+    state.ready.recommendations = false;
+    state.ready.votes = false;
+    state.ready.imChannels = false;
+
+    state.changed.votes = 0;
+    state.changed.imChannels = 0;
+
+    state.files = [];
+  },
 };
