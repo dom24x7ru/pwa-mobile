@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "FAQListPage",
@@ -23,13 +23,19 @@ export default {
     categoryId() {
       return this.$route.params.categoryId;
     },
-    ...mapGetters(["getFAQList"]),
+    ...mapState(["ready"]),
+    ...mapGetters(["getFAQList", "getFAQCategory"]),
   },
   created() {
-    this.setTitle("FAQ");
+    this.setTitle(this.getFAQCategory(this.categoryId));
   },
   methods: {
     ...mapMutations(["setTitle"]),
+  },
+  watch: {
+    "ready.faq"() {
+      this.setTitle(this.getFAQCategory(this.categoryId));
+    },
   },
 };
 </script>

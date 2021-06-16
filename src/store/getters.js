@@ -94,6 +94,12 @@ export default {
     }
     return categories;
   },
+  getFAQCategory: state => (categoryId) => {
+    if (categoryId == null || state.faq == null) return "Неизвестная категория";
+    const list = state.faq.filter(answer => answer.category.id == categoryId);
+    if (list.length == 0) return "Неизвестная категория";
+    return list[0].category.name;
+  },
   getFAQList: state => (categoryId) => {
     if (state.faq == null) return [];
     if (categoryId == null) return state.faq;
