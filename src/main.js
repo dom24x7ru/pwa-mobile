@@ -51,7 +51,24 @@ client.on("login", async (data) => {
 });
 client.on("logout", () => {
   console.log("emit logout");
+  
+  // закрываем каналы
+  const user = store.state.user;
+  const houseId = user.houseId;
+  const channels = [
+    `posts.${houseId}`,
+    `pinnedPosts.${houseId}`,
+    `flats.${houseId}`,
+    `instructions.${houseId}`,
+    `invites.${user.id}`,
+    `documents.${houseId}`,
+    `faq.${houseId}`,
+    `recommendations.${houseId}`
+  ];
+  for (let channel of channels) client.closeChannel(channel);
+
   store.commit("clearAll");
+
   if (router.currentRoute.name != "auth") router.push("/signin");
 });
 client.on("user", user => {
@@ -86,12 +103,12 @@ client.on("all", allData => {
   if (data.posts.length != 0) {
     store.commit("setPosts", allData.data.posts);
     client.closeChannel(`all.${houseId}.posts`);
-    client.initChannel("posts");
+    client.initChannel(`posts.${houseId}`);
   }
   if (data.flats.length != 0) {
     store.commit("setFlats", allData.data.flats);
     client.closeChannel(`all.${houseId}.flats`);
-    client.initChannel("flats");
+    client.initChannel(`flats.${houseId}`);
   }
   if (data.invites.length != 0) {
     store.commit("setInvites", allData.data.invites);
