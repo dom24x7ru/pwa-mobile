@@ -9,18 +9,18 @@
             <span v-if="vote.closed" class="text--disabled"><br />Голосование завершено</span>
           </v-card-subtitle>
           <v-card-text>
-            Проголосовало {{ vote.answers.length }} из {{ vote.persons }}
+            Проголосовало {{ vote.answers.length }} из {{ vote.persons }} жильцов
             <v-divider />
             <div v-if="answered == null"></div>
             <div v-if="answered == false && !vote.closed">
               <v-checkbox v-for="question of vote.questions" :key="question.id" :label="question.body" :value="question.id" v-model="answers" hide-details />
             </div>
             <div v-else>
-              <br />
+              <v-combobox v-model="selected" :items="types" />
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tbody>
                   <tr v-for="question of vote.questions" :key="question.id">
-                    <td><VoteQuestionResult :vote="vote" :question="question" :person="user.person" @click="if (!vote.anonymous) sheet = !sheet" /></td>
+                    <td><VoteQuestionResult :type="selected.value" :vote="vote" :question="question" :person="user.person" @click="if (!vote.anonymous) sheet = !sheet" /></td>
                   </tr>
                 </tbody>
               </table>
@@ -57,6 +57,8 @@ export default {
   name: "VotePage",
   data() {
     return {
+      types: [{ text: "По жильцам", value: "persons" }, { text: "По квартирам", value: "flats" }, { text: "По квадратуре", value: "squares" }],
+      selected: { text: "По жильцам", value: "persons" },
       vote: null,
       answers: [],
       waitResult: false,
