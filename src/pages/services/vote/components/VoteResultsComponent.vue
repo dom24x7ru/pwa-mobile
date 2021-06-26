@@ -1,19 +1,19 @@
 <template>
   <v-container fluid>
-    <v-row dense>
-      <v-col v-for="question of vote.questions" :key="question.id" cols="12">
-        <span class="font-weight-medium">{{ question.body }}</span><br />
-        <span>Голосов: {{ qAnswersCount(question) }} [{{ percent(question) }}%]</span>
-        <v-list dense>
-          <v-list-item v-for="answer of qAnswers(question)" :key="answer.id" :to="{ name: 'flat', params: { flatNumber: answer.person.flat.number } }">
-            <v-list-item-content>
-              <v-list-item-title>{{ showPersonInfo(answer) }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-      </v-col>
-    </v-row>
+    <v-expansion-panels>
+      <v-expansion-panel v-for="question of vote.questions" :key="question.id">
+        <v-expansion-panel-header>{{ question.body }} - {{ qAnswersCount(question) | answerCountFormat }}</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-list dense>
+            <v-list-item v-for="answer of qAnswers(question)" :key="answer.id" :to="{ name: 'flat', params: { flatNumber: answer.person.flat.number } }">
+              <v-list-item-content>
+                <v-list-item-title>{{ showPersonInfo(answer) }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-container>
 </template>
 
@@ -35,10 +35,6 @@ export default {
       const qAnswers = this.qAnswers(question);
       return qAnswers.length;
     },
-    percent(question) {
-      if (this.vote.answers == null || this.vote.answers.length == 0) return 0;
-      return (this.qAnswersCount(question) / this.vote.persons * 100).toFixed(2);
-    },
     showPersonInfo(answer) {
       const empty = value => value == null || value.trim().length == 0;
 
@@ -52,5 +48,30 @@ export default {
       return empty(result) ? `Сосед из кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}` : result;
     },
   },
+  filters: {
+    answerCountFormat(count) {
+      if (count == null) return "";
+      if (count < 11 || count > 19) {
+        switch (count % 10) {
+          case 0:
+          case 5:
+          case 6:
+          case 7:
+          case 8:
+          case 9:
+            return `${count} голосов`;
+          case 1:
+            return `${count} голос`;
+          case 2:
+          case 3:
+          case 4:
+            return `${count} голоса`;
+          default: return `${count} голосов`;
+        }
+      } else {
+        return `${count} голосов`;
+      }
+    }
+  }
 };
 </script>

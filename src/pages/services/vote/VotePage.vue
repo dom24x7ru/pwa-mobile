@@ -33,11 +33,12 @@
       </v-col>
     </v-row>
     <br /><br />
-    <v-bottom-sheet v-if="vote != null && !vote.anonymous" v-model="sheet" scrollable>
+    <v-bottom-sheet v-if="vote != null && !vote.anonymous" v-model="sheet" fullscreen scrollable>
       <v-card>
-        <v-card-title>Результаты</v-card-title>
-        <v-divider></v-divider>
-        <v-card-text style="height: 300px;">
+        <v-card-text>
+          <div class="d-flex justify-center">
+            <v-btn class="mt-6" text color="error" @click="sheet = !sheet">закрыть</v-btn>
+          </div>
           <VoteResults :vote="vote" />
         </v-card-text>
       </v-card>
