@@ -54,20 +54,22 @@ client.on("logout", () => {
   
   // закрываем каналы
   const user = store.state.user;
-  const houseId = user.houseId;
-  const channels = [
-    `posts.${houseId}`,
-    `pinnedPosts.${houseId}`,
-    `flats.${houseId}`,
-    `instructions.${houseId}`,
-    `invites.${user.id}`,
-    `documents.${houseId}`,
-    `faq.${houseId}`,
-    `recommendations.${houseId}`
-  ];
-  for (let channel of channels) client.closeChannel(channel);
+  if (user != null) {
+    const houseId = user.houseId;
+    const channels = [
+      `posts.${houseId}`,
+      `pinnedPosts.${houseId}`,
+      `flats.${houseId}`,
+      `instructions.${houseId}`,
+      `invites.${user.id}`,
+      `documents.${houseId}`,
+      `faq.${houseId}`,
+      `recommendations.${houseId}`
+    ];
+    for (let channel of channels) client.closeChannel(channel);
 
-  store.commit("clearAll");
+    store.commit("clearAll");
+  }
 
   if (router.currentRoute.name != "auth") router.push("/signin");
 });
