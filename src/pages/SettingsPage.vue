@@ -10,7 +10,7 @@
       :error-messages="flat.errors" 
       persistent-hint
       required
-      :disabled="btnDisabled()" />
+      :disabled="flatFieldDisabled()" />
     <v-text-field prefix="@" v-model="telegram" label="Аккаунт в телеграм" />
     <span class="text-subtitle-1">Настройки приватности</span><br />
     <span class="text-subtitle-2">Отображение имени</span>
@@ -28,6 +28,17 @@
     <v-btn x-large color="success" dark @click="save">Сохранить</v-btn>
     <br /><br /><br /><br />
     <Toast v-if="toast.show" :show="toast.show" :text="toast.text" :color="toast.color" @close="toast.show = !toast.show" />
+    <v-dialog v-model="dialog" persistent>
+      <v-card>
+        <v-card-title>Вы действительно живете в квартире №{{flat.number}}?</v-card-title>
+        <v-card-text>После привязки квартиры ее можно будет изменить только через администратора. Поэтому внимательно проверьте номер квартиры, которую вы указали</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="save">Сохранить</v-btn>
+          <v-btn color="green darken-1" text @click="dialog = false">Отменить</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -39,6 +50,7 @@ export default {
   name: "SettingsPage",
   data() {
     return {
+      dialog: false,
       surname: null,
       name: null,
       midname: null,
@@ -97,12 +109,22 @@ export default {
       await this.client.wrapEmit("user.logout");
     },
     async save() {
-      console.log("Сохранение профиля");
       if (this.flat.id == null) {
-        console.error("Необходимо указать номер кватиры");
+        this.toast.text = "Необходимо указать номер кватиры";
+        this.toast.color = "error";
+        this.toast.show = true;
         return;
       }
 
+      if (this.user.resident == null && !this.dialog) {
+        // попадаем сюда только если мы указали номер квартиры и это делаем впервые
+        this.dialog = true;
+        return;
+      }
+
+      console.log("Сохранение профиля");
+      this.dialog = false;
+      
       const params = {
         surname: this.surname,
         name: this.name,
@@ -144,9 +166,11 @@ export default {
     getHint(flat) {
       return `кв. №${flat.number}, этаж ${flat.floor}, подъезд ${flat.section}`;
     },
-    btnDisabled() {
-      const result = !this.ready.flats;
-      return result;
+    flatFieldDisabled() {
+      if (!this.ready.flats) return true; // если список квартир не загружен, то блокировать кнопку
+      if (this.user == null) return true; // если пользователь не загружен, то блокировать кнопку
+      if (this.user.resident != null) return true; // уже есть связка с квартирой и нужно запрещать менять
+      return false;
     },
     ...mapMutations(["setTitle", "setPerson", "setResident"]),
   },

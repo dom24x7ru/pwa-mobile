@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
-    <v-text-field v-model="title" label="Заголовок" required />
+    <v-text-field v-model="title" label="Задайте вопрос" required />
 
     <VoteQuestion v-for="question of questions" :key="question.id" :question="question" @change="changeQuestion" @delete="delQuestion" />
-    <v-btn color="primary" text @click="addQuestion">Добавить вопрос</v-btn>
+    <v-btn color="primary" text @click="addQuestion">Добавить ответ</v-btn>
     
     <v-checkbox v-model="anonymous" label="анонимно" hide-details />
     <v-checkbox v-model="multi" label="несколько ответов" hide-details />
