@@ -24,7 +24,7 @@
       <v-container v-else>
         <v-row>
           <v-col>
-            <v-text-field v-model="smsCode" :rules="smsCodeRules" :counter="4" :label="$t('security.auth.sms')" required />
+            <v-text-field v-model="smsCode" :rules="smsCodeRules" :counter="4" :label="$t('security.auth.sms')" :hint="$t('security.auth.hint')" required />
           </v-col>
         </v-row>
         <v-row>
