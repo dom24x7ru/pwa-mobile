@@ -18,7 +18,7 @@ Vue.config.productionTip = PRODUCTION_MODE
 // production
 const client = new SocketClient({
   port: 443,
-  hostname: "dom24x7-backend.nl.yapahost.ru",
+  hostname: "node.dom24x7.ru",
   secure: true,
 });
 
