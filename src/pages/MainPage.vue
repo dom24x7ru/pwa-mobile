@@ -61,8 +61,8 @@ export default {
       vote: null,
       toast: {
         show: false,
-        text: "Версия приложения устарела. Необходимо обновить.",
-        btnText: "Обновить",
+        text: "Веб версия приложения больше не поддерживается. Просим перейти на сайт проекта и скачать мобильную версию.",
+        btnText: "Перейти на сайт",
         color: "blue",
         timeout: 15000,
       },
@@ -132,7 +132,8 @@ export default {
     },
     reload() {
       this.toast.show = false;
-      location.reload(true);
+      // location.reload(true);
+      location.href = "https://dom24x7.ru"
     },
     ...mapMutations(["setTitle"]),
   },

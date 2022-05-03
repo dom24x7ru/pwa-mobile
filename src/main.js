@@ -51,6 +51,7 @@ client.on("login", async (data) => {
   }
   store.commit("setAppCurrentVertion", version);
 
+  console.log("send app info");
   const appInfo = {
     "version": `${config.version.number}.${config.version.build}`,
     "platform": "web",
