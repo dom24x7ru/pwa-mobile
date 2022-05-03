@@ -81,15 +81,16 @@ export default {
         this.subscribe();
       });
     }
-    if (this.appCurrentVersion != null) {
-      if (this.version.number < this.appCurrentVersion.number) {
-        // версия устарела, отображаем сообщение, что нужно обновить приложение
-        this.toast.show = true;
-      } else if (this.version.number == this.appCurrentVersion.number && this.version.build < this.appCurrentVersion.build ) {
-        // найдена более свежая сборка приложения
-        this.toast.show = true;
-      }
-    }
+    // if (this.appCurrentVersion != null) {
+    //   if (this.version.number < this.appCurrentVersion.number) {
+    //     // версия устарела, отображаем сообщение, что нужно обновить приложение
+    //     this.toast.show = true;
+    //   } else if (this.version.number == this.appCurrentVersion.number && this.version.build < this.appCurrentVersion.build ) {
+    //     // найдена более свежая сборка приложения
+    //     this.toast.show = true;
+    //   }
+    // }
+    this.toast.show = true;
   },
   methods: {
     postTypeIcon(post) {
