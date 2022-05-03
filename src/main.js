@@ -10,6 +10,8 @@ import SocketClient from "./api/SocketClient";
 import moment from "moment";
 import i18n from './i18n'
 
+import config from "../config";
+
 moment.locale("ru");
 
 const PRODUCTION_MODE = true;
@@ -48,6 +50,13 @@ client.on("login", async (data) => {
     }
   }
   store.commit("setAppCurrentVertion", version);
+
+  const appInfo = {
+    "version": `${config.version.number}.${config.version.build}`,
+    "platform": "web",
+    "platformVersion": ""
+  };
+  client.wrapEmit("service.appInfo", appInfo);
 });
 client.on("logout", () => {
   console.log("emit logout");
